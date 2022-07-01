@@ -12,7 +12,7 @@ public class Hero extends DungeonCharacter {
 
     @Override
     public double getHealth() {
-        return super.myHealthPoints;
+        return super.myHealthPoints + 2;
     }
 
     @Override
