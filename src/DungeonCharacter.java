@@ -9,12 +9,12 @@ public abstract class DungeonCharacter {
 
     // **************************** Fields ****************************
 
-    private String myName;
-    private double myHealthPoints;
-    private double myDamageRangeMin;
-    private double myDamageRangeMax;
-    private double myAttackSpeed;
-    private double myChanceToHit;
+    protected String myName;
+    protected double myHealthPoints;
+    protected double myDamageRangeMin;
+    protected double myDamageRangeMax;
+    protected double myAttackSpeed;
+    protected double myChanceToHit;
 
     // ************************** Constructors ************************
 
@@ -42,12 +42,12 @@ public abstract class DungeonCharacter {
     public abstract double getChanceToHit();
 
     // Setters
-    public abstract String setName();
-    public abstract double setHealth();
-    public abstract double setDamageRangeMin();
-    public abstract double setDamageRangeMax();
-    public abstract double setAttackSpeed();
-    public abstract double setChanceToHit();
+    public abstract void setName(final String THE_NAME);
+    public abstract void setHealth(final double THE_HEALTH);
+    public abstract void setDamageRangeMin(final double THE_RANGE_MIN);
+    public abstract void setDamageRangeMax(final double THE_RANGE_MAX);
+    public abstract void setAttackSpeed(final double THE_ATTACK_SPEED);
+    public abstract void setChanceToHit(final double THE_CHANCE_TO_HIT);
 
     public abstract void attackBehavior();
 
