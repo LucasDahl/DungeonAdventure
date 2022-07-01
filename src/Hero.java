@@ -1,7 +1,27 @@
-public class Hero extends DungeonCharacter {
+/**
+ * @author Lucas Dahl - LDahl
+ * @version 1.0
+ *
+ *
+ */
+public abstract class Hero extends DungeonCharacter {
 
     // **************************** Fields ****************************
+
+    protected double myChanceToBlock;
+    protected int myNumberOfAttacks;
+
     // ************************** Constructors ************************
+
+    /**
+     *  This is the default constructor
+     */
+    public Hero() {
+        super();
+        myChanceToBlock = 0.0;
+        myNumberOfAttacks = 0;
+    }
+
     // **************************** Methods ***************************
 
 
@@ -12,7 +32,7 @@ public class Hero extends DungeonCharacter {
 
     @Override
     public double getHealth() {
-        return super.myHealthPoints + 2;
+        return super.myHealthPoints;
     }
 
     @Override
@@ -34,6 +54,10 @@ public class Hero extends DungeonCharacter {
     public double getChanceToHit() {
         return super.myChanceToHit;
     }
+
+    public abstract double getChanceToBlock();
+
+    public abstract int getNumberOfAttacks();
 
     @Override
     public void setName(String THE_NAME) {
@@ -64,6 +88,10 @@ public class Hero extends DungeonCharacter {
     public void setChanceToHit(double THE_CHANCE_TO_HIT) {
         super.myChanceToHit = THE_CHANCE_TO_HIT;
     }
+
+    public abstract void setChanceToBlock();
+
+    public abstract void setNumberOfAttacks();
 
     @Override
     public void attackBehavior() {

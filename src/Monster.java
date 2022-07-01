@@ -1,7 +1,21 @@
-public class Monster extends DungeonCharacter {
+/**
+ * @author Lucas Dahl - LDahl
+ * @version 1.0
+ *
+ *
+ */
+public abstract class Monster extends DungeonCharacter {
 
     // **************************** Fields ****************************
     // ************************** Constructors ************************
+
+    /**
+     *  This is the default constructor
+     */
+    public Monster() {
+        super();
+    }
+
     // **************************** Methods ***************************
 
     @Override

@@ -1,6 +1,6 @@
 /**
- * @Author Lucas Dahl - LDahl
- * @Version 1.0
+ * @author Lucas Dahl - LDahl
+ * @version 1.0
  *
  *  This is the parent class for all the dungeon characters.
  *
