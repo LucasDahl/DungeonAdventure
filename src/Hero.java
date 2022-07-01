@@ -7,32 +7,32 @@ public class Hero extends DungeonCharacter {
 
     @Override
     public String getName() {
-        return null;
+        return super.myName;
     }
 
     @Override
     public double getHealth() {
-        return 0;
+        return super.myHealthPoints;
     }
 
     @Override
     public double getDamageRangeMin() {
-        return 0;
+        return super.myDamageRangeMin;
     }
 
     @Override
     public double getDamageRangeMax() {
-        return 0;
+        return super.myDamageRangeMax;
     }
 
     @Override
     public double getAttackSpeed() {
-        return 0;
+        return super.myAttackSpeed;
     }
 
     @Override
     public double getChanceToHit() {
-        return 0;
+        return super.myChanceToHit;
     }
 
     @Override
