@@ -13,6 +13,11 @@ Lost in a dungeon in a mysterious land, the exit will only open to this dangerou
 
 <div align="center">
 
+## Game Play
+</div>
+
+<div align="center">
+
 ## Controls
 </div>
 
@@ -81,6 +86,10 @@ chance to heal: 0.3 (30 percent) <br>
 minimum heal points: 30 <br>
 maximum heal points: 50 <br>
 
+<div align="center">
+
+## Dungeon
+</div>
 
 <div align="center">
 
