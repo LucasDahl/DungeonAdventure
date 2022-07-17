@@ -2,9 +2,19 @@
 
 # DungeonAdventure
 </div>
-An adventure game where a hero needs to find the four Pillars of OO and escape.
 
-Created by Lucas Dahl, Jane Kennerly, and Luke McAlphine.
+<div align="center">
+
+## Created by Lucas Dahl, Jane Kennerly, and Luke McAlphine.
+</div>
+
+Lost in a dungeon in a mysterious land, the exit will only open to this dangerous dungeon once the pillars of Abstraction, Encapsulation, Inheritance, and Polymorphism are found. Can you find all four pillars of Object Oriented?
+
+
+<div align="center">
+
+## Controls
+</div>
 
 <div align="center">
 
@@ -12,7 +22,7 @@ Created by Lucas Dahl, Jane Kennerly, and Luke McAlphine.
 </div>
 
 
-###Warrior: <br>
+### Warrior: <br>
 hit points: 125 <br>
 attack speed: 4 <br>
 chance to hit: 0.8 (80 percent) <br>
@@ -70,3 +80,9 @@ maximum damage: 50 <br>
 chance to heal: 0.3 (30 percent) <br>
 minimum heal points: 30 <br>
 maximum heal points: 50 <br>
+
+
+<div align="center">
+
+## Rooms
+</div>
