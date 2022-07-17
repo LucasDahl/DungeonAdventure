@@ -1,71 +1,49 @@
-public class Monster extends DungeonCharacter {
+import java.util.Random;
+
+/**
+ * @author Lucas Dahl - LDahl
+ * @version 1.0
+ *
+ *
+ */
+public abstract class Monster extends DungeonCharacter {
 
     // **************************** Fields ****************************
+    private Random myRandom;
+
+
     // ************************** Constructors ************************
+
+    /**
+     *  This is the default constructor
+     */
+    public Monster(final String the_name, final double the_health, final double the_attack_speed, final double the_hit_chance, final double the_damage_range_min, final double the_damage_range_max, final double the_chance_to_heal, final double the_min_heal_points, final double the_max_heal_points, final int the_number_of_attacks) {
+        super(the_name, the_health, the_damage_range_min, the_damage_range_max, the_attack_speed, the_hit_chance, the_number_of_attacks);
+    }
+
     // **************************** Methods ***************************
 
-    @Override
-    public String getName() {
-        return super.myName;
+    //=================
+    // Override Methods
+    //=================
+
+    public  String toString() {
+       return super.toString();
     }
 
     @Override
-    public double getHealth() {
-        return super.myHealthPoints;
-    }
+    public void attackBehavior(final DungeonCharacter theOther) {
 
-    @Override
-    public double getDamageRangeMin() {
-        return super.myDamageRangeMin;
-    }
+        // Attack the other character
+        for(int i = 0; i < getMyNumberOfAttacks(); i++) {
 
-    @Override
-    public double getDamageRangeMax() {
-        return super.myDamageRangeMax;
-    }
+            double attackHit = myRandom.nextDouble() * 100.0;
+            double damage = getDamageRangeMin() + (getDamageRangeMax() - getDamageRangeMin()) * myRandom.nextDouble();
 
-    @Override
-    public double getAttackSpeed() {
-        return super.myAttackSpeed;
-    }
-
-    @Override
-    public double getChanceToHit() {
-        return super.myChanceToHit;
-    }
-
-    @Override
-    public void setName(String THE_NAME) {
-        super.myName = THE_NAME;
-    }
-
-    @Override
-    public void setHealth(double THE_HEALTH) {
-        super.myHealthPoints = THE_HEALTH;
-    }
-
-    @Override
-    public void setDamageRangeMin(double THE_RANGE_MIN) {
-        super.myDamageRangeMin = THE_RANGE_MIN;
-    }
-
-    @Override
-    public void setDamageRangeMax(double THE_RANGE_MAX) {
-        super.myDamageRangeMax = THE_RANGE_MAX;
-    }
-
-    @Override
-    public void setAttackSpeed(double THE_ATTACK_SPEED) {
-        super.myAttackSpeed = THE_ATTACK_SPEED;
-    }
-
-    @Override
-    public void setChanceToHit(double THE_CHANCE_TO_HIT) {
-        super.myChanceToHit = THE_CHANCE_TO_HIT;
-    }
-
-    @Override
-    public void attackBehavior() {
-
+            // The Warrior hit the enemy
+            if(attackHit > getChanceToHit()) {
+                theOther.setHealth(theOther.getHealth() - damage);
+            }
+        }
     }
 }
