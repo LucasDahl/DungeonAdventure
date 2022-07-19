@@ -1,5 +1,3 @@
-import java.util.Random;
-
 /**
  * @author Lucas Dahl - LDahl
  * @version 1.0
@@ -10,7 +8,7 @@ public abstract class Hero extends DungeonCharacter {
 
     // **************************** Fields ****************************
 
-    protected final double MY_CHANCE_TO_BLOCK;
+    private final double MY_CHANCE_TO_BLOCK;
 
     // ************************** Constructors ************************
 
@@ -45,7 +43,7 @@ public abstract class Hero extends DungeonCharacter {
 
     // Get the number of attacks
     protected int getNumberOfAttacks() {
-        return super.getMyNumberOfAttacks();
+        return super.getNumberOfAttacks();
     }
 
     //========
@@ -97,10 +95,10 @@ public abstract class Hero extends DungeonCharacter {
     public void attackBehavior(final DungeonCharacter theOther) {
 
         // Set the number of attacks for the Warrior
-        setNumberOfAttacks(theOther.getMyNumberOfAttacks() + 1);
+        setNumberOfAttacks(theOther.getNumberOfAttacks() + 1);
 
         // Attack the other character
-        for(int i = 0; i < getMyNumberOfAttacks(); i++) {
+        for(int i = 0; i < this.getNumberOfAttacks(); i++) {
 
             double attackHit = getMyRandomRange(0, 100);
             double damage = super.getDamage();
