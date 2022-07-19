@@ -75,7 +75,7 @@ public abstract class DungeonCharacter {
     }
 
     // Get the number of attacks
-    protected int getMyNumberOfAttacks() {return  myNumberOfAttacks;};
+    protected int getNumberOfAttacks() {return  myNumberOfAttacks;};
 
     // Get the damage based min and max.
     protected double getDamage() {
@@ -83,7 +83,7 @@ public abstract class DungeonCharacter {
     }
 
     // Get a random double within a range
-    protected double getMyRandomRange(final int theMin, final int theMax) {
+    protected double getMyRandomRange(final double theMin, final double theMax) {
         return theMin + (theMax - theMin) * myRandom.nextDouble();
     }
 

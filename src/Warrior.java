@@ -37,7 +37,7 @@ public class Warrior extends Hero {
      *
      * @return the name of the special skill
      */
-    public String getMY_SPECIAL_SKILL() {
+    public String getSpecialSkill() {
         return MY_SPECIAL_SKILL;
     }
 
@@ -46,7 +46,7 @@ public class Warrior extends Hero {
      *
      * @return the damage to the special skill.
      */
-    public double getMY_SPECIAL_DAMAGE() {
+    public double getMySpecialDamge() {
         return MY_SPECIAL_DAMAGE;
     }
 
@@ -56,7 +56,7 @@ public class Warrior extends Hero {
      *
      * @return the special chance to hit
      */
-    public double getMY_SPECIAL_CHANCE() {
+    public double getSpecialChance() {
         return MY_SPECIAL_CHANCE;
     }
 

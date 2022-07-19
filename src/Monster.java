@@ -1,5 +1,3 @@
-import java.util.Random;
-
 /**
  * @author Lucas Dahl - LDahl
  * @version 1.0
@@ -9,7 +7,6 @@ import java.util.Random;
 public abstract class Monster extends DungeonCharacter {
 
     // **************************** Fields ****************************
-    private Random myRandom;
 
 
     // ************************** Constructors ************************
@@ -35,10 +32,10 @@ public abstract class Monster extends DungeonCharacter {
     public void attackBehavior(final DungeonCharacter theOther) {
 
         // Attack the other character
-        for(int i = 0; i < getMyNumberOfAttacks(); i++) {
+        for(int i = 0; i < getNumberOfAttacks(); i++) {
 
-            double attackHit = myRandom.nextDouble() * 100.0;
-            double damage = getDamageRangeMin() + (getDamageRangeMax() - getDamageRangeMin()) * myRandom.nextDouble();
+            double attackHit = getMyRandomRange(super.getDamageRangeMin(), super.getDamageRangeMax());
+            double damage = super.getDamage();
 
             // The Warrior hit the enemy
             if(attackHit > getChanceToHit()) {
