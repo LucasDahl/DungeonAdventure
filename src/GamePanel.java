@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
+ *
+ * @Author Luke McAlpine
  * Game Screen settings
  */
 public class GamePanel extends JPanel implements Runnable {
