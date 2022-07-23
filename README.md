@@ -23,6 +23,14 @@ Lost in a dungeon in a mysterious land, the exit will only open to this dangerou
 
 <div align="center">
 
+## Adventurer
+</div>
+
+Play as either a Warrior with the ability to deal a crushing blow, a Priestess who can heal without potions, or a Thief that has a chance of a surprise attack.
+Chose the right Hero for the job, as the way is plagued with dangerous enemies and traps, and it may just take all you have to make it to the end.
+
+<div align="center">
+
 ## Characters
 </div>
 
