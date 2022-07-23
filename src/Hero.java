@@ -50,6 +50,15 @@ public abstract class Hero extends DungeonCharacter {
     // Setters
     //========
 
+    /**
+     *  This method will set the name of the character
+     *
+     * @param theName the name for the character.
+     */
+    public void setName(final String theName) {
+        super.setName(theName);
+    }
+
 
     //=================
     // Override Methods
