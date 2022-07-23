@@ -20,11 +20,13 @@ public class Adventurer {
     // ************************** Constructors ************************
 
 
-    public Adventurer(final String thePlayerName) {
+    public Adventurer(final String thePlayerName, final Hero theHero) {
 
         myNumberOfHealingPotions = 0;
         myNumberOfVisionPotions = 0;
         myListOfPillars = Collections.emptySet();
+        myCharacter = theHero;
+        myCharacter.setName(thePlayerName);
 
     }
 
