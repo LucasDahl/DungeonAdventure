@@ -23,6 +23,11 @@ Lost in a dungeon in a mysterious land, the exit will only open to this dangerou
 
 <div align="center">
 
+## Player
+</div>
+
+<div align="center">
+
 ## Characters
 </div>
 
