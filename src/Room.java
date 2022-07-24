@@ -5,6 +5,7 @@
  * Package condition: Must be placed in the same package as DungeonAdventure
  */
 
+import java.util.Objects;
 import java.util.Random;
 import java.io.Serializable;
 
@@ -32,7 +33,8 @@ public class Room implements Serializable {
      */
     public Room() {
         myPillarLetter = "";
-        myItemCount = 0;
+        myItemCount = 0;    // counts: pits, potions, pillars,
+                            // not counted: entrance, exit
         myDoorsNESW = new int[] {1, 1, 1, 1}; // open door = 1, closed door = 0
         myEntrance = false;
         myExit = false;
@@ -51,6 +53,9 @@ public class Room implements Serializable {
      * @param theEntrance of the dungeon
      */
     void setEntrance(final boolean theEntrance) {
+        if (theEntrance) {
+            emptyRoom();
+        }
         myEntrance = theEntrance;
     }
 
@@ -66,6 +71,9 @@ public class Room implements Serializable {
      * @param theExit of the dungeon
      */
     void setExit(final boolean theExit) {
+        if (theExit) {
+            emptyRoom();
+        }
         myExit = theExit;
     }
 
@@ -82,12 +90,12 @@ public class Room implements Serializable {
      * @param thePillarLetter "A", "E", "I", or "P"
      */
     void setPillar(String thePillarLetter) {
-        myPillarLetter = thePillarLetter;
-        if (thePillarLetter == "") {
+        if (Objects.equals(thePillarLetter, "") && myPillarLetter.length()>0) {
             myItemCount--;
-        } else {
+        } else if (Objects.equals(myPillarLetter, "") && thePillarLetter.length() >0){
             myItemCount++;
         }
+        myPillarLetter = thePillarLetter;
     }
 
     /**
@@ -96,6 +104,15 @@ public class Room implements Serializable {
      */
     boolean getPit() {
         return myPit;
+    }
+
+    void setPit(boolean thePit) {
+        if (!thePit && myPit) { // removing pit when there was a pit
+            myItemCount--;
+        } else if (!myPit && thePit){ // had no pit, adding a pit
+            myItemCount++;
+        }
+        myPit = thePit;
     }
 
     /**
@@ -111,10 +128,9 @@ public class Room implements Serializable {
      * @param theVisionPotion true places vision potion, false removes it
      */
     void setVisionPotion(final boolean theVisionPotion) {
-        boolean previous = myVisionPotion;
-        if (previous && !theVisionPotion) {
+        if (myVisionPotion && !theVisionPotion) { //had potion, removing it
             myItemCount--;
-        } else if (!previous && theVisionPotion) {
+        } else if (!myVisionPotion && theVisionPotion) { //no potion, adding it
             myItemCount++;
         }
         myVisionPotion = theVisionPotion;
@@ -129,10 +145,9 @@ public class Room implements Serializable {
      * @param theHealingPotion true places healing potion, false removes it
      */
     void setHealingPotion(final boolean theHealingPotion) {
-        boolean previous = myVisionPotion;
-        if (previous && !theHealingPotion) {
+        if (myHealingPotion && !theHealingPotion) { // had potion, removing it
             myItemCount--;
-        } else if (!previous && theHealingPotion) {
+        } else if (!myHealingPotion && theHealingPotion) { // no potion, adding it
             myItemCount++;
         }
         this.myHealingPotion = theHealingPotion;
@@ -158,7 +173,7 @@ public class Room implements Serializable {
      * Randomly assigns a pit, vision potion, healing potion, and a monster
      * to the Room.
      */
-    private void populateRoom() {
+    void populateRoom() {
         final int PIT_CHANCE = 20;
         final int VISION_POTION_CHANCE = 10;
         final int HEALING_POTION_CHANCE = 20;
@@ -197,6 +212,19 @@ public class Room implements Serializable {
     }
 
     /**
+     * Clears all the items in the room.
+     */
+    void emptyRoom() {
+        setPillar("");
+        setPit(false);
+        setHealingPotion(false);
+        setVisionPotion(false);
+        if (myMonster1 != null) {
+            myMonster1.setHealth(0);
+        }
+    }
+
+    /**
      * Pillars: A = Abstraction, E = Encapsulation
      *          I = Inheritance, P = Polymorphism
      * H = healing potion only
@@ -206,24 +234,30 @@ public class Room implements Serializable {
      *
      * @return Gets the letter that best represents the contents of the room
      */
-    private String getItem() {
-        String item = "";
-        if (myItemCount > 1) {
-            item = "M";
-        } else if (myItemCount < 1) {
-            item = " ";
+    private String getMiddle() {
+        String middle = "";
+        if (getEntrance()) {
+            middle = "i";
+        } else if (getExit()) {
+            middle = "O";
         } else {
-            if (getPillar() != "") {
-                item = getPillar();
-            } else if (getVisionPotion()) {
-                item = "V";
-            } else if (getHealingPotion()) {
-                item = "H";
-            } else if (getPit()) {
-                item = "X";
+            if (myItemCount > 1) {
+                middle = "M";
+            } else if (myItemCount < 1) {
+                middle = " ";
+            } else {
+                if (getPillar() != "") {
+                    middle = getPillar();
+                } else if (getVisionPotion()) {
+                    middle = "V";
+                } else if (getHealingPotion()) {
+                    middle = "H";
+                } else if (getPit()) {
+                    middle = "X";
+                }
             }
         }
-        return item;
+        return middle;
     }
     @Override
     /** Returns a string composed of 3x3 characters to represent a room
@@ -247,7 +281,7 @@ public class Room implements Serializable {
         } else {
             sb.append("*");
         }
-        sb.append(getItem());
+        sb.append(getMiddle());
         if (getMyDoorsNESW()[1] == 1) {
             sb.append("|\n");
         } else {

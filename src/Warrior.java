@@ -18,8 +18,8 @@ public class Warrior extends Hero {
     /**
      *  This is the default constructor
      */
-    public Warrior() {
-        super("Warrior", 125, 4, 0.8, 35, 60, 0.4, 1);
+    public Warrior(final String theName) {
+        super(theName, 125, 4, 0.8, 35, 60, 0.4, 1);
 
         MY_SPECIAL_SKILL = "Crushing Blow";
         MY_SPECIAL_DAMAGE = super.getMyRandomRange(75, 150);
