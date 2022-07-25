@@ -222,6 +222,8 @@ public class Room implements Serializable {
         if (myMonster1 != null) {
             myMonster1.setHealth(0);
         }
+        setEntrance(false);
+        setExit(false);
     }
 
     /**
@@ -246,7 +248,7 @@ public class Room implements Serializable {
             } else if (myItemCount < 1) {
                 middle = " ";
             } else {
-                if (getPillar() != "") {
+                if (getPillar().compareTo("") != 0) { // if pillar not empty String
                     middle = getPillar();
                 } else if (getVisionPotion()) {
                     middle = "V";
@@ -260,15 +262,6 @@ public class Room implements Serializable {
         return middle;
     }
     @Override
-    /** Returns a string composed of 3x3 characters to represent a room
-     * '*' are solid walls, '-' and "|" are doors
-     *
-     *  This is a room with multiple items and a door
-     *  in each cardinal direction
-     *  *-*
-     *  |M|
-     *  *-*
-     */
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if (getMyDoorsNESW()[0] == 1) {
@@ -288,9 +281,9 @@ public class Room implements Serializable {
             sb.append("*\n");
         }
         if (getMyDoorsNESW()[2] == 1) {
-            sb.append("*-*\n");
+            sb.append("*-*");
         } else {
-            sb.append("***\n");
+            sb.append("***");
         }
         return sb.toString();
     }
