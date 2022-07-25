@@ -236,7 +236,7 @@ public class Room implements Serializable {
      *
      * @return Gets the letter that best represents the contents of the room
      */
-    private String getMiddle() {
+    String getMiddle() {
         String middle = "";
         if (getEntrance()) {
             middle = "i";
