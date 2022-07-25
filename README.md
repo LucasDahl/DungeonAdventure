@@ -104,14 +104,14 @@ Maximum heal points: 50 <br>
 ## Rooms
 </div>
 Could possibly contain one of each of the following: <br>
-- Pillar Letter: <br>
-    - A: Abstraction <br>
-    - E: Encapsulation <br>
-    - I: Inheritance <br>
-    - P: Polymorphism <br>
-- Pit: Causes damage to player <br>
-- Vision Potion: Shows the player the adjacent rooms <br>
-- Healing Potion: Can be used to recover some health points <br>
-- Monster <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pillar Letter: <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A: Abstraction <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;E: Encapsulation <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I: Inheritance <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;P: Polymorphism <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pit: Causes damage to player <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vision Potion: Shows the player the adjacent rooms <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Healing Potion: Can be used to recover some health points <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Monster <br>
 
-Each room has at one least door. <br>
+All rooms have 4 doors. By default, they are open. <br>
