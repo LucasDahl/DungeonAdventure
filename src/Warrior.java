@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /**
  * @author Lucas Dahl - LDahl
  * @version 1.0
@@ -9,7 +11,7 @@ public class Warrior extends Hero {
     // **************************** Fields ****************************
 
     private final String MY_SPECIAL_SKILL;
-    private final double MY_SPECIAL_DAMAGE;
+    private double mySpecialDamage;
     private final double MY_SPECIAL_CHANCE;
 
 
@@ -22,11 +24,28 @@ public class Warrior extends Hero {
         super("Warrior", 125, 4, 0.8, 35, 60, 0.4, 1);
 
         MY_SPECIAL_SKILL = "Crushing Blow";
-        MY_SPECIAL_DAMAGE = super.getMyRandomRange(75, 150);
+        mySpecialDamage = 75;
         MY_SPECIAL_CHANCE = 0.4;
     }
 
     // **************************** Methods ***************************
+
+    /**
+     *  This method will use the characters special attack
+     *   if a number that is higher than the hit chance
+     *   is rolled.
+     *
+     * @return the special attack damage.
+     */
+    public double specialAttack() {
+
+        Random rand = new Random();
+
+        if(MY_SPECIAL_CHANCE > rand.nextDouble()) {
+            return getMySpecialDamage();
+        }
+        return 0;
+    }
 
     //========
     // Getters
@@ -46,8 +65,8 @@ public class Warrior extends Hero {
      *
      * @return the damage to the special skill.
      */
-    public double getMySpecialDamge() {
-        return MY_SPECIAL_DAMAGE;
+    public double getMySpecialDamage() {
+        return  mySpecialDamage = super.getMyRandomRange(75, 150);
     }
 
     /**
