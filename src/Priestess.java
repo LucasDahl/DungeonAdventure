@@ -9,17 +9,15 @@ public class Priestess extends Hero {
     // **************************** Fields ****************************
 
     private final String MY_SPECIAL_SKILL;
-    private final double MY_HEAL_RANGE;
 
     // ************************** Constructors ************************
 
     /**
      *  This is the default constructor
      */
-    public Priestess() {
-        super("Priestess", 75, 5, 0.7, 25, 45, 0.3, 1);
+    public Priestess(final String theName) {
+        super(theName, 75, 5, 0.7, 25, 45, 0.3, 1);
         MY_SPECIAL_SKILL = "Heal";
-        MY_HEAL_RANGE = 1;
     }
 
     // **************************** Methods ***************************
