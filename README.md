@@ -45,6 +45,8 @@ Chance to hit: 0.7 (70 percent) <br>
 Minimum damage: 25 <br>
 Maximum damage: 45 <br>
 Chance to block: 0.3 (30 percent) <br>
+Special skill; Heal <br>
+Heal range: 1 - 100<br>
 
 ### Thief: <br>
 Hit points: 75 <br>
