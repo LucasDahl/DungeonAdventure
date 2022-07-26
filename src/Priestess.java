@@ -19,10 +19,18 @@ public class Priestess extends Hero {
     public Priestess() {
         super("Priestess", 75, 5, 0.7, 25, 45, 0.3, 1);
         MY_SPECIAL_SKILL = "Heal";
-        MY_HEAL_RANGE = 50;
+        MY_HEAL_RANGE = 1;
     }
 
     // **************************** Methods ***************************
+
+    /**
+     *  This method will heal the Priestess
+     *  with a random value from 1 - 100;
+     */
+    public void heal() {
+        super.setHealth(super.getHealth() + healPoints());
+    }
 
     //========
     // Getters
@@ -35,6 +43,11 @@ public class Priestess extends Hero {
      */
     public String getMySpecialSkill() {
         return MY_SPECIAL_SKILL;
+    }
+
+    // The amount of heal points the Priestess will heal
+    private double healPoints() {
+        return getMyRandomRange(1, 100);
     }
 
     //=================
