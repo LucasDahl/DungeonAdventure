@@ -34,6 +34,9 @@ Chance to hit: 0.8 (80 percent) <br>
 Minimum damage: 35 <br>
 Maximum damage: 60
 chance to block: 0.2 (20 percent)<br>
+Special attack: Crushing Blow<br>
+Special attack damage: 75 - 150;
+Special attack hit chance: 0.4 (40 percent)<br>
 
 ### Priestess: <br>
 Hit points: 75 <br>
