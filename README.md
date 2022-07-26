@@ -42,6 +42,9 @@ Chance to hit: 0.8 (80 percent) <br>
 Minimum damage: 35 <br>
 Maximum damage: 60
 chance to block: 0.2 (20 percent)<br>
+Special attack: Crushing Blow<br>
+Special attack damage: 75 - 150;
+Special attack hit chance: 0.4 (40 percent)<br>
 
 ### Priestess: <br>
 Hit points: 75 <br>
@@ -50,6 +53,8 @@ Chance to hit: 0.7 (70 percent) <br>
 Minimum damage: 25 <br>
 Maximum damage: 45 <br>
 Chance to block: 0.3 (30 percent) <br>
+Special skill: Heal <br>
+Heal range: 1 - 100<br>
 
 ### Thief: <br>
 Hit points: 75 <br>
@@ -58,6 +63,9 @@ Chance to hit: 0.8 (80 percent) <br>
 Minimum damage: 20 <br>
 Maximum damage: 40 <br>
 Chance to block: 0.4 (40 percent) <br>
+Special skill: Sneak attack <br>
+Special chance: 0.4 (40 percent) <br>
+Special skill chance of no attack: 0.2 (20 percent) <br>
 
 <div align="center">
 
