@@ -5,7 +5,7 @@
 
 <div align="center">
 
-## Created by Lucas Dahl, Jane Kennerly, and Luke McAlphine.
+## Created by Lucas Dahl, Jane Kennerly, and Luke McAlpine.
 </div>
 
 Lost in a dungeon in a mysterious land, the exit will only open to this dangerous dungeon once the pillars of Abstraction, Encapsulation, Inheritance, and Polymorphism are found. Can you find all four pillars of Object Oriented?
