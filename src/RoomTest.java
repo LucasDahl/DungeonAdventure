@@ -34,25 +34,29 @@ class RoomTest {
     @Test
     @DisplayName("Test the default entrance setting")
     void testGetEntrance() {
-        assertFalse(room.getEntrance(), "a default room should NOT be an entrance");
+        assertFalse(room.getEntrance(),
+                "a default room should NOT be an entrance");
     }
 
     @Test
     void testSetEntrance1() {
         room.setEntrance(true);
-        assertTrue(room.getEntrance(), "entrance was not set to \"true\" as expected");
+        assertTrue(room.getEntrance(),
+                "entrance was not set to \"true\" as expected");
     }
 
     @Test
     void testSetEntrance2() {
         room.setEntrance(true);
         room.setEntrance(false);
-        assertFalse(room.getEntrance(), "entrance was not set to \"false\" as expected");
+        assertFalse(room.getEntrance(),
+                "entrance was not set to \"false\" as expected");
     }
 
     @Test
     void testGetExit1() {
-        assertFalse(room.getExit(), "a default room should NOT be an exit");
+        assertFalse(room.getExit(),
+                "a default room should NOT be an exit");
     }
 
     @Test
@@ -76,42 +80,52 @@ class RoomTest {
     @Test
     void testGetPillar() {
         room.emptyRoom();
-        assertEquals("", room.getPillar(), "Expected \"\", got: " + room.getPillar());
+        assertEquals("", room.getPillar(),
+                "Expected \"\", got: " + room.getPillar());
     }
 
     @Test
     void testGetSetPillar1() {
         room.setPillar("A");
-        assertEquals("A", room.getPillar(), "Expected \"A\", got: " + room.getPillar());
+        assertEquals("A", room.getPillar(),
+                "Expected \"A\", got: " + room.getPillar());
     }
 
     @Test
     void testGetSetPillar2() {
         room.setPillar("E");
-        assertEquals("E", room.getPillar(), "Expected \"E\", got: " + room.getPillar());
+        assertEquals("E", room.getPillar(),
+                "Expected \"E\", got: " + room.getPillar());
     }
     @Test
     void testGetSetPillar3() {
         room.setPillar("I");
-        assertEquals("I", room.getPillar(), "Expected \"I\", got: " + room.getPillar());
+        assertEquals("I", room.getPillar(),
+                "Expected \"I\", got: " + room.getPillar());
     }
     @Test
     void testGetSetPillar4() {
         room.setPillar("P");
-        assertEquals("P", room.getPillar(), "Expected \"P\", got: " + room.getPillar());
+        assertEquals("P", room.getPillar(),
+                "Expected \"P\", got: " + room.getPillar());
     }
     @Test
     void testSetPillar() {
         room.setPillar("A");
-        assertEquals("A", room.getPillar(), "Expected \"A\", got: " + room.getPillar());
+        assertEquals("A", room.getPillar(),
+                "Expected \"A\", got: " + room.getPillar());
         room.setPillar("");
-        assertEquals("", room.getPillar(), "Expected \"\", got: " + room.getPillar());
+        assertEquals("", room.getPillar(),
+                "Expected \"\", got: " + room.getPillar());
         room.setPillar("P");
-        assertEquals("P", room.getPillar(), "Expected \"P\", got: " + room.getPillar());
+        assertEquals("P", room.getPillar(),
+                "Expected \"P\", got: " + room.getPillar());
         room.setPillar("I");
-        assertEquals("I", room.getPillar(), "Expected \"I\", got: " + room.getPillar());
+        assertEquals("I", room.getPillar(),
+                "Expected \"I\", got: " + room.getPillar());
         room.setPillar("E");
-        assertEquals("E", room.getPillar(), "Expected \"E\", got: " + room.getPillar());
+        assertEquals("E", room.getPillar(),
+                "Expected \"E\", got: " + room.getPillar());
     }
 
     @Test
