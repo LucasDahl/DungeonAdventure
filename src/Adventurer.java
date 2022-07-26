@@ -36,16 +36,35 @@ public class Adventurer {
     /**
      * This method will heal the player if they
      * have any health potions.
+     *
+     * @return a message to let the player know if they healed or not
      */
-    public String heal() {
+    public String useHealPotion() {
 
         // If the player has at least one healing potion
         if(myNumberOfHealingPotions > 0) {
             myCharacter.setHealth(myCharacter.getHealth() + 20);
+            myNumberOfHealingPotions--;
             return "Healed 20 health";
         } else {
             return "Not enough healing potions";
         }
+    }
+
+    /**
+     *  This method will use a vision potion and return
+     *  true if the player has one, and false if they do not.
+     *
+     * @return weather a healing potion is used
+     */
+    public boolean useVisionPotion() {
+
+        if(myNumberOfVisionPotions > 0) {
+            myNumberOfVisionPotions--;
+            return true;
+        }
+
+        return false;
     }
 
 
