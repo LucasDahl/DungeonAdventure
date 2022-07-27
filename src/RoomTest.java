@@ -188,14 +188,17 @@ class RoomTest {
 
     @Test
     void testGetMyDoorsNESW1() {
-        int[] doors = {1, 1, 1, 1}; // array of NESW doors all open
+        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.OPEN,
+                DoorStatus.OPEN, DoorStatus.OPEN}; // array of NESW doors all open
         assertEquals(Arrays.toString(doors), Arrays.toString(room.getMyDoorsNESW()),
                 "Expected: " + Arrays.toString(room.getMyDoorsNESW()));
     }
 
     @Test
     void testSetMyDoorsNESW1() {
-        int[] doors = {1,0,0,1};
+        //int[] doors = {1,0,0,1};
+        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.CLOSED,
+                DoorStatus.CLOSED, DoorStatus.OPEN};
         room.setMyDoorsNESW(doors);
         assertEquals(doors, room.getMyDoorsNESW(),
                 "Expected: " + Arrays.toString(room.getMyDoorsNESW()));
@@ -203,7 +206,8 @@ class RoomTest {
 
     @Test
     void testSetMyDoorsNESW2() {
-        int[] doors = {0,0,0,0};
+        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.CLOSED,
+                DoorStatus.CLOSED, DoorStatus.OPEN};
         room.setMyDoorsNESW(doors);
         assertEquals(doors, room.getMyDoorsNESW(),
                 "Expected: " + Arrays.toString(room.getMyDoorsNESW()));
@@ -211,14 +215,16 @@ class RoomTest {
 
     @Test
     void testSetMyDoorsNESW3() {
-        int[] doors = {0,1,0,1};
+        DoorStatus[] doors = {DoorStatus.CLOSED, DoorStatus.OPEN,
+                DoorStatus.CLOSED, DoorStatus.OPEN};
         room.setMyDoorsNESW(doors);
         assertEquals(doors, room.getMyDoorsNESW(),
                 "Expected: " + Arrays.toString(room.getMyDoorsNESW()));
     }
     @Test
     void testToString_Empty_Room() {
-        int[] doors = {1,1,1,1}; // open doors
+        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.OPEN,
+                DoorStatus.OPEN, DoorStatus.OPEN};
         room.setMyDoorsNESW(doors);
         room.emptyRoom();
         assertEquals("*-*\n| |\n*-*", room.toString());
@@ -226,21 +232,24 @@ class RoomTest {
 
     @Test
     void testToString_Entrance() {
-        int[] doors = {1,1,1,1}; // open doors
+        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.OPEN,
+                DoorStatus.OPEN, DoorStatus.OPEN};
         room.setMyDoorsNESW(doors);
         room.setEntrance(true);
         assertEquals("*-*\n|i|\n*-*", room.toString());
     }
     @Test
     void testToString_Exit() {
-        int[] doors = {1,1,1,1}; // open doors
+        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.OPEN,
+                DoorStatus.OPEN, DoorStatus.OPEN};
         room.setMyDoorsNESW(doors);
         room.setExit(true);
         assertEquals("*-*\n|O|\n*-*", room.toString());
     }
     @Test
     void testToString_PillarA() {
-        int[] doors = {1,1,1,1}; // open doors
+        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.OPEN,
+                DoorStatus.OPEN, DoorStatus.OPEN};
         room.setMyDoorsNESW(doors);
         room.emptyRoom();
         room.setPillar("A");
@@ -250,7 +259,9 @@ class RoomTest {
 
     @Test
     void testToString_PillarP() {
-        int[] doors = {1,1,1,1}; // open doors
+        //int[] doors = {1,1,1,1}; // open doors
+        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.OPEN,
+                DoorStatus.OPEN, DoorStatus.OPEN};
         room.setMyDoorsNESW(doors);
         room.emptyRoom();
         room.setPillar("P");
@@ -259,7 +270,8 @@ class RoomTest {
 
     @Test
     void testToString_PillarI() {
-        int[] doors = {1,1,1,1}; // open doors
+        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.OPEN,
+                DoorStatus.OPEN, DoorStatus.OPEN};
         room.setMyDoorsNESW(doors);
         room.emptyRoom();
         room.setPillar("I");
@@ -268,7 +280,8 @@ class RoomTest {
 
     @Test
     void testToString_PillarE() {
-        int[] doors = {1,1,1,1}; // open doors
+        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.OPEN,
+                DoorStatus.OPEN, DoorStatus.OPEN};
         room.setMyDoorsNESW(doors);
         room.emptyRoom();
         room.setPillar("E");
@@ -278,7 +291,8 @@ class RoomTest {
 
     @Test
     void testToString_Pit() {
-        int[] doors = {1,1,1,1}; // open doors
+        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.OPEN,
+                DoorStatus.OPEN, DoorStatus.OPEN};
         room.setMyDoorsNESW(doors);
         room.emptyRoom();
         room.setPit(true);
@@ -287,7 +301,8 @@ class RoomTest {
     @Test
     void testToString_HealingPotion() {
         room.emptyRoom();
-        int[] doors = {1,1,1,1}; // open doors
+        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.OPEN,
+                DoorStatus.OPEN, DoorStatus.OPEN};
         room.setMyDoorsNESW(doors);
         room.setHealingPotion(true);
         assertEquals("*-*\n|H|\n*-*", room.toString());
@@ -295,7 +310,8 @@ class RoomTest {
     @Test
     void testToString_VisionPotion() {
         room.emptyRoom();
-        int[] doors = {1,1,1,1}; // open doors
+        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.OPEN,
+                DoorStatus.OPEN, DoorStatus.OPEN};  // open doors
         room.setMyDoorsNESW(doors);
         room.setVisionPotion(true);
         assertEquals("*-*\n|V|\n*-*", room.toString());
@@ -303,7 +319,8 @@ class RoomTest {
     @Test
     void testToString_ClosedDoors() {
         room.emptyRoom();
-        int[] doors = {0,0,0,0}; // open doors
+        DoorStatus[] doors = {DoorStatus.CLOSED,DoorStatus.CLOSED,
+                DoorStatus.CLOSED,DoorStatus.CLOSED}; // closed doors
         room.setMyDoorsNESW(doors);
         assertEquals("***\n* *\n***", room.toString());
     }

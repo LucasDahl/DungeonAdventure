@@ -9,21 +9,26 @@ import java.util.Objects;
 import java.util.Random;
 import java.io.Serializable;
 
+enum DoorStatus {
+    OPEN, CLOSED
+}
+
 /**
  * This class contains all fields and methods pertaining to a Room as part
  * of the Dungeon environment for the associated Dungeon Adventure game.
  *
  * @author Jane Kennerly janekennerly@gmail.com
- * @version 20 July 2022
+ * @version 26 July 2022
  */
 public class Room implements Serializable {
+
 
     private String myPillarLetter;
     private boolean myVisionPotion;
     private boolean myHealingPotion;
     private boolean myPit;
     private Monster myMonster1;
-    private int[] myDoorsNESW;
+    private DoorStatus[] myDoorsNESW;
     private boolean myEntrance;
     private boolean myExit;
     private int myItemCount;
@@ -35,7 +40,8 @@ public class Room implements Serializable {
         myPillarLetter = "";
         myItemCount = 0;    // counts: pits, potions, pillars,
                             // not counted: entrance, exit
-        myDoorsNESW = new int[] {1, 1, 1, 1}; // open door = 1, closed door = 0
+        myDoorsNESW = new DoorStatus[] {DoorStatus.OPEN, DoorStatus.OPEN,
+                DoorStatus.OPEN, DoorStatus.OPEN};
         myEntrance = false;
         myExit = false;
         populateRoom();
@@ -154,18 +160,19 @@ public class Room implements Serializable {
     }
 
     /**
-     * Get doors state. 1 = open, 0 = closed
+     * Get state of all doors (OPEN or CLOSED)
+     * in North, East, South, West order
      * @return an int array of the doors in NESW order
      */
-    int[] getMyDoorsNESW() {
+     DoorStatus[] getMyDoorsNESW() {
         return myDoorsNESW;
     }
 
     /**
-     * Set doors state. 1 = open, 0 = closed
+     * Set doors state. Pass in DoorStatus.OPEN, or DoorStatus.CLOSED
      * @param theDoors the new state of the doors in NESW order
      */
-    void setMyDoorsNESW(final int[] theDoors) {
+    void setMyDoorsNESW(final DoorStatus[] theDoors) {
         myDoorsNESW = theDoors;
     }
 
@@ -264,23 +271,23 @@ public class Room implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if (getMyDoorsNESW()[0] == 1) {
+        if (getMyDoorsNESW()[0] == DoorStatus.OPEN) {
             sb.append("*-*\n");
         } else {
             sb.append("***\n");
         }
-        if (getMyDoorsNESW()[3] == 1) {
+        if (getMyDoorsNESW()[3] == DoorStatus.OPEN) {
             sb.append("|");
         } else {
             sb.append("*");
         }
         sb.append(getMiddle());
-        if (getMyDoorsNESW()[1] == 1) {
+        if (getMyDoorsNESW()[1] == DoorStatus.OPEN) {
             sb.append("|\n");
         } else {
             sb.append("*\n");
         }
-        if (getMyDoorsNESW()[2] == 1) {
+        if (getMyDoorsNESW()[2] == DoorStatus.OPEN) {
             sb.append("*-*");
         } else {
             sb.append("***");
