@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * of the Dungeon environment for the associated Dungeon Adventure game.
  *
  * @author Jane Kennerly janekennerly@gmail.com
- * @version 24 July 2022
+ * @version 26 July 2022
  */
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -156,8 +156,6 @@ class RoomTest {
     void testGetVisionPotion2() {
         room.setVisionPotion(true);
         assertTrue(room.getVisionPotion(), "Expected vision potion true");
-
-
     }
     @Test
     void testSetVisionPotion() {
@@ -187,70 +185,27 @@ class RoomTest {
     }
 
     @Test
-    void testGetMyDoorsNESW1() {
-        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.OPEN,
-                DoorStatus.OPEN, DoorStatus.OPEN}; // array of NESW doors all open
-        assertEquals(Arrays.toString(doors), Arrays.toString(room.getMyDoorsNESW()),
-                "Expected: " + Arrays.toString(room.getMyDoorsNESW()));
-    }
-
-    @Test
-    void testSetMyDoorsNESW1() {
-        //int[] doors = {1,0,0,1};
-        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.CLOSED,
-                DoorStatus.CLOSED, DoorStatus.OPEN};
-        room.setMyDoorsNESW(doors);
-        assertEquals(doors, room.getMyDoorsNESW(),
-                "Expected: " + Arrays.toString(room.getMyDoorsNESW()));
-    }
-
-    @Test
-    void testSetMyDoorsNESW2() {
-        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.CLOSED,
-                DoorStatus.CLOSED, DoorStatus.OPEN};
-        room.setMyDoorsNESW(doors);
-        assertEquals(doors, room.getMyDoorsNESW(),
-                "Expected: " + Arrays.toString(room.getMyDoorsNESW()));
-    }
-
-    @Test
-    void testSetMyDoorsNESW3() {
-        DoorStatus[] doors = {DoorStatus.CLOSED, DoorStatus.OPEN,
-                DoorStatus.CLOSED, DoorStatus.OPEN};
-        room.setMyDoorsNESW(doors);
-        assertEquals(doors, room.getMyDoorsNESW(),
-                "Expected: " + Arrays.toString(room.getMyDoorsNESW()));
-    }
-    @Test
     void testToString_Empty_Room() {
-        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.OPEN,
-                DoorStatus.OPEN, DoorStatus.OPEN};
-        room.setMyDoorsNESW(doors);
+        room.openAllDoors();
         room.emptyRoom();
         assertEquals("*-*\n| |\n*-*", room.toString());
     }
 
     @Test
     void testToString_Entrance() {
-        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.OPEN,
-                DoorStatus.OPEN, DoorStatus.OPEN};
-        room.setMyDoorsNESW(doors);
+        room.openAllDoors();
         room.setEntrance(true);
         assertEquals("*-*\n|i|\n*-*", room.toString());
     }
     @Test
     void testToString_Exit() {
-        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.OPEN,
-                DoorStatus.OPEN, DoorStatus.OPEN};
-        room.setMyDoorsNESW(doors);
+        room.openAllDoors();
         room.setExit(true);
         assertEquals("*-*\n|O|\n*-*", room.toString());
     }
     @Test
     void testToString_PillarA() {
-        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.OPEN,
-                DoorStatus.OPEN, DoorStatus.OPEN};
-        room.setMyDoorsNESW(doors);
+        room.openAllDoors();
         room.emptyRoom();
         room.setPillar("A");
         assertEquals("*-*\n|A|\n*-*", room.toString());
@@ -259,10 +214,7 @@ class RoomTest {
 
     @Test
     void testToString_PillarP() {
-        //int[] doors = {1,1,1,1}; // open doors
-        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.OPEN,
-                DoorStatus.OPEN, DoorStatus.OPEN};
-        room.setMyDoorsNESW(doors);
+        room.openAllDoors();
         room.emptyRoom();
         room.setPillar("P");
         assertEquals("*-*\n|P|\n*-*", room.toString());
@@ -270,9 +222,7 @@ class RoomTest {
 
     @Test
     void testToString_PillarI() {
-        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.OPEN,
-                DoorStatus.OPEN, DoorStatus.OPEN};
-        room.setMyDoorsNESW(doors);
+        room.openAllDoors();
         room.emptyRoom();
         room.setPillar("I");
         assertEquals("*-*\n|I|\n*-*", room.toString());
@@ -280,48 +230,37 @@ class RoomTest {
 
     @Test
     void testToString_PillarE() {
-        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.OPEN,
-                DoorStatus.OPEN, DoorStatus.OPEN};
-        room.setMyDoorsNESW(doors);
+        room.openAllDoors();
         room.emptyRoom();
         room.setPillar("E");
         assertEquals("*-*\n|E|\n*-*", room.toString());
     }
 
-
     @Test
     void testToString_Pit() {
-        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.OPEN,
-                DoorStatus.OPEN, DoorStatus.OPEN};
-        room.setMyDoorsNESW(doors);
+        room.openAllDoors();
         room.emptyRoom();
         room.setPit(true);
         assertEquals("*-*\n|X|\n*-*", room.toString());
     }
     @Test
     void testToString_HealingPotion() {
+        room.openAllDoors();
         room.emptyRoom();
-        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.OPEN,
-                DoorStatus.OPEN, DoorStatus.OPEN};
-        room.setMyDoorsNESW(doors);
         room.setHealingPotion(true);
         assertEquals("*-*\n|H|\n*-*", room.toString());
     }
     @Test
     void testToString_VisionPotion() {
+        room.openAllDoors();
         room.emptyRoom();
-        DoorStatus[] doors = {DoorStatus.OPEN, DoorStatus.OPEN,
-                DoorStatus.OPEN, DoorStatus.OPEN};  // open doors
-        room.setMyDoorsNESW(doors);
         room.setVisionPotion(true);
         assertEquals("*-*\n|V|\n*-*", room.toString());
     }
     @Test
     void testToString_ClosedDoors() {
         room.emptyRoom();
-        DoorStatus[] doors = {DoorStatus.CLOSED,DoorStatus.CLOSED,
-                DoorStatus.CLOSED,DoorStatus.CLOSED}; // closed doors
-        room.setMyDoorsNESW(doors);
+        room.closeAllDoors();
         assertEquals("***\n* *\n***", room.toString());
     }
 }
