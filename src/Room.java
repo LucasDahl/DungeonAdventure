@@ -9,21 +9,30 @@ import java.util.Objects;
 import java.util.Random;
 import java.io.Serializable;
 
+enum DoorStatus {
+    OPEN, CLOSED
+}
+
 /**
  * This class contains all fields and methods pertaining to a Room as part
  * of the Dungeon environment for the associated Dungeon Adventure game.
  *
  * @author Jane Kennerly janekennerly@gmail.com
- * @version 20 July 2022
+ * @version 26 July 2022
  */
 public class Room implements Serializable {
+
 
     private String myPillarLetter;
     private boolean myVisionPotion;
     private boolean myHealingPotion;
     private boolean myPit;
     private Monster myMonster1;
-    private int[] myDoorsNESW;
+    private DoorStatus myNorthDoor;
+    private DoorStatus myEastDoor;
+    private DoorStatus mySouthDoor;
+    private DoorStatus myWestDoor;
+
     private boolean myEntrance;
     private boolean myExit;
     private int myItemCount;
@@ -35,7 +44,10 @@ public class Room implements Serializable {
         myPillarLetter = "";
         myItemCount = 0;    // counts: pits, potions, pillars,
                             // not counted: entrance, exit
-        myDoorsNESW = new int[] {1, 1, 1, 1}; // open door = 1, closed door = 0
+        myNorthDoor = DoorStatus.OPEN;
+        myEastDoor = DoorStatus.OPEN;
+        mySouthDoor = DoorStatus.OPEN;
+        myWestDoor = DoorStatus.OPEN;
         myEntrance = false;
         myExit = false;
         populateRoom();
@@ -153,20 +165,59 @@ public class Room implements Serializable {
         this.myHealingPotion = theHealingPotion;
     }
 
-    /**
-     * Get doors state. 1 = open, 0 = closed
-     * @return an int array of the doors in NESW order
-     */
-    int[] getMyDoorsNESW() {
-        return myDoorsNESW;
+//    /**
+//     * Get state of all doors (OPEN or CLOSED)
+//     * in North, East, South, West order
+//     * @return a DoorStatus array of the doors in NESW order
+//     */
+//     DoorStatus[] getMyDoorsNESW() {
+//        return myDoorsNESW;
+//    }
+
+    DoorStatus getNorthDoor() {
+        return myNorthDoor;
     }
 
-    /**
-     * Set doors state. 1 = open, 0 = closed
-     * @param theDoors the new state of the doors in NESW order
-     */
-    void setMyDoorsNESW(final int[] theDoors) {
-        myDoorsNESW = theDoors;
+    void setNorthDoor(DoorStatus theNorthDoor) {
+        myNorthDoor = theNorthDoor;
+    }
+
+    DoorStatus getEastDoor() {
+        return myEastDoor;
+    }
+
+    void setEastDoor(DoorStatus theEastDoor) {
+        myEastDoor = theEastDoor;
+    }
+
+    DoorStatus getSouthDoor() {
+        return mySouthDoor;
+    }
+
+    void setSouthDoor(DoorStatus theSouthDoor) {
+        mySouthDoor = theSouthDoor;
+    }
+
+    DoorStatus getWestDoor() {
+        return myWestDoor;
+    }
+
+    void setWestDoor(DoorStatus theWestDoor) {
+        myWestDoor = theWestDoor;
+    }
+
+    void openAllDoors() {
+        myNorthDoor = DoorStatus.OPEN;
+        myWestDoor = DoorStatus.OPEN;
+        myEastDoor = DoorStatus.OPEN;
+        mySouthDoor = DoorStatus.OPEN;
+    }
+
+    void closeAllDoors() {
+        myNorthDoor = DoorStatus.CLOSED;
+        myWestDoor = DoorStatus.CLOSED;
+        myEastDoor = DoorStatus.CLOSED;
+        mySouthDoor = DoorStatus.CLOSED;
     }
 
     /**
@@ -236,7 +287,7 @@ public class Room implements Serializable {
      *
      * @return Gets the letter that best represents the contents of the room
      */
-    private String getMiddle() {
+    String getMiddle() {
         String middle = "";
         if (getEntrance()) {
             middle = "i";
@@ -264,23 +315,23 @@ public class Room implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if (getMyDoorsNESW()[0] == 1) {
+        if (getNorthDoor() == DoorStatus.OPEN) {
             sb.append("*-*\n");
         } else {
             sb.append("***\n");
         }
-        if (getMyDoorsNESW()[3] == 1) {
+        if (getWestDoor() == DoorStatus.OPEN) {
             sb.append("|");
         } else {
             sb.append("*");
         }
         sb.append(getMiddle());
-        if (getMyDoorsNESW()[1] == 1) {
+        if (getEastDoor() == DoorStatus.OPEN) {
             sb.append("|\n");
         } else {
             sb.append("*\n");
         }
-        if (getMyDoorsNESW()[2] == 1) {
+        if (getSouthDoor() == DoorStatus.OPEN) {
             sb.append("*-*");
         } else {
             sb.append("***");
