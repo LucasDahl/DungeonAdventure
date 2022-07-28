@@ -22,6 +22,8 @@ public class Priestess extends Hero {
 
     // **************************** Methods ***************************
 
+
+
     /**
      *  This method will heal the Priestess
      *  with a random value from 1 - 100;
@@ -60,5 +62,10 @@ public class Priestess extends Hero {
     @Override
     public void attackBehavior(final DungeonCharacter theOther) {
         super.attackBehavior(theOther);
+    }
+
+    @Override
+    public boolean isDead() {
+        return super.isDead();
     }
 }

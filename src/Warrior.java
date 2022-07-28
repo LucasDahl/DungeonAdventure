@@ -92,4 +92,9 @@ public class Warrior extends Hero {
     public void attackBehavior(final DungeonCharacter theOther) {
         super.attackBehavior(theOther);
     }
+
+    @Override
+    public boolean isDead() {
+        return super.isDead();
+    }
 }

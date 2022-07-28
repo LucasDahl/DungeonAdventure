@@ -40,6 +40,20 @@ public abstract class DungeonCharacter {
 
     // **************************** Methods ***************************
 
+    /**
+     *  This method will indicate if the
+     *  character is dead or not.
+     *
+     * @return The status of the characters life.
+     */
+    public boolean isDead() {
+        if(myHealthPoints <= 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     //========
     // Getters
     //========
