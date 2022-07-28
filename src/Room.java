@@ -165,15 +165,6 @@ public class Room implements Serializable {
         this.myHealingPotion = theHealingPotion;
     }
 
-//    /**
-//     * Get state of all doors (OPEN or CLOSED)
-//     * in North, East, South, West order
-//     * @return a DoorStatus array of the doors in NESW order
-//     */
-//     DoorStatus[] getMyDoorsNESW() {
-//        return myDoorsNESW;
-//    }
-
     DoorStatus getNorthDoor() {
         return myNorthDoor;
     }
