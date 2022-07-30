@@ -9,6 +9,12 @@ public class Dungeon {
     private int myColumns;
     private int myRows;
 
+    private Room myPillarALocation, myPillarELocation, MyPillarILocation, myPillarPLocation, myCurrentRoom;
+
+
+    private int myEntranceXCoordinate, myEntranceYCoordinate, myExitXCoordinate, myExitYCoordinate;
+
+
     public Dungeon(final int theRows, final int theColumns) {
         myRows = theRows;
         myColumns = theColumns;
@@ -20,6 +26,7 @@ public class Dungeon {
         placeEntrance();
         placeExit();
         placePillars();
+        move(0, 1);
 
 
     }
@@ -45,6 +52,25 @@ public class Dungeon {
     private void move(final int theXCoordinate, final int theYCoordinate) {
         //todo just try to move from one room to another.
         // use Room toString() to possibly display each room for now.
+        myAdventurerLocationX = theXCoordinate;
+        myAdventurerLocationY = theYCoordinate;
+
+
+        //how can I move from the entrance to another room?
+
+        // need a field for the current room?
+
+        // the current room by default will always be the entrance
+
+        System.out.println("Current room:");
+        System.out.println(myCurrentRoom);
+
+        // to move from one room just update the coordinates of myCurrentRoom
+
+        myCurrentRoom = myMazeOfRooms[theXCoordinate][theYCoordinate];
+
+        System.out.println("The current room after moving:");
+        System.out.println(myCurrentRoom);
 
 
     }
@@ -63,8 +89,14 @@ public class Dungeon {
         boolean isExit = myMazeOfRooms[0][0].getExit();
         // if this room is not the exit then I want to set it to be the entrance
         if (!isExit) {
+            myEntranceXCoordinate = 0;
+            myEntranceYCoordinate = 0;
             myMazeOfRooms[0][0].emptyRoom();
             myMazeOfRooms[0][0].setEntrance(true);
+            //  myEntranceLocation =
+            myCurrentRoom = myMazeOfRooms[0][0];
+//            System.out.println("ENTRANCE");
+//            System.out.println(Arrays.deepToString(myEntranceLocation));
 
         }
 
@@ -82,12 +114,17 @@ public class Dungeon {
 
         //myMazeOfRooms[random.nextInt(myRows)][random.nextInt(myColumns)].getEntrance();
 
-        boolean isEntrance = myMazeOfRooms[0][0].getEntrance();
+        boolean isEntrance = myMazeOfRooms[0][1].getEntrance();
         System.out.println(isEntrance);
         // if this room is not the entrance then I want to set it to be the exit
         if (!isEntrance) {
-            myMazeOfRooms[0][0].emptyRoom();
-            myMazeOfRooms[0][0].setExit(true);
+            myExitXCoordinate = 0;
+            myEntranceYCoordinate = 1;
+            myMazeOfRooms[0][1].emptyRoom();
+            myMazeOfRooms[0][1].setExit(true);
+            // myExitLocation = myMazeOfRooms[0][1];
+            System.out.println("EXIT");
+            //System.out.println(myExitLocation);
 
 
         }
@@ -97,39 +134,91 @@ public class Dungeon {
 
     }
 
+    public int[] getEntrance() {
+        int[] coordinates = {myEntranceXCoordinate, myEntranceYCoordinate};
+        return coordinates;
+    }
+
+    public int[] getExit() {
+        int[] coordinates = {myExitXCoordinate, myExitYCoordinate};
+        return coordinates;
+    }
+
+    public int[] getAdventurerLocation() {
+        int[] coordinates = {myAdventurerLocationX, myAdventurerLocationY};
+        return coordinates;
+    }
+
     private void placePillars() {
 
-        //todo make sure all 4 pillars are placed in a dungeon (maze)
-        // ideas are have it where there is a count of how many pillars there are.
-        // while the count is less than 4 keep placing a new pillar.
-        // need to check if there is only 1 of each pillar. Don't want duplicates in the maze.
+        myMazeOfRooms[0][2].setPillar("A");
+        myMazeOfRooms[1][0].setPillar("E");
+        myMazeOfRooms[1][1].setPillar("I");
+        myMazeOfRooms[1][2].setPillar("P");
 
 
         // if this room where the pillar will be placed is not the entrance or exit
         // and this room does not have any other pillars
-        boolean isEntrance = myMazeOfRooms[1][1].getEntrance();
-        boolean isExit = myMazeOfRooms[1][1].getExit();
+//        boolean isEntrance_A = myMazeOfRooms[0][2].getEntrance();
+//        boolean isExit_A = myMazeOfRooms[0][2].getExit();
+//        String pillarLetter_A = myMazeOfRooms[0][2].getPillar();
+//
+//        boolean isEntrance_E = myMazeOfRooms[0][3].getEntrance();
+//        boolean isExit_E = myMazeOfRooms[0][3].getExit();
+//        String pillarLetter_E = myMazeOfRooms[0][3].getPillar();
+//
+//        boolean isEntrance_I = myMazeOfRooms[1][0].getEntrance();
+//        boolean isExit_I = myMazeOfRooms[1][0].getExit();
+//        String pillarLetter_I = myMazeOfRooms[1][0].getPillar();
+//
+//        boolean isEntrance_P = myMazeOfRooms[1][1].getEntrance();
+//        boolean isExit_P = myMazeOfRooms[1][1].getExit();
+//        String pillarLetter_P = myMazeOfRooms[1][1].getPillar();
+//
+//        String letterToPlace = getRandomPillarLetter();
+//
+//        int count = 0;
+//
+//        if (!isEntrance_A && !isExit_A && pillarLetter_A.equals("")) {
+////            myMazeOfRooms[1][1].setPillar(letterToPlace);
+//            if (letterToPlace.equals("A") && count < 1) {
+//                System.out.println("Place A");
+//                myMazeOfRooms[0][2].setPillar(letterToPlace);
+//                count += 1;
+//            }
+//        }
+//        if (!isEntrance_E && !isExit_E && pillarLetter_E.equals("")) {
+//            if (letterToPlace.equals("E")) {
+//                System.out.println("Place E");
+//                myMazeOfRooms[0][3].setPillar(letterToPlace);
+//            }
+//        }
+//
+//        if (!isEntrance_I && !isExit_I && pillarLetter_I.equals("")) {
+//            if (letterToPlace.equals("I")) {
+//                System.out.println("Place I");
+//                myMazeOfRooms[1][0].setPillar(letterToPlace);
+//            }
+//        }
+//
+//        if (!isEntrance_P && !isExit_P && pillarLetter_P.equals("")) {
+//            if (letterToPlace.equals("P")) {
+//                System.out.println("Place P");
+//                myMazeOfRooms[1][1].setPillar(letterToPlace);
+//            }
+//        }
+//
+//        System.out.println("Here");
+    }
 
-        String pillarLetter = myMazeOfRooms[1][1].getPillar();
-
-
+    private String getRandomPillarLetter() {
         String[] validLetters = {"A", "E", "I", "P"};
 
         Random random = new Random();
         int randomNumber = random.nextInt(validLetters.length);
         System.out.println(validLetters[randomNumber]);
 
-        String letterToPlace = validLetters[randomNumber];
-
-        if (!isEntrance && !isExit && pillarLetter.equals("")) {
-            myMazeOfRooms[1][1].setPillar(letterToPlace);
-        }
-
-
-        System.out.println("Here");
-        System.out.println(pillarLetter);
-
-
+        return validLetters[randomNumber];
     }
 
     public String toString() {
@@ -142,8 +231,10 @@ public class Dungeon {
         StringBuilder dungeonInformation = new StringBuilder();
 
 
+        System.out.println("MAZE LENGTH" + myMazeOfRooms.length);
+
         for (int row = 0; row < myMazeOfRooms.length; row++) {
-            for (int col = 0; col < myMazeOfRooms.length; col++) {
+            for (int col = 0; col < myMazeOfRooms[row].length; col++) {
                 String pillar = myMazeOfRooms[row][col].getPillar();
                 boolean entrance = myMazeOfRooms[row][col].getEntrance();
                 boolean exit = myMazeOfRooms[row][col].getExit();
@@ -172,9 +263,9 @@ public class Dungeon {
 
         // Room room = new Room();
         // System.out.println(room);
-        Dungeon dungeon = new Dungeon(4, 4);
-        System.out.println(dungeon.myMazeOfRooms[1][1]);
-        System.out.println(dungeon);
+        Dungeon dungeon = new Dungeon(2, 3);
+        //   System.out.println(dungeon.myMazeOfRooms[1][1]);
+        // System.out.println(dungeon);
         //System.out.println(dungeon);
     }
 
