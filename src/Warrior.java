@@ -19,6 +19,8 @@ public class Warrior extends Hero {
 
     /**
      *  This is the default constructor
+     *
+     * @param theName the name of the Hero
      */
     public Warrior(final String theName) {
         super(theName, 125, 4, 0.8, 35, 60, 0.4, 1);

@@ -14,6 +14,8 @@ public class Priestess extends Hero {
 
     /**
      *  This is the default constructor
+     *
+     * @param theName the name of the Hero
      */
     public Priestess(final String theName) {
         super(theName, 75, 5, 0.7, 25, 45, 0.3, 1);
