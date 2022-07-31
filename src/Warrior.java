@@ -97,4 +97,15 @@ public class Warrior extends Hero {
     public boolean isDead() {
         return super.isDead();
     }
+
+    /**
+     *  This method will return the special ability
+     *  to display in the character selection screen
+     *
+     * @return the special skill info
+     */
+    public static String specialSkill() {
+        return "Special Skill: Crushing Blow, Chance to Hit: 40%, Special Attack Damage: 75 - 150";
+    }
+
 }

@@ -83,4 +83,19 @@ public class Thief extends Hero {
     public boolean isDead() {
         return super.isDead();
     }
+
+    //===============
+    // Static Methods
+    //===============
+
+    /**
+     *  This method will return the special ability
+     *  to display in the character selection screen
+     *
+     * @return the special skill info
+     */
+    public static String specialSkill() {
+        return "Special Skill: Sneak Attack, Chance to Hit: 40% with a 20% chance of getting caught";
+    }
+
 }
