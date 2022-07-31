@@ -43,4 +43,9 @@ public abstract class Monster extends DungeonCharacter {
             }
         }
     }
+
+    @Override
+    public boolean isDead() {
+        return super.isDead();
+    }
 }
