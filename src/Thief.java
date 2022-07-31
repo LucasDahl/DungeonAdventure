@@ -20,7 +20,7 @@ public class Thief extends Hero {
      */
     public Thief(final String theName) {
         super(theName, 75, 6, 0.8, 20, 40, 0.4, 1);
-        MY_SPECIAL_SKILL = "Crushing Blow";
+        MY_SPECIAL_SKILL = "Sneak Attack";
         MY_SPECIAL_CHANCE = 0.4;
     }
 
