@@ -32,6 +32,9 @@ public abstract class Hero extends DungeonCharacter {
 
     // **************************** Methods ***************************
 
+
+
+
     //========
     // Getters
     //========
@@ -64,6 +67,10 @@ public abstract class Hero extends DungeonCharacter {
     // Override Methods
     //=================
 
+    @Override
+    public boolean isDead() {
+        return super.isDead();
+    }
 
     @Override
     protected double getAttackSpeed() {

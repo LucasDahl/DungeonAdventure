@@ -20,14 +20,17 @@ public class Adventurer {
     // ************************** Constructors ************************
 
 
-    public Adventurer(final String thePlayerName, final Hero theHero) {
+    /**
+     *  This is the default constructor for the adventure
+     *
+     * @param theHero
+     */
+    public Adventurer(final Hero theHero) {
 
         myNumberOfHealingPotions = 0;
         myNumberOfVisionPotions = 0;
         myListOfPillars = Collections.emptySet();
         myCharacter = theHero;
-        myCharacter.setName(thePlayerName);
-
     }
 
     // **************************** Methods ***************************
@@ -107,7 +110,7 @@ public class Adventurer {
      *  This method will return the pillars
      *  of OO that the player has collected.
      *
-     * @return All the pilalrs of OO the player has found
+     * @return All the pillars of OO the player has found
      */
     public String getListOfPillars() {
         return myListOfPillars.toString();
