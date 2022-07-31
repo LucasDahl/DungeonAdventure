@@ -22,7 +22,6 @@ enum DoorStatus {
  */
 public class Room implements Serializable {
 
-
     private String myPillarLetter;
     private boolean myVisionPotion;
     private boolean myHealingPotion;

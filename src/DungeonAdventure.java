@@ -8,8 +8,8 @@ import java.util.Scanner;
  * Package condition: Must be placed in the same package
  * as all component classes.
  */
-public class DungeonAdventure {
-    static Dungeon myDungeon;
+class DungeonAdventure {
+    static MockDungeon myDungeon;
     static Adventurer myAdventurer;
     final static int myDungeonRows = 2;
     final static int myDungeonColumns = 3;
@@ -54,14 +54,14 @@ public class DungeonAdventure {
         Thief thief = new Thief("Thief guy");
         Priestess priestess = new Priestess("Priestess lady");
         // Warrior Thief Priestess
-        System.out.println("Warrior can : " + warrior.getSpecialSkill());
-        System.out.println("Thief can: " + thief.getMY_SPECIAL_SKILL());
-        System.out.println("Priestess can : " + priestess.getMySpecialSkill());
+        System.out.println("Warrior's special skill is' : " + warrior.getSpecialSkill());
+        System.out.println("Thief's special skill is': " + thief.getMY_SPECIAL_SKILL());
+        System.out.println("Priestess's special skill is' : " + priestess.getMySpecialSkill());
     }
     public static void main(String[] args) {
-        myDungeon = new Dungeon(myDungeonRows,myDungeonColumns);
-        System.out.println("Entrance: " + Arrays.toString(myDungeon.getEntrance()));
-        System.out.println("Exit: " + Arrays.toString(myDungeon.getExit()));
+        myDungeon = new MockDungeon(myDungeonRows,myDungeonColumns);
+        //System.out.println("Entrance: " + Arrays.toString(myDungeon.getEntrance()));
+        //System.out.println("Exit: " + Arrays.toString(myDungeon.getExit()));
 
         intro();
         System.out.println("Showing dungeon: ");
