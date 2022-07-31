@@ -20,7 +20,7 @@ public class Thief extends Hero {
      */
     public Thief(final String theName) {
         super(theName, 75, 6, 0.8, 20, 40, 0.4, 1);
-        MY_SPECIAL_SKILL = "Crushing Blow";
+        MY_SPECIAL_SKILL = "Sneak Attack";
         MY_SPECIAL_CHANCE = 0.4;
     }
 
@@ -78,4 +78,24 @@ public class Thief extends Hero {
     public void attackBehavior(final DungeonCharacter theOther) {
         super.attackBehavior(theOther);
     }
+
+    @Override
+    public boolean isDead() {
+        return super.isDead();
+    }
+
+    //===============
+    // Static Methods
+    //===============
+
+    /**
+     *  This method will return the special ability
+     *  to display in the character selection screen
+     *
+     * @return the special skill info
+     */
+    public static String specialSkill() {
+        return "Special Skill: Sneak Attack, Chance to Hit: 40% with a 20% chance of getting caught";
+    }
+
 }
