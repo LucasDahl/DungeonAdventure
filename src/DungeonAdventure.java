@@ -33,16 +33,16 @@ class DungeonAdventure {
         String heroChoice = input.next();
         System.out.println("Hero choice is: " + heroChoice);
         if (heroChoice.equals("w")) {
-            myAdventurer = new Adventurer(playerName, new Warrior(playerName));
+            myAdventurer = new Adventurer(new Warrior(playerName));
             System.out.println("Good luck, Warrior " + playerName);
         } else if (heroChoice.equals("t")) {
-            myAdventurer = new Adventurer(playerName, new Thief(playerName));
+            myAdventurer = new Adventurer(new Thief(playerName));
             System.out.println("Good luck, Thief " + playerName);
         } else if (heroChoice.equals("p")) {
-            myAdventurer = new Adventurer(playerName, new Priestess(playerName));
+            myAdventurer = new Adventurer(new Priestess(playerName));
             System.out.println("Good luck, Priestess " + playerName);
         } else {
-            myAdventurer = new Adventurer(playerName, new Warrior(playerName));
+            myAdventurer = new Adventurer(new Warrior(playerName));
             System.out.println("Good luck, Warrior " + playerName);
         }
 
@@ -54,9 +54,9 @@ class DungeonAdventure {
         Thief thief = new Thief("Thief guy");
         Priestess priestess = new Priestess("Priestess lady");
         // Warrior Thief Priestess
-        System.out.println("Warrior's special skill is' : " + warrior.getSpecialSkill());
-        System.out.println("Thief's special skill is': " + thief.getMY_SPECIAL_SKILL());
-        System.out.println("Priestess's special skill is' : " + priestess.getMySpecialSkill());
+        System.out.println("Warrior's special skill is: " + warrior.getSpecialSkill());
+        System.out.println("Thief's special skill is: " + thief.getMY_SPECIAL_SKILL());
+        System.out.println("Priestess's special skill is: " + priestess.getMySpecialSkill());
     }
     public static void main(String[] args) {
         myDungeon = new MockDungeon(myDungeonRows,myDungeonColumns);
@@ -124,7 +124,12 @@ class MockDungeon {
         // what class is doing it?
     }
 
-
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Print the dungeon please");
+        return sb.toString();
+    }
 }
 
 
