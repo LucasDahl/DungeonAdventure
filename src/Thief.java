@@ -17,6 +17,8 @@ public class Thief extends Hero {
 
     /**
      *  This is the default constructor
+     *
+     * @param theName the name of the Hero
      */
     public Thief(final String theName) {
         super(theName, 75, 6, 0.8, 20, 40, 0.4, 1);
