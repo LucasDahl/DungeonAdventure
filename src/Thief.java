@@ -61,7 +61,7 @@ public class Thief extends Hero {
      *
      * @return the name of the special skill
      */
-    public String getMY_SPECIAL_SKILL() {
+    public String getSpecialSkill() {
         return MY_SPECIAL_SKILL;
     }
 
