@@ -52,7 +52,7 @@ public class Priestess extends Hero {
      *
      * @return the name of the special skill
      */
-    public String getMySpecialSkill() {
+    public String getSpecialSkill() {
         return MY_SPECIAL_SKILL;
     }
 
