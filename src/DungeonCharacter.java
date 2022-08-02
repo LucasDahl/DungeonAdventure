@@ -59,7 +59,7 @@ public abstract class DungeonCharacter {
     //========
 
     // Get the name
-    private String getName() {
+    protected String getName() {
         return MY_NAME;
     }
 
