@@ -5,7 +5,7 @@
 
 <div align="center">
 
-## Created by Lucas Dahl, Jane Kennerly, and Luke McAlphine.
+## Created by Lucas Dahl, Jane Kennerly, and Luke McAlpine.
 </div>
 
 Lost in a dungeon in a mysterious land, the exit will only open to this dangerous dungeon once the pillars of Abstraction, Encapsulation, Inheritance, and Polymorphism are found. Can you find all four pillars of Object Oriented?
@@ -20,6 +20,14 @@ Lost in a dungeon in a mysterious land, the exit will only open to this dangerou
 
 ## Controls
 </div>
+
+<div align="center">
+
+## Adventurer
+</div>
+
+Play as either a Warrior with the ability to deal a crushing blow, a Priestess who can heal without potions, or a Thief that has a chance of a surprise attack.
+Chose the right Hero for the job, as the way is plagued with dangerous enemies and traps, and it may just take all you have to make it to the end.
 
 <div align="center">
 
@@ -104,14 +112,14 @@ Maximum heal points: 50 <br>
 ## Rooms
 </div>
 Could possibly contain one of each of the following: <br>
-- Pillar Letter: <br>
-    - A: Abstraction <br>
-    - E: Encapsulation <br>
-    - I: Inheritance <br>
-    - P: Polymorphism <br>
-- Pit: Causes damage to player <br>
-- Vision Potion: Shows the player the adjacent rooms <br>
-- Healing Potion: Can be used to recover some health points <br>
-- Monster <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pillar Letter: <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A: Abstraction <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;E: Encapsulation <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I: Inheritance <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;P: Polymorphism <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pit: Causes damage to player <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vision Potion: Shows the player the adjacent rooms <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Healing Potion: Can be used to recover some health points <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Monster <br>
 
-Each room has at one least door. <br>
+All rooms have 4 doors. By default, they are open. <br>
