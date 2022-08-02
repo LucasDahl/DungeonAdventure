@@ -60,7 +60,7 @@ public abstract class DungeonCharacter {
 
     // Get the name
     protected String getName() {
-        return MY_NAME;
+        return myName;
     }
 
     // Get the health
@@ -98,7 +98,8 @@ public abstract class DungeonCharacter {
 
     // Get a random double within a range
     protected double getMyRandomRange(final double theMin, final double theMax) {
-        return theMin + (theMax - theMin) * myRandom.nextDouble();
+        double num = theMin + (theMax - theMin) * myRandom.nextDouble();
+        return num;
     }
 
     //========
