@@ -11,7 +11,7 @@ public abstract class DungeonCharacter {
 
     // **************************** Fields ****************************
 
-    private final String MY_NAME;
+    private String myName;
     private double myHealthPoints;
     private final double MY_DAMAGE_MIN;
     private final double MY_DAMAGE_MAX;
@@ -28,7 +28,7 @@ public abstract class DungeonCharacter {
      *  will initialize the fields with passed in values.
      */
     protected DungeonCharacter(final String the_name, final double the_health, final double the_damage_range_min, final double the_damage_range_max, final double the_attack_speed, final double the_hit_chance, final int theNumberOfAttacks) {
-        MY_NAME = the_name;
+        myName = the_name;
         myHealthPoints = the_health;
         MY_DAMAGE_MIN = the_damage_range_min;
         MY_DAMAGE_MAX = the_damage_range_max;
@@ -114,10 +114,15 @@ public abstract class DungeonCharacter {
         myHealthPoints = the_health;
     }
 
+    // Sets the name
+    protected void setName(final String theName) {
+        myName = theName;
+    }
+
 
     @Override
     public String toString() {
-        return "Name: " + MY_NAME + " Health: " + myHealthPoints + " Max Damage range: " + MY_DAMAGE_MAX + " Min damage range: " + " Attack speed: " + MY_ATTACK_SPEED + " Chance to hit: " + MY_CHANCE_TO_HIT + " Number of attacks: " + myNumberOfAttacks;
+        return "Name: " + myName + " Health: " + myHealthPoints + " Max Damage range: " + MY_DAMAGE_MAX + " Min damage range: " + MY_DAMAGE_MIN + " Attack speed: " + MY_ATTACK_SPEED + " Chance to hit: " + MY_CHANCE_TO_HIT + " Number of attacks: " + myNumberOfAttacks;
     }
 
 
