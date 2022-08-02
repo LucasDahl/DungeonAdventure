@@ -48,11 +48,20 @@ public class Thief extends Hero {
     //========
 
     /**
+     *  Returns the Hero's name.
+     *
+     * @return the name of the Hero.
+     */
+    public String getName() {
+        return super.getName();
+    }
+
+    /**
      *  This method will return the special skill.
      *
      * @return the name of the special skill
      */
-    public String getMY_SPECIAL_SKILL() {
+    public String getSpecialSkill() {
         return MY_SPECIAL_SKILL;
     }
 

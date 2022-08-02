@@ -59,8 +59,8 @@ public abstract class DungeonCharacter {
     //========
 
     // Get the name
-    private String getName() {
-        return myName;
+    protected String getName() {
+        return MY_NAME;
     }
 
     // Get the health
