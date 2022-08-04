@@ -27,31 +27,29 @@ public abstract class DungeonCharacter {
      *  This is the default constructor that
      *  will initialize the fields with passed in values.
      */
-    protected DungeonCharacter(final String the_name, final double the_health, final double the_damage_range_min, final double the_damage_range_max, final double the_attack_speed, final double the_hit_chance, final int theNumberOfAttacks) {
-        myName = the_name;
-        myHealthPoints = the_health;
-        MY_DAMAGE_MIN = the_damage_range_min;
-        MY_DAMAGE_MAX = the_damage_range_max;
-        MY_ATTACK_SPEED = the_attack_speed;
-        MY_CHANCE_TO_HIT = the_hit_chance;
+    protected DungeonCharacter(final String theName, final double theHealth, final double theDamageRangeMin, final double theDamageRangeMax, final double theAttackSpeed, final double theHitChance, final int theNumberOfAttacks) {
+        myName = theName;
+        myHealthPoints = theHealth;
+        MY_DAMAGE_MIN = theDamageRangeMin;
+        MY_DAMAGE_MAX = theDamageRangeMax;
+        MY_ATTACK_SPEED = theAttackSpeed;
+        MY_CHANCE_TO_HIT = theHitChance;
         myNumberOfAttacks = theNumberOfAttacks;
         myRandom = new Random();
     }
 
     // **************************** Methods ***************************
 
+    // Make a battle method
+
     /**
      *  This method will indicate if the
      *  character is dead or not.
      *
-     * @return The status of the characters life.
+     * @return The status of the character life.
      */
-    public boolean isDead() {
-        if(myHealthPoints <= 0) {
-            return true;
-        } else {
-            return false;
-        }
+    protected boolean isDead() {
+        return myHealthPoints <= 0;
     }
 
     //========
@@ -59,7 +57,7 @@ public abstract class DungeonCharacter {
     //========
 
     // Get the name
-    private String getName() {
+    protected String getName() {
         return myName;
     }
 
@@ -98,20 +96,21 @@ public abstract class DungeonCharacter {
 
     // Get a random double within a range
     protected double getMyRandomRange(final double theMin, final double theMax) {
-        return theMin + (theMax - theMin) * myRandom.nextDouble();
+        double num = theMin + (theMax - theMin) * myRandom.nextDouble();
+        return num;
     }
 
     //========
     // Setters
     //========
 
-    protected void setNumberOfAttacks(final int the_number_of_attacks) {
-        myNumberOfAttacks = the_number_of_attacks;
+    protected void setNumberOfAttacks(final int theNumberOfAttacks) {
+        myNumberOfAttacks = theNumberOfAttacks;
     }
 
     // This method will set the health
-    protected void setHealth(final double the_health) {
-        myHealthPoints = the_health;
+    protected void setHealth(final double theHealth) {
+        myHealthPoints = theHealth;
     }
 
     // Sets the name
@@ -126,11 +125,28 @@ public abstract class DungeonCharacter {
     }
 
 
-    /**
-     * This is the attack method for one turn.
-     *
-     * @param theOther this is the other character object
-     */
-    public abstract void attackBehavior(final DungeonCharacter theOther);
+    // This is the attack method for one turn.
+    protected void attackBehavior(final DungeonCharacter theOther) {
+
+        // Set the number of attacks for the Warrior
+        setNumberOfAttacks(theOther.getNumberOfAttacks() + 1);
+
+        // Attack the other character
+        for(int i = 0; i < this.getNumberOfAttacks(); i++) {
+
+            double attackHit = getMyRandomRange(0, 100);
+            double damage = getDamage();
+
+            // The Warrior hit the enemy
+            if(attackHit > getChanceToHit()) {
+                theOther.setHealth(theOther.getHealth() - damage);
+            }
+
+        }
+
+        // Set the number of attacks back  down to 1(for the next encounter)
+        setNumberOfAttacks(1);
+
+    }
 
 }

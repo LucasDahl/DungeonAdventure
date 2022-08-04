@@ -107,7 +107,7 @@ public abstract class Hero extends DungeonCharacter {
         return super.toString() + " Chance to block: " + MY_CHANCE_TO_BLOCK;
     }
 
-    @Override
+    @Override // This should be done here, not subclasses
     public void attackBehavior(final DungeonCharacter theOther) {
 
         // Set the number of attacks for the Warrior
