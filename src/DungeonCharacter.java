@@ -40,14 +40,16 @@ public abstract class DungeonCharacter {
 
     // **************************** Methods ***************************
 
+    // Make a battle method
+
     /**
      *  This method will indicate if the
      *  character is dead or not.
      *
-     * @return The status of the characters life.
+     * @return The status of the character life.
      */
     protected boolean isDead() {
-        return (myHealthPoints <= 0);
+        return myHealthPoints <= 0;
     }
 
     //========
@@ -123,11 +125,28 @@ public abstract class DungeonCharacter {
     }
 
 
-    /**
-     * This is the attack method for one turn.
-     * flesh this out here
-     * @param theOther this is the other character object
-     */
-    public abstract void attackBehavior(final DungeonCharacter theOther);
+    // This is the attack method for one turn.
+    protected void attackBehavior(final DungeonCharacter theOther) {
+
+        // Set the number of attacks for the Warrior
+        setNumberOfAttacks(theOther.getNumberOfAttacks() + 1);
+
+        // Attack the other character
+        for(int i = 0; i < this.getNumberOfAttacks(); i++) {
+
+            double attackHit = getMyRandomRange(0, 100);
+            double damage = getDamage();
+
+            // The Warrior hit the enemy
+            if(attackHit > getChanceToHit()) {
+                theOther.setHealth(theOther.getHealth() - damage);
+            }
+
+        }
+
+        // Set the number of attacks back  down to 1(for the next encounter)
+        setNumberOfAttacks(1);
+
+    }
 
 }
