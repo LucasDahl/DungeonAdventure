@@ -72,7 +72,7 @@ public class Thief extends Hero {
      *
      * @return the special chance to hit
      */
-    public double getMY_SPECIAL_CHANCE() {
+    public double getSpecialChance() {
         return MY_SPECIAL_CHANCE;
     }
 

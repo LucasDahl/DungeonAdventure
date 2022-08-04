@@ -32,22 +32,6 @@ public class Warrior extends Hero {
 
     // **************************** Methods ***************************
 
-    /**
-     *  This method will use the characters special attack
-     *   if a number that is higher than the hit chance
-     *   is rolled.
-     *
-     * @return the special attack damage.
-     */
-    public double specialAttack() {
-
-        Random rand = new Random();
-
-        if(MY_SPECIAL_CHANCE > rand.nextDouble()) {
-            return getMySpecialDamage();
-        }
-        return 0;
-    }
 
     //========
     // Getters
@@ -80,6 +64,7 @@ public class Warrior extends Hero {
         return  mySpecialDamage = super.getMyRandomRange(75, 150);
     }
 
+    // switch to protected
     /**
      *  This method returns the special chance skill
      *  chance to hit.
@@ -107,6 +92,24 @@ public class Warrior extends Hero {
     @Override
     public boolean isDead() {
         return super.isDead();
+    }
+
+
+    /**
+     *  This method will use the characters special attack
+     *   if a number that is higher than the hit chance
+     *   is rolled.
+     *
+     * @return the special attack damage.
+     */
+    public double specialAttack() {
+
+        Random rand = new Random();
+
+        if(MY_SPECIAL_CHANCE > rand.nextDouble()) {
+            return getMySpecialDamage();
+        }
+        return 0;
     }
 
     /**
