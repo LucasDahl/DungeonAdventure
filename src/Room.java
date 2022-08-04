@@ -34,6 +34,7 @@ public class Room implements Serializable {
 
     private boolean myEntrance;
     private boolean myExit;
+    private boolean myVisited;
     private int myItemCount;
 
     /**
@@ -49,8 +50,10 @@ public class Room implements Serializable {
         myWestDoor = DoorStatus.OPEN;
         myEntrance = false;
         myExit = false;
+        myVisited = false;
         populateRoom();
     }
+
 
     /**
      * @return whether the room is the dungeon entrance or not

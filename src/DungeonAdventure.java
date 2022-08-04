@@ -123,6 +123,13 @@ class MockDungeon {
             myX = theX;
             myY = theY;
         }
+        int getX() {
+            return myX;
+        }
+
+        int getY() {
+            return myY;
+        }
         void updateX(int theX) {
             myX += theX;
             myCurrentRoom = myMazeOfRooms[myX][myY];
