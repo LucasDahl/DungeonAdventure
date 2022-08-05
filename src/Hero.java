@@ -33,7 +33,7 @@ public abstract class Hero extends DungeonCharacter {
     // **************************** Methods ***************************
 
     // This is the method for the player to use the special skill
-    protected abstract void specialSkill(final DungeonCharacter theEnemy);
+    protected abstract void specialSkill(final Monster theEnemy);
 
     // This method will have a character defend against another
     protected boolean defend() {

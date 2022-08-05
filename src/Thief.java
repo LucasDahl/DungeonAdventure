@@ -71,7 +71,7 @@ public class Thief extends Hero {
     }
 
     @Override
-    protected void specialSkill(DungeonCharacter theEnemy) {
+    protected void specialSkill(Monster theEnemy) {
         Random rand = new Random();
         double chance = rand.nextDouble();
         if(MY_SPECIAL_CHANCE / 2.0 < chance) {
