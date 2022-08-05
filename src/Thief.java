@@ -33,15 +33,15 @@ public class Thief extends Hero {
      *  character to possible get another attack,
      *  but can also lose an attack during this turn.
      */
-    public void sneakAttack() {
-        Random rand = new Random();
-        double chance = rand.nextDouble();
-        if(MY_SPECIAL_CHANCE / 2.0 < chance) {
-            super.setNumberOfAttacks(0);
-        } else if(MY_SPECIAL_CHANCE > chance) {
-            super.setNumberOfAttacks(getNumberOfAttacks() + 1);
-        }
-    }
+//    public void sneakAttack() {
+//        Random rand = new Random();
+//        double chance = rand.nextDouble();
+//        if(MY_SPECIAL_CHANCE / 2.0 < chance) {
+//            super.setNumberOfAttacks(0);
+//        } else if(MY_SPECIAL_CHANCE > chance) {
+//            super.setNumberOfAttacks(getNumberOfAttacks() + 1);
+//        }
+//    }
 
     //========
     // Getters
@@ -85,10 +85,10 @@ public class Thief extends Hero {
         return super.toString();
     }
 
-    @Override
-    public void attackBehavior(final DungeonCharacter theOther) {
-        super.attackBehavior(theOther);
-    }
+//    @Override
+//    public void attackBehavior(final DungeonCharacter theOther) {
+//        super.attackBehavior(theOther);
+//    }
 
     @Override
     public boolean isDead() {

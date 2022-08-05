@@ -57,21 +57,21 @@ public abstract class Monster extends DungeonCharacter {
        return super.toString();
     }
 
-    @Override
-    public void attackBehavior(final DungeonCharacter theOther) {
-
-        // Attack the other character
-        for(int i = 0; i < getNumberOfAttacks(); i++) {
-
-            double attackHit = getMyRandomRange(super.getDamageRangeMin(), super.getDamageRangeMax());
-            double damage = super.getDamage();
-
-            // The Warrior hit the enemy
-            if(attackHit > getChanceToHit()) {
-                theOther.setHealth(theOther.getHealth() - damage);
-            }
-        }
-    }
+//    @Override
+//    public void attackBehavior(final DungeonCharacter theOther) {
+//
+//        // Attack the other character
+//        for(int i = 0; i < getNumberOfAttacks(); i++) {
+//
+//            double attackHit = getMyRandomRange(super.getDamageRangeMin(), super.getDamageRangeMax());
+//            double damage = super.getDamage();
+//
+//            // The Warrior hit the enemy
+//            if(attackHit > getChanceToHit()) {
+//                theOther.setHealth(theOther.getHealth() - damage);
+//            }
+//        }
+//    }
 
     @Override
     public boolean isDead() {

@@ -32,8 +32,15 @@ public abstract class Hero extends DungeonCharacter {
 
     // **************************** Methods ***************************
 
+    // This is the method for the player to use the special skill
+    protected void specialSkill(final DungeonCharacter theEnemy) {
 
+    }
 
+    // This method will have a character defend against another
+    protected void defend(final DungeonCharacter theEnemy) {
+
+    }
 
     //========
     // Getters
@@ -48,20 +55,6 @@ public abstract class Hero extends DungeonCharacter {
     protected int getNumberOfAttacks() {
         return super.getNumberOfAttacks();
     }
-
-    //========
-    // Setters
-    //========
-
-    /**
-     *  This method will set the name of the character
-     *
-     * @param theName the name for the character.
-     */
-    public void setName(final String theName) {
-        super.setName(theName);
-    }
-
 
     //=================
     // Override Methods
@@ -103,31 +96,35 @@ public abstract class Hero extends DungeonCharacter {
     }
 
     @Override
+    protected void setName(final String theName) {
+        super.setName(theName);
+    }
+
+    @Override
     public String toString() {
         return super.toString() + " Chance to block: " + MY_CHANCE_TO_BLOCK;
     }
 
-    @Override // This should be done here, not subclasses
-    public void attackBehavior(final DungeonCharacter theOther) {
-
-        // Set the number of attacks for the Warrior
-        setNumberOfAttacks(theOther.getNumberOfAttacks() + 1);
-
-        // Attack the other character
-        for(int i = 0; i < this.getNumberOfAttacks(); i++) {
-
-            double attackHit = getMyRandomRange(0, 100);
-            double damage = super.getDamage();
-
-            // The Warrior hit the enemy
-            if(attackHit > getChanceToHit()) {
-                theOther.setHealth(theOther.getHealth() - damage);
-            }
-
-        }
-
-        // Set the number of attacks back  down to 1(for the next encounter)
-        setNumberOfAttacks(1);
-
-    }
+//    @Override // This should be done here, not subclasses
+//    protected void attackBehavior(final DungeonCharacter theOther) {
+//
+//        // Set the number of attacks for the Warrior
+//        setNumberOfAttacks(theOther.getNumberOfAttacks() + 1);
+//
+//        // Attack the other character
+//        for(int i = 0; i < this.getNumberOfAttacks(); i++) {
+//
+//            double attackHit = getMyRandomRange(0, 100);
+//            double damage = super.getDamage();
+//
+//            // The Warrior hit the enemy
+//            if(attackHit > getChanceToHit()) {
+//                theOther.setHealth(theOther.getHealth() - damage);
+//            }
+//
+//        }
+//
+//        // Set the number of attacks back  down to 1(for the next encounter)
+//        setNumberOfAttacks(1);
+//    }
 }

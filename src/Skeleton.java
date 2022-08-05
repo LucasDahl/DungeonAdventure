@@ -27,10 +27,11 @@ public class Skeleton extends Monster {
         return super.toString();
     }
 
-    @Override
-    public void attackBehavior(final DungeonCharacter theOther) {
-        super.attackBehavior(theOther);
-    }
+//    @Override
+//    public void attackBehavior(final DungeonCharacter theOther) {
+//        super.attackBehavior(theOther);
+//    }
+
     @Override
     public boolean isDead() {
         return super.isDead();

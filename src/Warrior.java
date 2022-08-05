@@ -24,14 +24,12 @@ public class Warrior extends Hero {
      */
     public Warrior(final String theName) {
         super(theName, 125, 4, 0.8, 35, 60, 0.4, 1);
-
         MY_SPECIAL_SKILL = "Crushing Blow";
         mySpecialDamage = 75;
         MY_SPECIAL_CHANCE = 0.4;
     }
 
     // **************************** Methods ***************************
-
 
     //========
     // Getters
@@ -84,16 +82,15 @@ public class Warrior extends Hero {
         return super.toString();
     }
 
-    @Override
-    public void attackBehavior(final DungeonCharacter theOther) {
-        super.attackBehavior(theOther);
-    }
+//    @Override
+//    public void attackBehavior(final DungeonCharacter theOther) {
+//        super.attackBehavior(theOther);
+//    }
 
     @Override
     public boolean isDead() {
         return super.isDead();
     }
-
 
     /**
      *  This method will use the characters special attack
@@ -102,15 +99,15 @@ public class Warrior extends Hero {
      *
      * @return the special attack damage.
      */
-    public double specialAttack() {
-
-        Random rand = new Random();
-
-        if(MY_SPECIAL_CHANCE > rand.nextDouble()) {
-            return getMySpecialDamage();
-        }
-        return 0;
-    }
+//    public double specialAttack() {
+//
+//        Random rand = new Random();
+//
+//        if(MY_SPECIAL_CHANCE > rand.nextDouble()) {
+//            return getMySpecialDamage();
+//        }
+//        return 0;
+//    }
 
     /**
      *  This method will return the special ability

@@ -70,10 +70,10 @@ public class Priestess extends Hero {
         return super.toString();
     }
 
-    @Override
-    public void attackBehavior(final DungeonCharacter theOther) {
-        super.attackBehavior(theOther);
-    }
+//    @Override
+//    public void attackBehavior(final DungeonCharacter theOther) {
+//        super.attackBehavior(theOther);
+//    }
 
     @Override
     public boolean isDead() {
