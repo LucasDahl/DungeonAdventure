@@ -33,13 +33,14 @@ public abstract class Hero extends DungeonCharacter {
     // **************************** Methods ***************************
 
     // This is the method for the player to use the special skill
-    protected void specialSkill(final DungeonCharacter theEnemy) {
-
-    }
+    protected abstract void specialSkill(final DungeonCharacter theEnemy);
 
     // This method will have a character defend against another
-    protected void defend(final DungeonCharacter theEnemy) {
-
+    protected boolean defend() {
+        if(super.getMyRandomRange(0, 100) < MY_CHANCE_TO_BLOCK) {
+            return true;
+        }
+        return false;
     }
 
     //========
@@ -105,26 +106,4 @@ public abstract class Hero extends DungeonCharacter {
         return super.toString() + " Chance to block: " + MY_CHANCE_TO_BLOCK;
     }
 
-//    @Override // This should be done here, not subclasses
-//    protected void attackBehavior(final DungeonCharacter theOther) {
-//
-//        // Set the number of attacks for the Warrior
-//        setNumberOfAttacks(theOther.getNumberOfAttacks() + 1);
-//
-//        // Attack the other character
-//        for(int i = 0; i < this.getNumberOfAttacks(); i++) {
-//
-//            double attackHit = getMyRandomRange(0, 100);
-//            double damage = super.getDamage();
-//
-//            // The Warrior hit the enemy
-//            if(attackHit > getChanceToHit()) {
-//                theOther.setHealth(theOther.getHealth() - damage);
-//            }
-//
-//        }
-//
-//        // Set the number of attacks back  down to 1(for the next encounter)
-//        setNumberOfAttacks(1);
-//    }
 }
