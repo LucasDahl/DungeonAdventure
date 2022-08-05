@@ -151,9 +151,6 @@ public class Adventurer {
     }
 
 
-    //=================
-    // Override Methods
-    //=================
 
     @Override
     public String toString() {
