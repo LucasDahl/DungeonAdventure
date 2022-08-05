@@ -228,9 +228,9 @@ public class DungeonCharacterTest {
         assertTrue("testWarriorIsDead failed",warrior.isDead());
     }
 
-    //====================
+    //===========================
     // Test Special skills - name
-    //====================
+    //===========================
 
     @Test
     @DisplayName("Test the getSpecialSkill method for Warrior")
@@ -275,11 +275,11 @@ public class DungeonCharacterTest {
     // Test Special skills - range
     //============================
 
-    @Test
-    @DisplayName("Test the getSpecialSkill method for Warrior")
-    public void testWarriorSpecialAttack() {
-        setUpHeros();
-        assertTrue(75.0 <= warrior1.specialAttack() && warrior1.specialAttack() <= 150.0);
-    }
+//    @Test
+//    @DisplayName("Test the getSpecialSkill method for Warrior")
+//    public void testWarriorSpecialAttack() {
+//        setUpHeros();
+//        assertTrue(75.0 <= warrior1.specialAttack() && warrior1.specialAttack() <= 150.0);
+//    }
 
 }

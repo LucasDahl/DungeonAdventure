@@ -7,6 +7,7 @@
 public class Gremlin extends Monster {
 
     // **************************** Fields ****************************
+
     // ************************** Constructors ************************
 
     /**
@@ -27,8 +28,8 @@ public class Gremlin extends Monster {
         return super.toString();
     }
 
-    @Override
-    public void attackBehavior(final DungeonCharacter theOther) {
-        super.attackBehavior(theOther);
-    }
+//    @Override
+//    public void attackBehavior(final DungeonCharacter theOther) {
+//        super.attackBehavior(theOther);
+//    }
 }

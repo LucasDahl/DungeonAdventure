@@ -25,15 +25,6 @@ public class Priestess extends Hero {
     // **************************** Methods ***************************
 
 
-
-    /**
-     *  This method will heal the Priestess
-     *  with a random value from 1 - 100;
-     */
-    public void heal() {
-        super.setHealth(super.getHealth() + healPoints());
-    }
-
     //========
     // Getters
     //========
@@ -66,19 +57,23 @@ public class Priestess extends Hero {
     //=================
 
     @Override
-    public String toString() {
-        return super.toString();
+    protected void specialSkill(DungeonCharacter theEnemy) {
+        super.setHealth(super.getHealth() + healPoints());
     }
 
     @Override
-    public void attackBehavior(final DungeonCharacter theOther) {
-        super.attackBehavior(theOther);
+    public String toString() {
+        return super.toString();
     }
 
     @Override
     public boolean isDead() {
         return super.isDead();
     }
+
+    //===============
+    // Static Methods
+    //===============
 
     /**
      *  This method will return the special ability

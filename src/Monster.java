@@ -7,42 +7,71 @@
 public abstract class Monster extends DungeonCharacter {
 
     // **************************** Fields ****************************
-
+    private double myChanceToHeal;
+    private int myHealMin;
+    private int myHealMax;
 
     // ************************** Constructors ************************
 
     /**
      *  This is the default constructor
+     *
+     * @param theName the name of the monster
+     * @param theHealth the health of the monster
+     * @param theAttackSpeed the attack speed of the monster
+     * @param theHitChance the hit chance of the monster
+     * @param theDamageRangeMin the damage min of the monster
+     * @param theDamageRangeMax the damage max of the monster
+     * @param theChanceToHeal the chance to heal of the monster
+     * @param theMinHealPoints the min heal points of the monster
+     * @param theMaxHealPoints the max heal points of the monster
+     * @param theNumberOfAttacks the total number of attacks
      */
-    public Monster(final String the_name, final double the_health, final double the_attack_speed, final double the_hit_chance, final double the_damage_range_min, final double the_damage_range_max, final double the_chance_to_heal, final double the_min_heal_points, final double the_max_heal_points, final int the_number_of_attacks) {
-        super(the_name, the_health, the_damage_range_min, the_damage_range_max, the_attack_speed, the_hit_chance, the_number_of_attacks);
+    public Monster(final String theName, final double theHealth, final double theAttackSpeed, final double theHitChance, final double theDamageRangeMin, final double theDamageRangeMax, final double theChanceToHeal, final int theMinHealPoints, final int theMaxHealPoints, final int theNumberOfAttacks) {
+        super(theName, theHealth, theDamageRangeMin, theDamageRangeMax, theAttackSpeed, theHitChance, theNumberOfAttacks);
+        myChanceToHeal = theChanceToHeal;
+        myHealMax = theMaxHealPoints;
+        myHealMin = theMinHealPoints;
     }
 
     // **************************** Methods ***************************
+
+    // This method will have a monster heal its self
+    protected void heal() {
+
+        // Properties
+        double chance = super.getMyRandomRange(0, 100);
+        double healPoints = super.getMyRandomRange(myHealMin, myHealMax);
+
+        if(chance <= myChanceToHeal) {
+            super.setHealth(super.getHealth() + healPoints);
+        }
+    }
 
     //=================
     // Override Methods
     //=================
 
+    @Override
     public  String toString() {
        return super.toString();
     }
 
-    @Override
-    public void attackBehavior(final DungeonCharacter theOther) {
-
-        // Attack the other character
-        for(int i = 0; i < getNumberOfAttacks(); i++) {
-
-            double attackHit = getMyRandomRange(super.getDamageRangeMin(), super.getDamageRangeMax());
-            double damage = super.getDamage();
-
-            // The Warrior hit the enemy
-            if(attackHit > getChanceToHit()) {
-                theOther.setHealth(theOther.getHealth() - damage);
-            }
-        }
-    }
+//    @Override
+//    public void attackBehavior(final DungeonCharacter theOther) {
+//
+//        // Attack the other character
+//        for(int i = 0; i < getNumberOfAttacks(); i++) {
+//
+//            double attackHit = getMyRandomRange(super.getDamageRangeMin(), super.getDamageRangeMax());
+//            double damage = super.getDamage();
+//
+//            // The Warrior hit the enemy
+//            if(attackHit > getChanceToHit()) {
+//                theOther.setHealth(theOther.getHealth() - damage);
+//            }
+//        }
+//    }
 
     @Override
     public boolean isDead() {

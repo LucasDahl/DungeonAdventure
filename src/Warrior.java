@@ -24,7 +24,6 @@ public class Warrior extends Hero {
      */
     public Warrior(final String theName) {
         super(theName, 125, 4, 0.8, 35, 60, 0.4, 1);
-
         MY_SPECIAL_SKILL = "Crushing Blow";
         mySpecialDamage = 75;
         MY_SPECIAL_CHANCE = 0.4;
@@ -80,13 +79,23 @@ public class Warrior extends Hero {
     //=================
 
     @Override
-    public String toString() {
-        return super.toString();
+    protected void specialSkill(DungeonCharacter theEnemy) {
+
+        // Display the special skill
+        System.out.println(getSpecialSkill());
+
+        // The enemy was hit.
+        if(super.getMyRandomRange(0, 100) < MY_SPECIAL_CHANCE) {
+            theEnemy.setHealth(theEnemy.getHealth() - getMySpecialDamage());
+            System.out.println("The " + theEnemy.getName() + " took " + mySpecialDamage + " points of damage.");
+        } else {
+            System.out.println("Attack missed.");
+        }
     }
 
     @Override
-    public void attackBehavior(final DungeonCharacter theOther) {
-        super.attackBehavior(theOther);
+    public String toString() {
+        return super.toString();
     }
 
     @Override
@@ -94,23 +103,9 @@ public class Warrior extends Hero {
         return super.isDead();
     }
 
-
-    /**
-     *  This method will use the characters special attack
-     *   if a number that is higher than the hit chance
-     *   is rolled.
-     *
-     * @return the special attack damage.
-     */
-    public double specialAttack() {
-
-        Random rand = new Random();
-
-        if(MY_SPECIAL_CHANCE > rand.nextDouble()) {
-            return getMySpecialDamage();
-        }
-        return 0;
-    }
+    //===============
+    // Static Methods
+    //===============
 
     /**
      *  This method will return the special ability

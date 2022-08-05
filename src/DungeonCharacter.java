@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * @author Lucas Dahl - LDahl
@@ -40,14 +41,69 @@ public abstract class DungeonCharacter {
 
     // **************************** Methods ***************************
 
-    // Make a battle method
+    // This is the battle method between two characters
+    protected void battle(final Monster theEnemy, final Hero theHero) {
 
-    /**
-     *  This method will indicate if the
-     *  character is dead or not.
-     *
-     * @return The status of the character life.
-     */
+        while(theEnemy.getHealth() > 0 || theHero.getHealth() > 0) {
+
+            // See who attacks first. If players speed becomes too low
+            // enemy may be able to attack twice in a row.
+            if(theHero.getAttackSpeed() > theEnemy.getAttackSpeed()) {
+
+                int attackType;
+                Scanner input = new Scanner(System.in);
+
+                System.out.print("Press 1 for normal attack, or 2 for special attack: ");
+                attackType = input.nextInt();
+
+                if(attackType == 1) {
+                    theHero.attack(theEnemy);
+                } else if(attackType == 2) {
+                    theHero.specialSkill(theEnemy);
+                } else {
+                    System.out.println("Invalid option, turned missed");
+                }
+
+            } else {
+
+                // If the player blocks, enemy doesn't attack
+                if(!theHero.defend()) {
+                    theEnemy.attack(theHero);
+                } else {
+                    System.out.println("You blocked the attack");
+                }
+
+                // The monster has a chance to heal
+                theEnemy.heal();
+
+            }
+        }
+    }
+
+    // This method will have a character another
+    protected void attack(final DungeonCharacter theEnemy) {
+
+        // Set the number of attacks for the Warrior
+        setNumberOfAttacks(theEnemy.getNumberOfAttacks() + 1);
+
+        // Attack the other character
+        for(int i = 0; i < this.getNumberOfAttacks(); i++) {
+
+            double attackHit = getMyRandomRange(0, 100);
+            double damage = getDamage();
+
+            // The Warrior hit the enemy
+            if(attackHit > getChanceToHit()) {
+                theEnemy.setHealth(theEnemy.getHealth() - damage);
+            }
+        }
+
+        // Set the number of attacks back  down to 1(for the next encounter)
+        setNumberOfAttacks(1);
+
+    }
+
+    // This method will let
     protected boolean isDead() {
         return myHealthPoints <= 0;
     }
@@ -118,35 +174,8 @@ public abstract class DungeonCharacter {
         myName = theName;
     }
 
-
     @Override
     public String toString() {
         return "Name: " + myName + " Health: " + myHealthPoints + " Max Damage range: " + MY_DAMAGE_MAX + " Min damage range: " + MY_DAMAGE_MIN + " Attack speed: " + MY_ATTACK_SPEED + " Chance to hit: " + MY_CHANCE_TO_HIT + " Number of attacks: " + myNumberOfAttacks;
     }
-
-
-    // This is the attack method for one turn.
-    protected void attackBehavior(final DungeonCharacter theOther) {
-
-        // Set the number of attacks for the Warrior
-        setNumberOfAttacks(theOther.getNumberOfAttacks() + 1);
-
-        // Attack the other character
-        for(int i = 0; i < this.getNumberOfAttacks(); i++) {
-
-            double attackHit = getMyRandomRange(0, 100);
-            double damage = getDamage();
-
-            // The Warrior hit the enemy
-            if(attackHit > getChanceToHit()) {
-                theOther.setHealth(theOther.getHealth() - damage);
-            }
-
-        }
-
-        // Set the number of attacks back  down to 1(for the next encounter)
-        setNumberOfAttacks(1);
-
-    }
-
 }
