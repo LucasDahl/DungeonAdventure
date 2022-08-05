@@ -57,8 +57,11 @@ public class Priestess extends Hero {
     //=================
 
     @Override
-    protected void specialSkill(DungeonCharacter theEnemy) {
+    protected void specialSkill(Monster theEnemy) {
         super.setHealth(super.getHealth() + healPoints());
+
+        // Give the monster a chance to heal
+        theEnemy.heal();
     }
 
     @Override
