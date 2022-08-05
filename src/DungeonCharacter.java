@@ -72,6 +72,10 @@ public abstract class DungeonCharacter {
                 } else {
                     System.out.println("You blocked the attack");
                 }
+
+                // The monster has a chance to heal
+                theEnemy.heal();
+
             }
         }
     }
