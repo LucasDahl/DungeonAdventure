@@ -6,7 +6,6 @@
  */
 public class Skeleton extends Monster {
 
-    // **************************** Fields ****************************
     // ************************** Constructors ************************
 
     /**
@@ -23,14 +22,14 @@ public class Skeleton extends Monster {
     //=================
 
     @Override
+    protected void heal() {
+        super.heal();
+    }
+
+    @Override
     public String toString() {
         return super.toString();
     }
-
-//    @Override
-//    public void attackBehavior(final DungeonCharacter theOther) {
-//        super.attackBehavior(theOther);
-//    }
 
     @Override
     public boolean isDead() {

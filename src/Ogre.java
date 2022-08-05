@@ -6,7 +6,6 @@
  */
 public class Ogre extends Monster {
 
-    // **************************** Fields ****************************
     // ************************** Constructors ************************
 
     /**
@@ -23,13 +22,13 @@ public class Ogre extends Monster {
     //=================
 
     @Override
-    public String toString() {
-        return super.toString();
+    protected void heal() {
+        super.heal();
     }
 
     @Override
-    public void attackBehavior(final DungeonCharacter theOther) {
-        super.attackBehavior(theOther);
+    public String toString() {
+        return super.toString();
     }
 
     @Override
