@@ -1,6 +1,8 @@
 import java.util.*;
 
 class MockDungeon {
+
+
     enum Direction {
         UP, DOWN, LEFT, RIGHT
     }
@@ -143,7 +145,9 @@ class MockDungeon {
             myMazeOfRooms[x][y].setPillar(thePillar);
         }
 
-
+        public Coordinates getEntrance() {
+            return myEntrance;
+        }
         void move(Direction theMove) {
             if (theMove.equals(Direction.LEFT) && (getAdventurerY()-1 >=0)) {
                 myCurrentLocation.updateY(-1);
@@ -166,6 +170,9 @@ class MockDungeon {
 
         int getAdventurerY() {
             return myCurrentLocation.myY;
+        }
+        Coordinates getCurrentLocation() {
+            return myCurrentLocation;
         }
         String printNSDoor(DoorStatus theDoor) {
             String str = "";

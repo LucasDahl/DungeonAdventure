@@ -1,5 +1,5 @@
 import java.util.Scanner;
-import java.util.Stack;
+
 
 /*
  * TCSS 360 - Summer 2022
@@ -15,34 +15,20 @@ class DungeonAdventure {
     final static int DUNGEON_COLUMNS = 4;
     public static void main(String[] args) {
         myDungeon = new MockDungeon(DUNGEON_ROWS, DUNGEON_COLUMNS);
-        System.out.println(myDungeon);
+//        System.out.println(myDungeon);
         //System.out.println("Entrance: " + Arrays.toString(myDungeon.getEntrance()));
         //System.out.println("Exit: " + Arrays.toString(myDungeon.getExit()));
 
-//        intro();
-//        System.out.println();
-//
-//        System.out.println("Showing dungeon: ");
-//        System.out.println("Dungeon Entrance: ");
-//        System.out.println(myDungeon.getEntrance());
-//
-//        System.out.println("Showing Adventurer Location: ");
-//        System.out.println(myDungeon.getAdventurerLocation());
-//
-//        System.out.println("Move right");
-//        myDungeon.move(MockDungeon.Direction.RIGHT);
-//        System.out.println("Showing Adventurer Location: ");
-//        System.out.println(myDungeon.getAdventurerLocation());
-//
-//        System.out.println("Move right");
-//        myDungeon.move(MockDungeon.Direction.RIGHT);
-//        System.out.println("Showing Adventurer Location: ");
-//        System.out.println(myDungeon.getAdventurerLocation());
-//
-//        System.out.println("Move down");
-//        myDungeon.move(MockDungeon.Direction.DOWN);
-//        System.out.println("Showing Adventurer Location: ");
-//        System.out.println(myDungeon.getAdventurerLocation());
+        intro();
+        System.out.println();
+
+        System.out.println("Showing dungeon: ");
+        System.out.println("Dungeon Entrance: ");
+        System.out.println(myDungeon.getEntrance());
+
+
+
+        System.out.println(myDungeon);
 
     }
 
