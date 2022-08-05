@@ -40,6 +40,7 @@ public class Room implements Serializable {
      * Standard Room creation, no pillar set, no items, and all doors are open/exist
      */
     public Room() {
+
         myPillarLetter = "";
         myItemCount = 0;    // counts: pits, potions, pillars,
                             // not counted: entrance, exit
@@ -52,6 +53,9 @@ public class Room implements Serializable {
         populateRoom();
     }
 
+    Monster getMonster() {
+        return myMonster1;
+    }
     /**
      * @return whether the room is the dungeon entrance or not
      */
