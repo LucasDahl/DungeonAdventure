@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * @author Lucas Dahl - LDahl
@@ -45,8 +46,28 @@ public abstract class DungeonCharacter {
 
         while(theEnemy.getHealth() > 0 || theHero.getHealth() > 0) {
 
-        }
+            // See who attacks first. If players speed becomes too low
+            // enemy may be able to attack twice in a row.
+            if(theHero.getAttackSpeed() > theEnemy.getAttackSpeed()) {
 
+                int attackType;
+                Scanner input = new Scanner(System.in);
+
+                System.out.print("Press 1 for normal attack, or 2 for special attack: ");
+                attackType = input.nextInt();
+
+                if(attackType == 1) {
+                    theHero.attack(theEnemy);
+                } else if(attackType == 2) {
+                    theHero.specialSkill(theEnemy);
+                } else {
+                    System.out.println("Invalid option, turned missed");
+                }
+
+            } else {
+                theEnemy.attack(theHero);
+            }
+        }
     }
 
     // This method will have a character another
@@ -71,11 +92,6 @@ public abstract class DungeonCharacter {
         setNumberOfAttacks(1);
 
     }
-//
-//    // This is the attack method for one turn.
-//    protected void attackBehavior(final DungeonCharacter theEnemy) {
-//
-//    }
 
     // This method will let
     protected boolean isDead() {
