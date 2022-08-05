@@ -65,7 +65,13 @@ public abstract class DungeonCharacter {
                 }
 
             } else {
-                theEnemy.attack(theHero);
+
+                // If the player blocks, enemy doesn't attack
+                if(!theHero.defend()) {
+                    theEnemy.attack(theHero);
+                } else {
+                    System.out.println("You blocked the attack");
+                }
             }
         }
     }
