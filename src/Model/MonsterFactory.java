@@ -1,15 +1,17 @@
+package Model;
+
 /**
  * @author lucasdahl -> LDahl
  * @version 1.0
  *
- * This class is a Hero Factory that creates
+ * This class is a Model.Hero Factory that creates
  * Heros.
  *
  */
 public class MonsterFactory {
 
     /**
-     * This method will create a Monster.
+     * This method will create a Model.Monster.
      *
      * @param theMonster the name of the monster.
      * @return the created monster
@@ -21,14 +23,14 @@ public class MonsterFactory {
         }
 
         switch (theMonster) {
-            case "Ogre":
+            case "Model.Ogre":
                 return new Ogre();
-            case "Skeleton":
+            case "Model.Skeleton":
                 return new Skeleton();
-            case "Gremlin":
+            case "Model.Gremlin":
                 return new Gremlin();
             default:
-                throw new IllegalArgumentException("Unknown Monster " + theMonster);
+                throw new IllegalArgumentException("Unknown Model.Monster " + theMonster);
         }
     }
 }

@@ -1,3 +1,5 @@
+package Model;
+
 import java.util.Random;
 import java.util.Scanner;
 
@@ -83,7 +85,7 @@ public abstract class DungeonCharacter {
     // This method will have a character another
     protected void attack(final DungeonCharacter theEnemy) {
 
-        // Set the number of attacks for the Warrior
+        // Set the number of attacks for the Model.Warrior
         setNumberOfAttacks(theEnemy.getNumberOfAttacks() + 1);
 
         // Attack the other character
@@ -92,7 +94,7 @@ public abstract class DungeonCharacter {
             double attackHit = getMyRandomRange(0, 100);
             double damage = getDamage();
 
-            // The Warrior hit the enemy
+            // The Model.Warrior hit the enemy
             if(attackHit > getChanceToHit()) {
                 theEnemy.setHealth(theEnemy.getHealth() - damage);
             }

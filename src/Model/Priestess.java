@@ -1,4 +1,4 @@
-import java.util.Random;
+package Model;
 
 /**
  * @author Lucas Dahl - LDahl
@@ -6,36 +6,35 @@ import java.util.Random;
  *
  *
  */
-public class Thief extends Hero {
+public class Priestess extends Hero {
 
     // **************************** Fields ****************************
 
     private final String MY_SPECIAL_SKILL;
-    private final double MY_SPECIAL_CHANCE;
 
     // ************************** Constructors ************************
 
     /**
      *  This is the default constructor
      *
-     * @param theName the name of the Hero
+     * @param theName the name of the Model.Hero
      */
-    public Thief(final String theName) {
-        super(theName, 75, 6, 0.8, 20, 40, 0.4, 1);
-        MY_SPECIAL_SKILL = "Sneak Attack";
-        MY_SPECIAL_CHANCE = 0.4;
+    public Priestess(final String theName) {
+        super(theName, 75, 5, 0.7, 25, 45, 0.3, 1);
+        MY_SPECIAL_SKILL = "Heal";
     }
 
     // **************************** Methods ***************************
+
 
     //========
     // Getters
     //========
 
     /**
-     *  Returns the Hero's name.
+     *  Returns the Model.Hero's name.
      *
-     * @return the name of the Hero.
+     * @return the name of the Model.Hero.
      */
     public String getName() {
         return super.getName();
@@ -50,15 +49,9 @@ public class Thief extends Hero {
         return MY_SPECIAL_SKILL;
     }
 
-
-    /**
-     *  This method returns the special chance skill
-     *  chance to hit.
-     *
-     * @return the special chance to hit
-     */
-    public double getSpecialChance() {
-        return MY_SPECIAL_CHANCE;
+    // The amount of heal points the Model.Priestess will heal
+    private double healPoints() {
+        return getMyRandomRange(1, 100);
     }
 
     //=================
@@ -66,19 +59,13 @@ public class Thief extends Hero {
     //=================
 
     @Override
-    public String toString() {
-        return super.toString();
+    protected void specialSkill(DungeonCharacter theEnemy) {
+        super.setHealth(super.getHealth() + healPoints());
     }
 
     @Override
-    protected void specialSkill(DungeonCharacter theEnemy) {
-        Random rand = new Random();
-        double chance = rand.nextDouble();
-        if(MY_SPECIAL_CHANCE / 2.0 < chance) {
-            super.setNumberOfAttacks(0);
-        } else if(MY_SPECIAL_CHANCE > chance) {
-            super.setNumberOfAttacks(getNumberOfAttacks() + 1);
-        }
+    public String toString() {
+        return super.toString();
     }
 
     @Override
@@ -97,7 +84,6 @@ public class Thief extends Hero {
      * @return the special skill info
      */
     public static String specialSkill() {
-        return "Special Skill: Sneak Attack, Chance to Hit: 40% with a 20% chance of getting caught";
+        return "Special Skill: Heal, Heal Range: 1 - 100";
     }
-
 }

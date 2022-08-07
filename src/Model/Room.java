@@ -1,7 +1,7 @@
-/*
+package Model;/*
  * TCSS 360 - Summer 2022
  * Instructor: Tom Capaul
- * Room class for Dungeon Adventure game
+ * Model.Room class for Model.Dungeon Adventure game
  * Package condition: Must be placed in the same package as DungeonAdventure
  */
 
@@ -14,8 +14,8 @@ enum DoorStatus {
 }
 
 /**
- * This class contains all fields and methods pertaining to a Room as part
- * of the Dungeon environment for the associated Dungeon Adventure game.
+ * This class contains all fields and methods pertaining to a Model.Room as part
+ * of the Model.Dungeon environment for the associated Model.Dungeon Adventure game.
  *
  * @author Jane Kennerly janekennerly@gmail.com
  * @version 26 July 2022
@@ -37,7 +37,7 @@ public class Room implements Serializable {
     private int myItemCount;
 
     /**
-     * Standard Room creation, no pillar set, no items, and all doors are open/exist
+     * Standard Model.Room creation, no pillar set, no items, and all doors are open/exist
      */
     public Room() {
 
@@ -53,7 +53,7 @@ public class Room implements Serializable {
         populateRoom();
     }
 
-    Monster getMonster() {
+    public Monster getMonster() {
         return myMonster1;
     }
     /**
@@ -77,7 +77,7 @@ public class Room implements Serializable {
     /**
      * @return whether the room is the dungeon exit or not
      */
-    boolean getExit() {
+    public boolean getExit() {
         return myExit;
     }
 
@@ -216,7 +216,7 @@ public class Room implements Serializable {
 
     /**
      * Randomly assigns a pit, vision potion, healing potion, and a monster
-     * to the Room.
+     * to the Model.Room.
      */
     void populateRoom() {
         final int PIT_CHANCE = 20;

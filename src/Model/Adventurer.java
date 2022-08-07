@@ -1,10 +1,12 @@
+package Model;
+
 import java.util.*;
 
 /**
  * @author Lucas Dahl - LDahl
  * @version 1.0
  *
- *  This is the Adventurer class. The Adventurer is the hero of
+ *  This is the Model.Adventurer class. The Model.Adventurer is the hero of
  *  the game(the player)
  *
  */

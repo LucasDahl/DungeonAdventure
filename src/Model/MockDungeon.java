@@ -1,6 +1,11 @@
+package Model;
+
+import Model.DoorStatus;
+import Model.Room;
+
 import java.util.*;
 
-class MockDungeon {
+public class MockDungeon {
 
 
     enum Direction {
@@ -58,7 +63,7 @@ class MockDungeon {
         private Coordinates myExit;
         private Coordinates myCurrentLocation;
         private final Room[][] myMazeOfRooms;
-        Room myCurrentRoom;
+        public Room myCurrentRoom;
 
         private final int myColumns;
         private final int myRows;
@@ -198,7 +203,7 @@ class MockDungeon {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < myRows; i++) {
 
-                // create Room top row
+                // create Model.Room top row
                 for (int j = 0; j < myColumns; j++) {
                     sb.append("*"); // top-left corner
                     sb.append((printNSDoor(myMazeOfRooms[i][j].getNorthDoor()))); // North door
@@ -206,17 +211,17 @@ class MockDungeon {
                 }
                 sb.append("*\n"); // go to middle row
 
-                // create Room middle row
+                // create Model.Room middle row
                 for (int j = 0; j < myColumns; j++) {
                     sb.append((printEWDoor(myMazeOfRooms[i][j].getWestDoor()))); // West door
-                    sb.append((myMazeOfRooms[i][j].getMiddle())); // Contents of Room
+                    sb.append((myMazeOfRooms[i][j].getMiddle())); // Contents of Model.Room
                     //sb.append(printEWDoor(myMazeOfRooms[i][j].getEastDoor())); // East door
                 }
                 sb.append(printEWDoor(myMazeOfRooms[i][myColumns - 1].getEastDoor())); // East door
                 sb.append("\n"); // go to bottom row
 
                 if (i == (myRows - 1)) {
-                    // create Room bottom row
+                    // create Model.Room bottom row
                     for (int j = 0; j < myColumns; j++) {
                         sb.append("*"); // bottom-left corner
                         sb.append(printNSDoor((myMazeOfRooms[i][j].getSouthDoor()))); // South door

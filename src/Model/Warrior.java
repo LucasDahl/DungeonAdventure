@@ -1,4 +1,4 @@
-import java.util.Random;
+package Model;
 
 /**
  * @author Lucas Dahl - LDahl
@@ -20,7 +20,7 @@ public class Warrior extends Hero {
     /**
      *  This is the default constructor
      *
-     * @param theName the name of the Hero
+     * @param theName the name of the Model.Hero
      */
     public Warrior(final String theName) {
         super(theName, 125, 4, 0.8, 35, 60, 0.4, 1);
@@ -37,9 +37,9 @@ public class Warrior extends Hero {
     //========
 
     /**
-     *  Returns the Hero's name.
+     *  Returns the Model.Hero's name.
      *
-     * @return the name of the Hero.
+     * @return the name of the Model.Hero.
      */
     public String getName() {
         return super.getName();

@@ -1,15 +1,17 @@
+package Model;
+
 /**
  * @author lucasdahl -> LDahl
  * @version 1.0
  *
- * This class is a Hero Factory that creates
+ * This class is a Model.Hero Factory that creates
  * Heros.
  *
  */
 public class HeroFactory {
 
     /**
-     *  This method will create a Hero.
+     *  This method will create a Model.Hero.
      *
      * @param theHero the name of the hero.
      * @return this is the created hero
@@ -21,14 +23,14 @@ public class HeroFactory {
         }
 
         switch (theHero) {
-            case "Warrior":
+            case "Model.Warrior":
                 return new Warrior(theName);
-            case "Priestess":
+            case "Model.Priestess":
                 return new Priestess(theName);
-            case "Thief":
+            case "Model.Thief":
                 return new Thief(theName);
             default:
-                throw new IllegalArgumentException("Unknown Hero " + theHero);
+                throw new IllegalArgumentException("Unknown Model.Hero " + theHero);
         }
     }
 }

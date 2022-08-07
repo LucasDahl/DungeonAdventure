@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * @author Lucas Dahl - LDahl
  * @version 1.0
@@ -58,7 +60,7 @@ public abstract class Monster extends DungeonCharacter {
     }
 
 //    @Override
-//    public void attackBehavior(final DungeonCharacter theOther) {
+//    public void attackBehavior(final Model.DungeonCharacter theOther) {
 //
 //        // Attack the other character
 //        for(int i = 0; i < getNumberOfAttacks(); i++) {
@@ -66,7 +68,7 @@ public abstract class Monster extends DungeonCharacter {
 //            double attackHit = getMyRandomRange(super.getDamageRangeMin(), super.getDamageRangeMax());
 //            double damage = super.getDamage();
 //
-//            // The Warrior hit the enemy
+//            // The Model.Warrior hit the enemy
 //            if(attackHit > getChanceToHit()) {
 //                theOther.setHealth(theOther.getHealth() - damage);
 //            }

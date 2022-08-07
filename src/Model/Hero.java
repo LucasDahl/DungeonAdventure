@@ -1,3 +1,5 @@
+package Model;
+
 /**
  * @author Lucas Dahl - LDahl
  * @version 1.0
@@ -16,14 +18,14 @@ public abstract class Hero extends DungeonCharacter {
      *  This constructor will set all the values for the class,
      *  by call the super class constructor.
      *
-     * @param the_name This is the name of the Hero
-     * @param the_health This is the total starting health of the Hero.
-     * @param the_damage_range_min This is the min attack range for the Hero
-     * @param the_damage_range_max This is the max attack range for the Hero
-     * @param the_attack_speed This is the attack speed for the Hero
-     * @param the_hit_chance This is the chance to hit for the Hero
-     * @param the_block_chance This is the chance to block for the Hero
-     * @param the_num_of_attacks This is the total number of attacks per turn the Hero gets
+     * @param the_name This is the name of the Model.Hero
+     * @param the_health This is the total starting health of the Model.Hero.
+     * @param the_damage_range_min This is the min attack range for the Model.Hero
+     * @param the_damage_range_max This is the max attack range for the Model.Hero
+     * @param the_attack_speed This is the attack speed for the Model.Hero
+     * @param the_hit_chance This is the chance to hit for the Model.Hero
+     * @param the_block_chance This is the chance to block for the Model.Hero
+     * @param the_num_of_attacks This is the total number of attacks per turn the Model.Hero gets
      */
     public Hero(final String the_name, final double the_health, final double the_attack_speed, final double the_hit_chance, final double the_damage_range_min, final double the_damage_range_max, final double the_block_chance, final int the_num_of_attacks) {
         super(the_name, the_health, the_damage_range_min, the_damage_range_max, the_attack_speed, the_hit_chance, the_num_of_attacks);
