@@ -179,6 +179,10 @@ public class MockDungeon {
         Coordinates getCurrentLocation() {
             return myCurrentLocation;
         }
+
+        void updateCurrentRoom() {
+            myCurrentRoom = myMazeOfRooms[getAdventurerX()][getAdventurerY()];
+        }
         String printNSDoor(DoorStatus theDoor) {
             String str = "";
             if(theDoor.equals(DoorStatus.CLOSED)){
