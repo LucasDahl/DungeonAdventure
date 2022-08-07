@@ -77,4 +77,9 @@ public class DungeonView {
 
 
     }
+    private String promptUserForString(String theDisplayString) {
+        Scanner input = new Scanner(System.in);
+        System.out.println(theDisplayString);
+        return input.next();
+    }
 }
