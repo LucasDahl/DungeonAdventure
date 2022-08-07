@@ -9,10 +9,6 @@ import java.util.Objects;
 import java.util.Random;
 import java.io.Serializable;
 
-enum DoorStatus {
-    OPEN, CLOSED
-}
-
 /**
  * This class contains all fields and methods pertaining to a Model.Room as part
  * of the Model.Dungeon environment for the associated Model.Dungeon Adventure game.
@@ -22,6 +18,7 @@ enum DoorStatus {
  */
 public class Room implements Serializable {
 
+    // ******************************* Fields *******************************
     private String myPillarLetter;
     private boolean myVisionPotion;
     private boolean myHealingPotion;
@@ -35,6 +32,8 @@ public class Room implements Serializable {
     private boolean myEntrance;
     private boolean myExit;
     private int myItemCount;
+
+    // ***************************** Constructors ***************************
 
     /**
      * Standard Model.Room creation, no pillar set, no items, and all doors are open/exist
@@ -53,15 +52,143 @@ public class Room implements Serializable {
         populateRoom();
     }
 
+    // ******************************* Methods ******************************
+
+
+    //========
+    // Door Getters
+    //========
+    public DoorStatus getNorthDoor() {
+        return myNorthDoor;
+    }
+    public DoorStatus getEastDoor() {
+        return myEastDoor;
+    }
+    public DoorStatus getSouthDoor() {
+        return mySouthDoor;
+    }
+    public DoorStatus getWestDoor() {
+        return myWestDoor;
+    }
+    //========
+    // Everything else Getters
+    //========
+    /**
+     * @return whether the room is the dungeon entrance or not
+     */
+    public boolean getEntrance() {
+        return myEntrance;
+    }
+    /**
+     * @return whether the room is the dungeon exit or not
+     */
+    public boolean getExit() {
+        return myExit;
+    }
+    public boolean getHealingPotion() {
+        return myHealingPotion;
+    }
+    /**
+     * Pillars: A = Abstraction, E = Encapsulation
+     *          I = Inheritance, P = Polymorphism
+     * H = healing potion only
+     * V = vision potion only
+     * X = pit only
+     * M = more than 1 item
+     *
+     * @return Gets the letter that best represents the contents of the room
+     */
+    public String getMiddle() {
+        String middle = "";
+        if (getEntrance()) {
+            middle = "i";
+        } else if (getExit()) {
+            middle = "O";
+        } else {
+            if (myItemCount > 1) {
+                middle = "M";
+            } else if (myItemCount < 1) {
+                middle = " ";
+            } else {
+                if (getPillar().compareTo("") != 0) { // if pillar not empty String
+                    middle = getPillar();
+                } else if (getVisionPotion()) {
+                    middle = "V";
+                } else if (getHealingPotion()) {
+                    middle = "H";
+                } else if (getPit()) {
+                    middle = "X";
+                }
+            }
+        }
+        return middle;
+    }
+
+    /**
+     * Get the Monster in the room
+     * @return the Monster of the room
+     */
     public Monster getMonster() {
         return myMonster1;
     }
     /**
-     * @return whether the room is the dungeon entrance or not
+     * Valid returns are "A", "E", "I", or "P"
+     * @return the letter of the pillar in the room if there is one
      */
-    boolean getEntrance() {
-        return myEntrance;
+    public String getPillar() {
+        return myPillarLetter;
     }
+    /**
+     * Get the pit state of the room (true = pit, false = no pit)
+     * @return whether there is a pit in the room
+     */
+    public boolean getPit() {
+        return myPit;
+    }
+    /**
+     * Get the vision potion state of the room
+     * @return whether there is a vision potion
+     */
+    public boolean getVisionPotion() {
+        return myVisionPotion;
+    }
+
+    //========
+    // Door Setters
+    //========
+
+    /**
+     * Set the north door as open or closed
+     * @param theNorthDoor uses enumerated type DoorStatus
+     */
+    void setNorthDoor(DoorStatus theNorthDoor) {
+        myNorthDoor = theNorthDoor;
+    }
+    /**
+     * Set the east door as open or closed
+     * @param theEastDoor uses enumerated type DoorStatus
+     */
+    void setEastDoor(DoorStatus theEastDoor) {
+        myEastDoor = theEastDoor;
+    }
+    /**
+     * Set the south door as open or closed
+     * @param theSouthDoor uses enumerated type DoorStatus
+     */
+    void setSouthDoor(DoorStatus theSouthDoor) {
+        mySouthDoor = theSouthDoor;
+    }
+
+    /**
+     * Set the west door as open or closed
+     * @param theWestDoor uses enumerated type DoorStatus
+     */
+    void setWestDoor(DoorStatus theWestDoor) {
+        myWestDoor = theWestDoor;
+    }
+    //========
+    // Everything else Setters
+    //========
 
     /**
      * Set a room to be or not be a dungeon entrance
@@ -73,14 +200,6 @@ public class Room implements Serializable {
         }
         myEntrance = theEntrance;
     }
-
-    /**
-     * @return whether the room is the dungeon exit or not
-     */
-    public boolean getExit() {
-        return myExit;
-    }
-
     /**
      * Set a room to be or not be a dungeon exit
      * @param theExit of the dungeon
@@ -91,15 +210,18 @@ public class Room implements Serializable {
         }
         myExit = theExit;
     }
-
     /**
-     * Valid returns are "A", "E", "I", or "P"
-     * @return the letter of the pillar in the room if there is one
+     * Designate whether the room has a healing potion
+     * @param theHealingPotion true places healing potion, false removes it
      */
-    String getPillar() {
-        return myPillarLetter;
+    void setHealingPotion(final boolean theHealingPotion) {
+        if (myHealingPotion && !theHealingPotion) { // had potion, removing it
+            myItemCount--;
+        } else if (!myHealingPotion && theHealingPotion) { // no potion, adding it
+            myItemCount++;
+        }
+        this.myHealingPotion = theHealingPotion;
     }
-
     /**
      * Designate the room to contain a pillar
      * @param thePillarLetter "A", "E", "I", or "P"
@@ -114,13 +236,9 @@ public class Room implements Serializable {
     }
 
     /**
-     * Get the pit state of the room (true = pit, false = no pit)
-     * @return whether or not there is a pit in the room
+     * Designate whether the room has a pit
+     * @param thePit true creates pit, false removes it
      */
-    boolean getPit() {
-        return myPit;
-    }
-
     void setPit(boolean thePit) {
         if (!thePit && myPit) { // removing pit when there was a pit
             myItemCount--;
@@ -129,15 +247,6 @@ public class Room implements Serializable {
         }
         myPit = thePit;
     }
-
-    /**
-     * Get the vision potion state of the room
-     * @return whether or not there is a vision potion
-     */
-    boolean getVisionPotion() {
-        return myVisionPotion;
-    }
-
     /**
      * Designate whether the room has a vision potion
      * @param theVisionPotion true places vision potion, false removes it
@@ -150,70 +259,39 @@ public class Room implements Serializable {
         }
         myVisionPotion = theVisionPotion;
     }
-
-    boolean getHealingPotion() {
-        return myHealingPotion;
+    /**
+     * Sets all doors to CLOSED
+     */
+    void closeAllDoors() {
+        setNorthDoor(DoorStatus.CLOSED);
+        setEastDoor(DoorStatus.CLOSED);
+        setSouthDoor(DoorStatus.CLOSED);
+        setWestDoor(DoorStatus.CLOSED);
     }
 
     /**
-     * Designate whether the room has a healing potion
-     * @param theHealingPotion true places healing potion, false removes it
+     * Sets all doors to OPEN
      */
-    void setHealingPotion(final boolean theHealingPotion) {
-        if (myHealingPotion && !theHealingPotion) { // had potion, removing it
-            myItemCount--;
-        } else if (!myHealingPotion && theHealingPotion) { // no potion, adding it
-            myItemCount++;
-        }
-        this.myHealingPotion = theHealingPotion;
-    }
-
-    DoorStatus getNorthDoor() {
-        return myNorthDoor;
-    }
-
-    void setNorthDoor(DoorStatus theNorthDoor) {
-        myNorthDoor = theNorthDoor;
-    }
-
-    DoorStatus getEastDoor() {
-        return myEastDoor;
-    }
-
-    void setEastDoor(DoorStatus theEastDoor) {
-        myEastDoor = theEastDoor;
-    }
-
-    DoorStatus getSouthDoor() {
-        return mySouthDoor;
-    }
-
-    void setSouthDoor(DoorStatus theSouthDoor) {
-        mySouthDoor = theSouthDoor;
-    }
-
-    DoorStatus getWestDoor() {
-        return myWestDoor;
-    }
-
-    void setWestDoor(DoorStatus theWestDoor) {
-        myWestDoor = theWestDoor;
-    }
-
     void openAllDoors() {
-        myNorthDoor = DoorStatus.OPEN;
-        myWestDoor = DoorStatus.OPEN;
-        myEastDoor = DoorStatus.OPEN;
-        mySouthDoor = DoorStatus.OPEN;
+        setNorthDoor(DoorStatus.OPEN);
+        setEastDoor(DoorStatus.OPEN);
+        setSouthDoor(DoorStatus.OPEN);
+        setWestDoor(DoorStatus.OPEN);
     }
-
-    void closeAllDoors() {
-        myNorthDoor = DoorStatus.CLOSED;
-        myWestDoor = DoorStatus.CLOSED;
-        myEastDoor = DoorStatus.CLOSED;
-        mySouthDoor = DoorStatus.CLOSED;
+    /**
+     * Clears all the items in the room.
+     */
+    void emptyRoom() {
+        setPillar("");
+        setPit(false);
+        setHealingPotion(false);
+        setVisionPotion(false);
+        if (myMonster1 != null) {
+            myMonster1.setHealth(0);
+        }
+        setEntrance(false);
+        setExit(false);
     }
-
     /**
      * Randomly assigns a pit, vision potion, healing potion, and a monster
      * to the Model.Room.
@@ -243,7 +321,8 @@ public class Room implements Serializable {
         } else {
             myHealingPotion = false;
         }
-
+        // if random rolls a number less than monster chance, create a monster
+        // depending on the modulus of the roll
         if((rand.nextInt(100) + 1) <= MONSTER_CHANCE) {
             int pick = rand.nextInt(100) + 1;
             if (pick % 3 == 0) {
@@ -256,56 +335,9 @@ public class Room implements Serializable {
         }
     }
 
-    /**
-     * Clears all the items in the room.
-     */
-    void emptyRoom() {
-        setPillar("");
-        setPit(false);
-        setHealingPotion(false);
-        setVisionPotion(false);
-        if (myMonster1 != null) {
-            myMonster1.setHealth(0);
-        }
-        setEntrance(false);
-        setExit(false);
-    }
-
-    /**
-     * Pillars: A = Abstraction, E = Encapsulation
-     *          I = Inheritance, P = Polymorphism
-     * H = healing potion only
-     * V = vision potion only
-     * X = pit only
-     * M = more than 1 item
-     *
-     * @return Gets the letter that best represents the contents of the room
-     */
-    String getMiddle() {
-        String middle = "";
-        if (getEntrance()) {
-            middle = "i";
-        } else if (getExit()) {
-            middle = "O";
-        } else {
-            if (myItemCount > 1) {
-                middle = "M";
-            } else if (myItemCount < 1) {
-                middle = " ";
-            } else {
-                if (getPillar().compareTo("") != 0) { // if pillar not empty String
-                    middle = getPillar();
-                } else if (getVisionPotion()) {
-                    middle = "V";
-                } else if (getHealingPotion()) {
-                    middle = "H";
-                } else if (getPit()) {
-                    middle = "X";
-                }
-            }
-        }
-        return middle;
-    }
+    //=================
+    // Override Methods
+    //=================
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
