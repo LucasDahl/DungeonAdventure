@@ -29,20 +29,51 @@ public class DungeonAdventure {
     public void setPlayerName(final String theName) {
         myPlayerName = theName;
     }
-
-
-//    private static void exit() {
-//        if (myAdventurer.getListOfPillars().length() > 3) {
-//            // play win music
-//        } else {
-//            displayOptions();
-//        }
-//    }
-
-    private static void checkMonster() {
-        if (!myDungeon.myCurrentRoom.getMonster().isDead()) {
-            System.out.println("f - fight Monster");
+    
+    private boolean checkExitConditions() {
+        boolean canExitHere = false;
+        int pillarsCount = 0;
+        String currentPillars = myAdventurer.getListOfPillars();
+        String[] neededPillars= {"a", "e", "i", "p"};
+        if (myDungeon.myCurrentRoom.getExit()) {
+            // Check for all 4 pillars
+            for (int i = 0; i < neededPillars.length; i++) {
+                if(currentPillars.contains(neededPillars[i])){
+                    pillarsCount++;
+                }
+            }
+            if(pillarsCount == neededPillars.length){
+                canExitHere = true;
+            }
         }
+        return canExitHere;
+    }
+    /**
+     * Check if the monster is alive. If a room has an alive monster,
+     * the adventurer should not be able to move out of the room.
+     */
+    private String checkMonster() {
+        StringBuilder sb = new StringBuilder();
+        if (!(myDungeon.myCurrentRoom.getMonster() == null)) {
+            if (!myDungeon.myCurrentRoom.getMonster().isDead()) {
+                sb.append("f - fight");
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * This method looks at the current room's doors to see if they are open.
+     * If open, the adventurer will be notified of the keyboard input to choose
+     * one of the open doors.
+     * @return a String of all the doors the adventurer can choose
+     */
+    private String reportOpenDoors() {
+        StringBuilder sb = new StringBuilder();
+        if (myDungeon.myCurrentRoom.getNorthDoor().equals(DoorStatus.OPEN)) {
+            sb.append("w - go through North Door\n");
+        }
+        return sb.toString();
     }
 
 
