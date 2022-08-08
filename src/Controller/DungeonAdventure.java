@@ -29,7 +29,7 @@ public class DungeonAdventure {
     public void setPlayerName(final String theName) {
         myPlayerName = theName;
     }
-    
+
     private boolean checkExitConditions() {
         boolean canExitHere = false;
         int pillarsCount = 0;
