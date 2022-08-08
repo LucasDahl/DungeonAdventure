@@ -3,8 +3,6 @@ package Controller;
 import Model.*;
 import View.DungeonView;
 
-import java.util.Scanner;
-
 
 /*
  * TCSS 360 - Summer 2022
@@ -14,7 +12,7 @@ import java.util.Scanner;
  * as all component classes.
  */
 public class DungeonAdventure {
-    private static MockDungeon myDungeon;
+    private static Dungeon myDungeon;
     private static Adventurer myAdventurer;
 
     private String myPlayerName;
@@ -29,7 +27,7 @@ public class DungeonAdventure {
     public void setPlayerName(final String theName) {
         myPlayerName = theName;
     }
-    
+
     private boolean checkExitConditions() {
         boolean canExitHere = false;
         int pillarsCount = 0;
@@ -56,6 +54,7 @@ public class DungeonAdventure {
         StringBuilder sb = new StringBuilder();
         if (!(myDungeon.myCurrentRoom.getMonster() == null)) {
             if (!myDungeon.myCurrentRoom.getMonster().isDead()) {
+                // have room class have a method called hasLiveMonster()
                 sb.append("f - fight");
             }
         }
@@ -94,7 +93,7 @@ public class DungeonAdventure {
     }
 
     public static void main(String[] args) {
-        myDungeon = new MockDungeon(DUNGEON_ROWS, DUNGEON_COLUMNS);
+        myDungeon = new Dungeon(DUNGEON_ROWS, DUNGEON_COLUMNS);
         new DungeonView();
 //        System.out.println(myDungeon);
         //System.out.println("Entrance: " + Arrays.toString(myDungeon.getEntrance()));
