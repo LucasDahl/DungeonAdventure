@@ -1,4 +1,5 @@
-import java.util.Arrays;
+package Model;
+
 import java.util.Random;
 
 public class Dungeon {
@@ -19,7 +20,7 @@ public class Dungeon {
         myRows = theRows;
         myColumns = theColumns;
         myMazeOfRooms = new Room[myRows][myColumns];
-//        Room room = new Room();
+//        Model.Room room = new Model.Room();
         //   System.out.println(room);
 
         generateRandomMaze();
@@ -51,7 +52,7 @@ public class Dungeon {
 
     private void move(final int theXCoordinate, final int theYCoordinate) {
         //todo just try to move from one room to another.
-        // use Room toString() to possibly display each room for now.
+        // use Model.Room toString() to possibly display each room for now.
         myAdventurerLocationX = theXCoordinate;
         myAdventurerLocationY = theYCoordinate;
 
@@ -246,7 +247,7 @@ public class Dungeon {
                 DoorStatus southDoor = myMazeOfRooms[row][col].getSouthDoor();
                 DoorStatus westDoor = myMazeOfRooms[row][col].getWestDoor();
 
-                dungeonInformation.append("\nRoom ").append(row).append(",").append(col).append(" has:").append("\npillar: ").append(pillar).append("\nentrance status: ").append(entrance).append("\nexit status: ").append(exit).append("\npit status: ").append(pit).append("\nhealing potion status: ").append(healingPotion).append("\nvision potion status: ").append(visionPotion).append("\neast door status: ").append(eastDoor).append("\nnorth door status: ").append(northDoor).append("\nsouth door status: ").append(southDoor).append("\nwest door status: ").append(westDoor).append("\n");
+                dungeonInformation.append("\nModel.Room ").append(row).append(",").append(col).append(" has:").append("\npillar: ").append(pillar).append("\nentrance status: ").append(entrance).append("\nexit status: ").append(exit).append("\npit status: ").append(pit).append("\nhealing potion status: ").append(healingPotion).append("\nvision potion status: ").append(visionPotion).append("\neast door status: ").append(eastDoor).append("\nnorth door status: ").append(northDoor).append("\nsouth door status: ").append(southDoor).append("\nwest door status: ").append(westDoor).append("\n");
 
 
             }
@@ -261,7 +262,7 @@ public class Dungeon {
 
     public static void main(String args[]) {
 
-        // Room room = new Room();
+        // Model.Room room = new Model.Room();
         // System.out.println(room);
         Dungeon dungeon = new Dungeon(2, 3);
         //   System.out.println(dungeon.myMazeOfRooms[1][1]);

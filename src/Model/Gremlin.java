@@ -1,19 +1,22 @@
+package Model;
+
 /**
  * @author Lucas Dahl - LDahl
  * @version 1.0
  *
  *
  */
-public class Skeleton extends Monster {
+public class Gremlin extends Monster {
 
     // **************************** Fields ****************************
+
     // ************************** Constructors ************************
 
     /**
      *  This is the default constructor
      */
-    public Skeleton() {
-        super("Skeleton", 100, 3, 0.8, 30, 50, 0.3, 30, 50, 1);
+    public Gremlin() {
+        super("Model.Gremlin", 70, 5, 0.8, 15, 30, 0.4, 20, 40, 1);
     }
 
     // **************************** Methods ***************************
@@ -28,12 +31,7 @@ public class Skeleton extends Monster {
     }
 
 //    @Override
-//    public void attackBehavior(final DungeonCharacter theOther) {
+//    public void attackBehavior(final Model.DungeonCharacter theOther) {
 //        super.attackBehavior(theOther);
 //    }
-
-    @Override
-    public boolean isDead() {
-        return super.isDead();
-    }
 }

@@ -1,22 +1,21 @@
-/*
+package Model;/*
  * TCSS 360 - Summer 2022
  * Instructor: Tom Capaul
- * Room class for Dungeon Adventure game
+ * Model.Room class for Model.Dungeon Adventure game
  * Package condition: Must be placed in the same package as DungeonAdventure
  */
 
+import Model.Room;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * This class tests all fields and methods pertaining to a Room as part
- * of the Dungeon environment for the associated Dungeon Adventure game.
+ * This class tests all fields and methods pertaining to a Model.Room as part
+ * of the Model.Dungeon environment for the associated Model.Dungeon Adventure game.
  *
  * @author Jane Kennerly janekennerly@gmail.com
  * @version 26 July 2022
