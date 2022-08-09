@@ -1,3 +1,5 @@
+package Model;
+
 import java.util.Random;
 
 /**
@@ -17,6 +19,8 @@ public class Thief extends Hero {
 
     /**
      *  This is the default constructor
+     *
+     * @param theName the name of the Model.Hero
      */
     public Thief(final String theName) {
         super(theName, 75, 6, 0.8, 20, 40, 0.4, 1);
@@ -26,31 +30,25 @@ public class Thief extends Hero {
 
     // **************************** Methods ***************************
 
-    /**
-     *  This special skill will allow the Thief
-     *  character to possible get another attack,
-     *  but can also lose an attack during this turn.
-     */
-    public void sneakAttack() {
-        Random rand = new Random();
-        double chance = rand.nextDouble();
-        if(MY_SPECIAL_CHANCE / 2.0 < chance) {
-            super.setNumberOfAttacks(0);
-        } else if(MY_SPECIAL_CHANCE > chance) {
-            super.setNumberOfAttacks(getNumberOfAttacks() + 1);
-        }
-    }
-
     //========
     // Getters
     //========
+
+    /**
+     *  Returns the Model.Hero's name.
+     *
+     * @return the name of the Model.Hero.
+     */
+    public String getName() {
+        return super.getName();
+    }
 
     /**
      *  This method will return the special skill.
      *
      * @return the name of the special skill
      */
-    public String getMY_SPECIAL_SKILL() {
+    public String getSpecialSkill() {
         return MY_SPECIAL_SKILL;
     }
 
@@ -61,7 +59,7 @@ public class Thief extends Hero {
      *
      * @return the special chance to hit
      */
-    public double getMY_SPECIAL_CHANCE() {
+    public double getSpecialChance() {
         return MY_SPECIAL_CHANCE;
     }
 
@@ -75,8 +73,14 @@ public class Thief extends Hero {
     }
 
     @Override
-    public void attackBehavior(final DungeonCharacter theOther) {
-        super.attackBehavior(theOther);
+    protected void specialSkill(DungeonCharacter theEnemy) {
+        Random rand = new Random();
+        double chance = rand.nextDouble();
+        if(MY_SPECIAL_CHANCE / 2.0 < chance) {
+            super.setNumberOfAttacks(0);
+        } else if(MY_SPECIAL_CHANCE > chance) {
+            super.setNumberOfAttacks(getNumberOfAttacks() + 1);
+        }
     }
 
     @Override
