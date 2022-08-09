@@ -5,9 +5,7 @@ import java.util.*;
 public class Dungeon {
 
 
-    enum Direction {
-        UP, DOWN, LEFT, RIGHT
-    }
+
         // **************************** Nested Class ****************************
         class Coordinates {
             // **************************** Fields ****************************
@@ -186,7 +184,7 @@ public class Dungeon {
      * updates the Coordinates of the adventurer
      * @param theMove the direction to move
      */
-    void move(Direction theMove) {
+    public void move(Direction theMove) {
         if (theMove.equals(Direction.LEFT) && (getAdventurerY()-1 >=0)) {
             myCurrentLocation.updateY(-1);
         } else if (theMove.equals(Direction.RIGHT) && getAdventurerY() + 1 < myColumns) {
