@@ -1,87 +1,133 @@
 package Model;
 
+import View.DungeonView;
+
+import java.io.Serializable;
 import java.util.*;
 
-public class Dungeon {
+public class Dungeon implements Serializable {
 
+    // **************************** Nested Class ****************************
 
+    /**
+     * This class stores a pair of integers representing an x and a y value,
+     * Coordinates, in the 2D array of Rooms composing Dungeon
+     */
+    class Coordinates {
+        // **************************** Fields ****************************
+        int myX;
+        int myY;
+        // ************************** Constructors ************************
+        Coordinates(int theX, int theY) {
+            myX = theX;
+            myY = theY;
+        }
+        // **************************** Methods ***************************
+        //========
+        // Getters
+        //========
 
-        // **************************** Nested Class ****************************
-        class Coordinates {
-            // **************************** Fields ****************************
-            int myX;
-            int myY;
-            // ************************** Constructors ************************
-            Coordinates(int theX, int theY) {
-                myX = theX;
-                myY = theY;
-            }
-            // **************************** Methods ***************************
-            //========
-            // Getters
-            //========
-
-            int getX() {
-                return myX;
-            }
-
-            int getY() {
-                return myY;
-            }
-
-            //========
-            // Setters
-            //========
-            void updateX(int theX) {
-                myX += theX;
-                myCurrentRoom = myMazeOfRooms[myX][myY];
-            }
-
-            void updateY(int theY) {
-                myY += theY;
-                myCurrentRoom = myMazeOfRooms[myX][myY];
-            }
-
-            //=================
-            // Override Methods
-            //=================
-            @Override
-            public String toString() {
-                StringBuilder sb = new StringBuilder();
-                sb.append("(").append(myX).append(", ").append(myY).append(")");
-                return sb.toString();
-            }
+        int getX() {
+            return myX;
         }
 
-        // ******************************* Fields *******************************
-        private Coordinates myEntrance;
-        private Coordinates myExit;
-        private Coordinates myCurrentLocation;
-        private final Room[][] myMazeOfRooms;
-        public Room myCurrentRoom;
-
-        private final int myColumns;
-        private final int myRows;
-
-        public Dungeon(final int theRows, final int theColumns) {
-            myRows = theRows;
-            myColumns = theColumns;
-            myMazeOfRooms = new Room[myRows][myColumns];
-
-            for (int row = 0; row < myMazeOfRooms.length; row++) {
-                for (int col = 0; col < myMazeOfRooms[row].length; col++) {
-                    myMazeOfRooms[row][col] = new Room();
-                }
-            }
-
-            placeEntrance();
-            placeExit();
-            placePillars();
-            closeEdgeDoors();
-
+        int getY() {
+            return myY;
         }
 
-        // ******************************* Methods ******************************
+        //========
+        // Setters
+        //========
+        void updateX(int theX) {
+            myX += theX;
+            myCurrentRoom = myMazeOfRooms[myX][myY];
+        }
+
+        void updateY(int theY) {
+            myY += theY;
+            myCurrentRoom = myMazeOfRooms[myX][myY];
+        }
+
+        //=================
+        // Override Methods
+        //=================
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+            sb.append("(").append(myX).append(", ").append(myY).append(")");
+            return sb.toString();
+        }
+    }
+
+    // ******************************* Fields *******************************
+    private Coordinates myEntrance;
+    private Coordinates myExit;
+    private Coordinates myCurrentLocation;
+    private final Room[][] myMazeOfRooms;
+    public Room myCurrentRoom;
+
+    private final int myColumns;
+    private final int myRows;
+
+    public Dungeon(final int theRows, final int theColumns) {
+        myRows = theRows;
+        myColumns = theColumns;
+        myMazeOfRooms = new Room[myRows][myColumns];
+
+        for (int row = 0; row < myMazeOfRooms.length; row++) {
+            for (int col = 0; col < myMazeOfRooms[row].length; col++) {
+                myMazeOfRooms[row][col] = new Room();
+            }
+        }
+        generateMaze();
+        placeEntrance();
+        placeExit();
+        placePillars();
+        closeEdgeDoors();
+
+    }
+
+    // ******************************* Methods ******************************
+    /**
+     * This method goes through the dungeon and cloes all the doors
+     * at the edge of the dungeon.
+     */
+    private void closeEdgeDoors() {
+        //top edge
+        for (int i = 0; i < myColumns; i++){
+            myMazeOfRooms[0][i].setNorthDoor(DoorStatus.CLOSED);
+        }
+        // right edge
+        for (int i = 0; i < myRows; i++) {
+            myMazeOfRooms[i][myColumns-1].setEastDoor(DoorStatus.CLOSED);
+        }
+        // bottom edge
+        for (int i = 0; i < myColumns; i++) {
+            myMazeOfRooms[myRows-1][i].setSouthDoor(DoorStatus.CLOSED);
+        }
+        // left edge
+        for (int i = 0; i < myRows; i++) {
+            myMazeOfRooms[i][0].setWestDoor(DoorStatus.CLOSED);
+        }
+    }
+
+    /**
+     * This method randomly generates a maze
+     */
+    private void generateMaze() {
+        // in progress
+        // recursive backtracker
+
+    }
+    private boolean isTraversalPossible() {
+        // in progress
+        boolean isTraversalPossible = false;
+        Coordinates entrance = getEntrance();
+        // try to reach the exit
+        Set<Room> visitedRooms = new HashSet<Room>();
+        visitedRooms.add(myCurrentRoom);
+        return isTraversalPossible;
+    }
     /**
      * This method randomly chooses a room in the dungeon and assigns
      * it as the dungeon entrance.
@@ -125,28 +171,7 @@ public class Dungeon {
         getEmptyRoom("I");
         getEmptyRoom("P");
     }
-    /**
-     * This method goes through the dungeon and cloes all the doors
-     * at the edge of the dungeon.
-     */
-    private void closeEdgeDoors() {
-        //top edge
-        for (int i = 0; i < myColumns; i++){
-            myMazeOfRooms[0][i].setNorthDoor(DoorStatus.CLOSED);
-        }
-        // right edge
-        for (int i = 0; i < myRows; i++) {
-            myMazeOfRooms[i][myColumns-1].setEastDoor(DoorStatus.CLOSED);
-        }
-        // bottom edge
-        for (int i = 0; i < myColumns; i++) {
-            myMazeOfRooms[myRows-1][i].setSouthDoor(DoorStatus.CLOSED);
-        }
-        // left edge
-        for (int i = 0; i < myRows; i++) {
-            myMazeOfRooms[i][0].setWestDoor(DoorStatus.CLOSED);
-        }
-    }
+
     //========
     // Getters
     //========
@@ -155,8 +180,7 @@ public class Dungeon {
      * This method checks if a random room is an entrance, exit, or
      * has pillars. If the room doesn't have any pillars, this method would
      * set the parameter the Pillar as the room's pillar.
-     * @param thePillar a letter (a, e, i, p) representing
-     *                  one of the Pillars of OO
+     * @param thePillar a letter (a, e, i, p) representing a Pillar of OO
      */
     private void getEmptyRoom(String thePillar){
         Random rand = new Random();
@@ -220,13 +244,12 @@ public class Dungeon {
         return myCurrentLocation;
     }
 
-
     /**
      * Precondition: It must be used for east or west doors
      * This method checks if the door is open or closed and returns
      * the character representation of the door.
-     * @param theDoor
-     * @return
+     * @param theDoor DoorStatus OPEN or CLOSED
+     * @return * is a closed door. | is an open east/west door.
      */
     String printEWDoor(DoorStatus theDoor) {
         String str = "";
@@ -241,8 +264,8 @@ public class Dungeon {
      * Precondition: It must be used for north or south doors
      * This method checks if the door is open or closed and returns
      * the character representation of the door.
-     * @param theDoor
-     * @return
+     * @param theDoor DoorStatus OPEN or CLOSED
+     * @return * is a closed door. - is an open north/south door.
      */
     String printNSDoor(DoorStatus theDoor) {
         String str = "";
@@ -254,10 +277,18 @@ public class Dungeon {
         return str;
     }
     /**
-     * sets the current room according to the Adventurer's coordinates
+     * update the current room according to the Adventurer's coordinates
      */
     void updateCurrentRoom() {
         myCurrentRoom = myMazeOfRooms[getAdventurerX()][getAdventurerY()];
+    }
+
+    /**
+     * Use to manually set the Dungeon's current room
+     * @param theRoom Coordinates to set as the current room
+     */
+    void updateCurrentRoom(Coordinates theRoom) {
+        myCurrentRoom = myMazeOfRooms[theRoom.getX()][theRoom.getY()];
     }
 
     //=================
@@ -265,37 +296,44 @@ public class Dungeon {
     //=================
     @Override
     public String toString() {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < myRows; i++) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < myRows; i++) {
 
-                // create Model.Room top row
-                for (int j = 0; j < myColumns; j++) {
-                    sb.append("*"); // top-left corner
-                    sb.append((printNSDoor(myMazeOfRooms[i][j].getNorthDoor()))); // North door
-                    //sb.append("*"); // top-right corner
-                }
-                sb.append("*\n"); // go to middle row
-
-                // create Model.Room middle row
-                for (int j = 0; j < myColumns; j++) {
-                    sb.append((printEWDoor(myMazeOfRooms[i][j].getWestDoor()))); // West door
-                    sb.append((myMazeOfRooms[i][j].getMiddle())); // Contents of Model.Room
-                    //sb.append(printEWDoor(myMazeOfRooms[i][j].getEastDoor())); // East door
-                }
-                sb.append(printEWDoor(myMazeOfRooms[i][myColumns - 1].getEastDoor())); // East door
-                sb.append("\n"); // go to bottom row
-
-                if (i == (myRows - 1)) {
-                    // create Model.Room bottom row
-                    for (int j = 0; j < myColumns; j++) {
-                        sb.append("*"); // bottom-left corner
-                        sb.append(printNSDoor((myMazeOfRooms[i][j].getSouthDoor()))); // South door
-
-                    }
-                    sb.append("*"); // bottom-right corner
-                }
+            // create Model.Room top row
+            for (int j = 0; j < myColumns; j++) {
+                sb.append("*"); // top-left corner
+                sb.append((printNSDoor(myMazeOfRooms[i][j].getNorthDoor()))); // North door
+                //sb.append("*"); // top-right corner
             }
-            return sb.toString();
+            sb.append("*\n"); // go to middle row
+
+            // create Model.Room middle row
+            for (int j = 0; j < myColumns; j++) {
+                sb.append((printEWDoor(myMazeOfRooms[i][j].getWestDoor()))); // West door
+                sb.append((myMazeOfRooms[i][j].getMiddle())); // Contents of Model.Room
+                //sb.append(printEWDoor(myMazeOfRooms[i][j].getEastDoor())); // East door
+            }
+            sb.append(printEWDoor(myMazeOfRooms[i][myColumns - 1].getEastDoor())); // East door
+            sb.append("\n"); // go to bottom row
+
+            if (i == (myRows - 1)) {
+                // create Model.Room bottom row
+                for (int j = 0; j < myColumns; j++) {
+                    sb.append("*"); // bottom-left corner
+                    sb.append(printNSDoor((myMazeOfRooms[i][j].getSouthDoor()))); // South door
+
+                }
+                sb.append("*"); // bottom-right corner
+            }
         }
+        return sb.toString();
+    }
+
+    // only here for testing
+    public static void main(String[] args) {
+        Dungeon dungeon = new Dungeon(3, 3);
+        System.out.println("Brand new dungeon");
+        System.out.println(dungeon);
+    }
     }
 

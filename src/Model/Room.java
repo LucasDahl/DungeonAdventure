@@ -1,4 +1,5 @@
-package Model;/*
+package Model;
+/*
  * TCSS 360 - Summer 2022
  * Instructor: Tom Capaul
  * Model.Room class for Model.Dungeon Adventure game
@@ -53,7 +54,92 @@ public class Room implements Serializable {
     }
 
     // ******************************* Methods ******************************
+    /**
+     * Sets all doors to CLOSED
+     */
+    void closeAllDoors() {
+        setNorthDoor(DoorStatus.CLOSED);
+        setEastDoor(DoorStatus.CLOSED);
+        setSouthDoor(DoorStatus.CLOSED);
+        setWestDoor(DoorStatus.CLOSED);
+    }
 
+    /**
+     * Sets all doors to OPEN
+     */
+    void openAllDoors() {
+        setNorthDoor(DoorStatus.OPEN);
+        setEastDoor(DoorStatus.OPEN);
+        setSouthDoor(DoorStatus.OPEN);
+        setWestDoor(DoorStatus.OPEN);
+    }
+    /**
+     * Clears all the items in the room.
+     */
+    void emptyRoom() {
+        setPillar("");
+        setPit(false);
+        setHealingPotion(false);
+        setVisionPotion(false);
+        if (myMonster1 != null) {
+            myMonster1.setHealth(0);
+        }
+        setEntrance(false);
+        setExit(false);
+    }
+
+    /**
+     * @return whether the Room has an alive monster
+     */
+    public boolean hasLiveMonster() {
+        boolean monsterIsDead = true;
+        if(myMonster1 != null) {
+            monsterIsDead = !getMonster().isDead();
+        }
+        return monsterIsDead;
+    }
+    /**
+     * Randomly assigns a pit, vision potion, healing potion, and a monster
+     * to the Model.Room.
+     */
+    void populateRoom() {
+        final int PIT_CHANCE = 20;
+        final int VISION_POTION_CHANCE = 10;
+        final int HEALING_POTION_CHANCE = 20;
+        final int MONSTER_CHANCE = 20;
+
+        Random rand = new Random();
+        if ((rand.nextInt(100) + 1) <= PIT_CHANCE) {
+            myPit = true;
+            myItemCount++;
+        } else {
+            myPit = false;
+        }
+        if ((rand.nextInt(100) + 1) <= VISION_POTION_CHANCE) {
+            myVisionPotion = true;
+            myItemCount++;
+        } else {
+            myVisionPotion = false;
+        }
+        if ((rand.nextInt(100) + 1) <= HEALING_POTION_CHANCE) {
+            myHealingPotion = true;
+            myItemCount++;
+        } else {
+            myHealingPotion = false;
+        }
+        // if random rolls a number less than monster chance, create a monster
+        // depending on the modulus of the roll
+        if((rand.nextInt(100) + 1) <= MONSTER_CHANCE) {
+            int pick = rand.nextInt(100) + 1;
+            if (pick % 3 == 0) {
+                myMonster1 = new Ogre();
+            } else if (pick % 3 == 1) {
+                myMonster1 = new Gremlin();
+            } else {
+                myMonster1 = new Skeleton();
+            }
+        }
+    }
 
     //========
     // Door Getters
@@ -259,81 +345,7 @@ public class Room implements Serializable {
         }
         myVisionPotion = theVisionPotion;
     }
-    /**
-     * Sets all doors to CLOSED
-     */
-    void closeAllDoors() {
-        setNorthDoor(DoorStatus.CLOSED);
-        setEastDoor(DoorStatus.CLOSED);
-        setSouthDoor(DoorStatus.CLOSED);
-        setWestDoor(DoorStatus.CLOSED);
-    }
 
-    /**
-     * Sets all doors to OPEN
-     */
-    void openAllDoors() {
-        setNorthDoor(DoorStatus.OPEN);
-        setEastDoor(DoorStatus.OPEN);
-        setSouthDoor(DoorStatus.OPEN);
-        setWestDoor(DoorStatus.OPEN);
-    }
-    /**
-     * Clears all the items in the room.
-     */
-    void emptyRoom() {
-        setPillar("");
-        setPit(false);
-        setHealingPotion(false);
-        setVisionPotion(false);
-        if (myMonster1 != null) {
-            myMonster1.setHealth(0);
-        }
-        setEntrance(false);
-        setExit(false);
-    }
-    /**
-     * Randomly assigns a pit, vision potion, healing potion, and a monster
-     * to the Model.Room.
-     */
-    void populateRoom() {
-        final int PIT_CHANCE = 20;
-        final int VISION_POTION_CHANCE = 10;
-        final int HEALING_POTION_CHANCE = 20;
-        final int MONSTER_CHANCE = 20;
-
-        Random rand = new Random();
-        if ((rand.nextInt(100) + 1) <= PIT_CHANCE) {
-            myPit = true;
-            myItemCount++;
-        } else {
-            myPit = false;
-        }
-        if ((rand.nextInt(100) + 1) <= VISION_POTION_CHANCE) {
-            myVisionPotion = true;
-            myItemCount++;
-        } else {
-            myVisionPotion = false;
-        }
-        if ((rand.nextInt(100) + 1) <= HEALING_POTION_CHANCE) {
-            myHealingPotion = true;
-            myItemCount++;
-        } else {
-            myHealingPotion = false;
-        }
-        // if random rolls a number less than monster chance, create a monster
-        // depending on the modulus of the roll
-        if((rand.nextInt(100) + 1) <= MONSTER_CHANCE) {
-            int pick = rand.nextInt(100) + 1;
-            if (pick % 3 == 0) {
-                myMonster1 = new Ogre();
-            } else if (pick % 3 == 1) {
-                myMonster1 = new Gremlin();
-            } else {
-                myMonster1 = new Skeleton();
-            }
-        }
-    }
 
     //=================
     // Override Methods
