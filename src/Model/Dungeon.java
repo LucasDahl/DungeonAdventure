@@ -28,6 +28,7 @@ public class Dungeon {
         placeExit();
         placePillars();
         move(0, 1);
+       // recursiveBacktrack(myMazeOfRooms, 0, 0, 3, 3);
 
 
     }
@@ -42,6 +43,31 @@ public class Dungeon {
         }
 
     }
+
+    // given a current cell as a parameter(0,0 the entrance?)
+    // mark the current cell as visited
+    // while the current cell has any unvisited neighbor cells
+    // choose one of the unvisited neighbors
+    // remove the wall between the current cell and the chosen cell
+    // invoke the routine recursively for a chosen cell
+
+
+    // the start is the entrance, the end is the exit
+    // maybe have it be 0,0 as the start?
+//    private void recursiveBacktrack(final Room[][] theRooms, final int startRow, final int startRo, final int endX, final int endY) {
+//        System.out.println("Room length " + theRooms.length);
+//        boolean[] visitedX = new boolean[theRooms.length];
+//        boolean[] visitedY = new boolean[theRooms.length];
+//
+//        // mark current cell as visited
+//        visitedX[startX] = true;
+//        visitedY[startY] = true;
+//
+//        // see if the current cell has neighbors
+//        if (theRooms[startX-1][startY])
+//
+//    }
+
 
     private boolean isTraversalPossible() {
 
@@ -264,7 +290,7 @@ public class Dungeon {
 
         // Model.Room room = new Model.Room();
         // System.out.println(room);
-        Dungeon dungeon = new Dungeon(2, 3);
+        Dungeon dungeon = new Dungeon(4, 4);
         //   System.out.println(dungeon.myMazeOfRooms[1][1]);
         // System.out.println(dungeon);
         //System.out.println(dungeon);
