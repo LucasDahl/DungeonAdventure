@@ -5,7 +5,7 @@ import java.util.*;
 public class Dungeon {
 
 
-    enum Direction {
+    public enum Direction {
         UP, DOWN, LEFT, RIGHT
     }
         // **************************** Nested Class ****************************
@@ -61,6 +61,8 @@ public class Dungeon {
         private Coordinates myCurrentLocation;
         private final Room[][] myMazeOfRooms;
         public Room myCurrentRoom;
+
+        private Direction myDirection;
 
         private final int myColumns;
         private final int myRows;
@@ -186,7 +188,7 @@ public class Dungeon {
      * updates the Coordinates of the adventurer
      * @param theMove the direction to move
      */
-    void move(Direction theMove) {
+    public void move(Direction theMove) {
         if (theMove.equals(Direction.LEFT) && (getAdventurerY()-1 >=0)) {
             myCurrentLocation.updateY(-1);
         } else if (theMove.equals(Direction.RIGHT) && getAdventurerY() + 1 < myColumns) {
@@ -220,6 +222,10 @@ public class Dungeon {
      */
     Coordinates getCurrentLocation() {
         return myCurrentLocation;
+    }
+
+    public Direction getDirection(String theDirection){
+       return myDirection = Direction.valueOf(theDirection);
     }
 
 
