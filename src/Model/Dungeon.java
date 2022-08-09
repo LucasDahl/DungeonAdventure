@@ -1,299 +1,303 @@
 package Model;
 
-import java.util.Random;
+import java.util.*;
 
 public class Dungeon {
-    private Room[][] myMazeOfRooms;
-    private int myAdventurerLocationX;
-    private int myAdventurerLocationY;
-
-    private int myColumns;
-    private int myRows;
-
-    private Room myPillarALocation, myPillarELocation, MyPillarILocation, myPillarPLocation, myCurrentRoom;
 
 
-    private int myEntranceXCoordinate, myEntranceYCoordinate, myExitXCoordinate, myExitYCoordinate;
-
-
-    public Dungeon(final int theRows, final int theColumns) {
-        myRows = theRows;
-        myColumns = theColumns;
-        myMazeOfRooms = new Room[myRows][myColumns];
-//        Model.Room room = new Model.Room();
-        //   System.out.println(room);
-
-        generateRandomMaze();
-        placeEntrance();
-        placeExit();
-        placePillars();
-        move(0, 1);
-       // recursiveBacktrack(myMazeOfRooms, 0, 0, 3, 3);
-
-
+    enum Direction {
+        UP, DOWN, LEFT, RIGHT
     }
+        // **************************** Nested Class ****************************
+        class Coordinates {
+            // **************************** Fields ****************************
+            int myX;
+            int myY;
+            // ************************** Constructors ************************
+            Coordinates(int theX, int theY) {
+                myX = theX;
+                myY = theY;
+            }
+            // **************************** Methods ***************************
+            //========
+            // Getters
+            //========
 
-    private void generateRandomMaze() {
+            int getX() {
+                return myX;
+            }
 
+            int getY() {
+                return myY;
+            }
 
-        for (int row = 0; row < myMazeOfRooms.length; row++) {
-            for (int col = 0; col < myMazeOfRooms[row].length; col++) {
-                myMazeOfRooms[row][col] = new Room();
+            //========
+            // Setters
+            //========
+            void updateX(int theX) {
+                myX += theX;
+                myCurrentRoom = myMazeOfRooms[myX][myY];
+            }
+
+            void updateY(int theY) {
+                myY += theY;
+                myCurrentRoom = myMazeOfRooms[myX][myY];
+            }
+
+            //=================
+            // Override Methods
+            //=================
+            @Override
+            public String toString() {
+                StringBuilder sb = new StringBuilder();
+                sb.append("(").append(myX).append(", ").append(myY).append(")");
+                return sb.toString();
             }
         }
 
-    }
+        // ******************************* Fields *******************************
+        private Coordinates myEntrance;
+        private Coordinates myExit;
+        private Coordinates myCurrentLocation;
+        private final Room[][] myMazeOfRooms;
+        public Room myCurrentRoom;
 
-    // given a current cell as a parameter(0,0 the entrance?)
-    // mark the current cell as visited
-    // while the current cell has any unvisited neighbor cells
-    // choose one of the unvisited neighbors
-    // remove the wall between the current cell and the chosen cell
-    // invoke the routine recursively for a chosen cell
+        private final int myColumns;
+        private final int myRows;
 
+        public Dungeon(final int theRows, final int theColumns) {
+            myRows = theRows;
+            myColumns = theColumns;
+            myMazeOfRooms = new Room[myRows][myColumns];
 
-    // the start is the entrance, the end is the exit
-    // maybe have it be 0,0 as the start?
-//    private void recursiveBacktrack(final Room[][] theRooms, final int startRow, final int startRo, final int endX, final int endY) {
-//        System.out.println("Room length " + theRooms.length);
-//        boolean[] visitedX = new boolean[theRooms.length];
-//        boolean[] visitedY = new boolean[theRooms.length];
-//
-//        // mark current cell as visited
-//        visitedX[startX] = true;
-//        visitedY[startY] = true;
-//
-//        // see if the current cell has neighbors
-//        if (theRooms[startX-1][startY])
-//
-//    }
+            for (int row = 0; row < myMazeOfRooms.length; row++) {
+                for (int col = 0; col < myMazeOfRooms[row].length; col++) {
+                    myMazeOfRooms[row][col] = new Room();
+                }
+            }
 
+            placeEntrance();
+            placeExit();
+            placePillars();
+            closeEdgeDoors();
 
-    private boolean isTraversalPossible() {
+        }
 
-        //todo implement a recursive backtracking algorithm to ensure it is possible to traverse from the entrance to exit
-        return false;
-    }
-
-
-    private void move(final int theXCoordinate, final int theYCoordinate) {
-        //todo just try to move from one room to another.
-        // use Model.Room toString() to possibly display each room for now.
-        myAdventurerLocationX = theXCoordinate;
-        myAdventurerLocationY = theYCoordinate;
-
-
-        //how can I move from the entrance to another room?
-
-        // need a field for the current room?
-
-        // the current room by default will always be the entrance
-
-        System.out.println("Current room:");
-        System.out.println(myCurrentRoom);
-
-        // to move from one room just update the coordinates of myCurrentRoom
-
-        myCurrentRoom = myMazeOfRooms[theXCoordinate][theYCoordinate];
-
-        System.out.println("The current room after moving:");
-        System.out.println(myCurrentRoom);
-
-
-    }
-
+        // ******************************* Methods ******************************
+    /**
+     * This method randomly chooses a room in the dungeon and assigns
+     * it as the dungeon entrance.
+     */
     private void placeEntrance() {
+        Random rand = new Random();
+        int x, y;
+        x = rand.nextInt(myRows);
+        y = rand.nextInt(myColumns);
+        myMazeOfRooms[x][y].setEntrance(true);
 
-
-        //todo place the entrance in a random location
-        // possibly need to save this location
-        // I need to check if the random location that I want to place the exit in doesn't have the exit in it
-        Random random = new Random();
-
-
-        //myMazeOfRooms[random.nextInt(myRows)][random.nextInt(myColumns)].setEntrance(true);
-
-        boolean isExit = myMazeOfRooms[0][0].getExit();
-        // if this room is not the exit then I want to set it to be the entrance
-        if (!isExit) {
-            myEntranceXCoordinate = 0;
-            myEntranceYCoordinate = 0;
-            myMazeOfRooms[0][0].emptyRoom();
-            myMazeOfRooms[0][0].setEntrance(true);
-            //  myEntranceLocation =
-            myCurrentRoom = myMazeOfRooms[0][0];
-//            System.out.println("ENTRANCE");
-//            System.out.println(Arrays.deepToString(myEntranceLocation));
-
-        }
-
-
-//        System.out.println(myMazeOfRooms[0][0].getEntrance());
-
+        myEntrance = new Coordinates(x,y);
+        myCurrentLocation = new Coordinates(x,y);
+        myCurrentRoom = myMazeOfRooms[x][y];
     }
 
+    /**
+     * This method randomly chooses a room in the dungeon and assigns
+     * it as the dungeon exit.
+     */
     private void placeExit() {
-        Random random = new Random();
-
-
-        //todo place the exit in a random location
-        // I need to check if the random location that I want to place the exit in doesn't have the entrance in it
-
-        //myMazeOfRooms[random.nextInt(myRows)][random.nextInt(myColumns)].getEntrance();
-
-        boolean isEntrance = myMazeOfRooms[0][1].getEntrance();
-        System.out.println(isEntrance);
-        // if this room is not the entrance then I want to set it to be the exit
-        if (!isEntrance) {
-            myExitXCoordinate = 0;
-            myEntranceYCoordinate = 1;
-            myMazeOfRooms[0][1].emptyRoom();
-            myMazeOfRooms[0][1].setExit(true);
-            // myExitLocation = myMazeOfRooms[0][1];
-            System.out.println("EXIT");
-            //System.out.println(myExitLocation);
-
-
+        Random rand = new Random();
+        int x, y;
+        x = rand.nextInt(myRows);
+        y = rand.nextInt(myColumns);
+        while(myMazeOfRooms[x][y].getEntrance()) {
+            x = rand.nextInt(myRows);
+            y = rand.nextInt(myColumns);
         }
-
-        System.out.println(isEntrance);
-
-
+        myMazeOfRooms[x][y].setExit(true);
+        myExit = new Coordinates(x, y);
     }
 
-    public int[] getEntrance() {
-        int[] coordinates = {myEntranceXCoordinate, myEntranceYCoordinate};
-        return coordinates;
-    }
-
-    public int[] getExit() {
-        int[] coordinates = {myExitXCoordinate, myExitYCoordinate};
-        return coordinates;
-    }
-
-    public int[] getAdventurerLocation() {
-        int[] coordinates = {myAdventurerLocationX, myAdventurerLocationY};
-        return coordinates;
-    }
-
+    /**
+     * This method finds a room that isn't the entrance, the exit, or
+     * has any pillars.
+     */
     private void placePillars() {
-
-        myMazeOfRooms[0][2].setPillar("A");
-        myMazeOfRooms[1][0].setPillar("E");
-        myMazeOfRooms[1][1].setPillar("I");
-        myMazeOfRooms[1][2].setPillar("P");
-
-
-        // if this room where the pillar will be placed is not the entrance or exit
-        // and this room does not have any other pillars
-//        boolean isEntrance_A = myMazeOfRooms[0][2].getEntrance();
-//        boolean isExit_A = myMazeOfRooms[0][2].getExit();
-//        String pillarLetter_A = myMazeOfRooms[0][2].getPillar();
-//
-//        boolean isEntrance_E = myMazeOfRooms[0][3].getEntrance();
-//        boolean isExit_E = myMazeOfRooms[0][3].getExit();
-//        String pillarLetter_E = myMazeOfRooms[0][3].getPillar();
-//
-//        boolean isEntrance_I = myMazeOfRooms[1][0].getEntrance();
-//        boolean isExit_I = myMazeOfRooms[1][0].getExit();
-//        String pillarLetter_I = myMazeOfRooms[1][0].getPillar();
-//
-//        boolean isEntrance_P = myMazeOfRooms[1][1].getEntrance();
-//        boolean isExit_P = myMazeOfRooms[1][1].getExit();
-//        String pillarLetter_P = myMazeOfRooms[1][1].getPillar();
-//
-//        String letterToPlace = getRandomPillarLetter();
-//
-//        int count = 0;
-//
-//        if (!isEntrance_A && !isExit_A && pillarLetter_A.equals("")) {
-////            myMazeOfRooms[1][1].setPillar(letterToPlace);
-//            if (letterToPlace.equals("A") && count < 1) {
-//                System.out.println("Place A");
-//                myMazeOfRooms[0][2].setPillar(letterToPlace);
-//                count += 1;
-//            }
-//        }
-//        if (!isEntrance_E && !isExit_E && pillarLetter_E.equals("")) {
-//            if (letterToPlace.equals("E")) {
-//                System.out.println("Place E");
-//                myMazeOfRooms[0][3].setPillar(letterToPlace);
-//            }
-//        }
-//
-//        if (!isEntrance_I && !isExit_I && pillarLetter_I.equals("")) {
-//            if (letterToPlace.equals("I")) {
-//                System.out.println("Place I");
-//                myMazeOfRooms[1][0].setPillar(letterToPlace);
-//            }
-//        }
-//
-//        if (!isEntrance_P && !isExit_P && pillarLetter_P.equals("")) {
-//            if (letterToPlace.equals("P")) {
-//                System.out.println("Place P");
-//                myMazeOfRooms[1][1].setPillar(letterToPlace);
-//            }
-//        }
-//
-//        System.out.println("Here");
+        getEmptyRoom("A");
+        getEmptyRoom("E");
+        getEmptyRoom("I");
+        getEmptyRoom("P");
     }
-
-    private String getRandomPillarLetter() {
-        String[] validLetters = {"A", "E", "I", "P"};
-
-        Random random = new Random();
-        int randomNumber = random.nextInt(validLetters.length);
-        System.out.println(validLetters[randomNumber]);
-
-        return validLetters[randomNumber];
-    }
-
-    public String toString() {
-
-        //todo possible refactoring
-
-        // show the information in each room in the dungeon
-
-
-        StringBuilder dungeonInformation = new StringBuilder();
-
-
-        System.out.println("MAZE LENGTH" + myMazeOfRooms.length);
-
-        for (int row = 0; row < myMazeOfRooms.length; row++) {
-            for (int col = 0; col < myMazeOfRooms[row].length; col++) {
-                String pillar = myMazeOfRooms[row][col].getPillar();
-                boolean entrance = myMazeOfRooms[row][col].getEntrance();
-                boolean exit = myMazeOfRooms[row][col].getExit();
-                boolean pit = myMazeOfRooms[row][col].getPit();
-                boolean healingPotion = myMazeOfRooms[row][col].getHealingPotion();
-                boolean visionPotion = myMazeOfRooms[row][col].getVisionPotion();
-                DoorStatus eastDoor = myMazeOfRooms[row][col].getEastDoor();
-                DoorStatus northDoor = myMazeOfRooms[row][col].getNorthDoor();
-                DoorStatus southDoor = myMazeOfRooms[row][col].getSouthDoor();
-                DoorStatus westDoor = myMazeOfRooms[row][col].getWestDoor();
-
-                dungeonInformation.append("\nModel.Room ").append(row).append(",").append(col).append(" has:").append("\npillar: ").append(pillar).append("\nentrance status: ").append(entrance).append("\nexit status: ").append(exit).append("\npit status: ").append(pit).append("\nhealing potion status: ").append(healingPotion).append("\nvision potion status: ").append(visionPotion).append("\neast door status: ").append(eastDoor).append("\nnorth door status: ").append(northDoor).append("\nsouth door status: ").append(southDoor).append("\nwest door status: ").append(westDoor).append("\n");
-
-
-            }
+    /**
+     * This method goes through the dungeon and cloes all the doors
+     * at the edge of the dungeon.
+     */
+    private void closeEdgeDoors() {
+        //top edge
+        for (int i = 0; i < myColumns; i++){
+            myMazeOfRooms[0][i].setNorthDoor(DoorStatus.CLOSED);
         }
+        // right edge
+        for (int i = 0; i < myRows; i++) {
+            myMazeOfRooms[i][myColumns-1].setEastDoor(DoorStatus.CLOSED);
+        }
+        // bottom edge
+        for (int i = 0; i < myColumns; i++) {
+            myMazeOfRooms[myRows-1][i].setSouthDoor(DoorStatus.CLOSED);
+        }
+        // left edge
+        for (int i = 0; i < myRows; i++) {
+            myMazeOfRooms[i][0].setWestDoor(DoorStatus.CLOSED);
+        }
+    }
+    //========
+    // Getters
+    //========
 
+    /**
+     * This method checks if a random room is an entrance, exit, or
+     * has pillars. If the room doesn't have any pillars, this method would
+     * set the parameter the Pillar as the room's pillar.
+     * @param thePillar a letter (a, e, i, p) representing
+     *                  one of the Pillars of OO
+     */
+    private void getEmptyRoom(String thePillar){
+        Random rand = new Random();
+        int x, y;
+        x = rand.nextInt(myRows);
+        y = rand.nextInt(myColumns);
+        while(myMazeOfRooms[x][y].getEntrance() ||
+                myMazeOfRooms[x][y].getExit() ||
+                myMazeOfRooms[x][y].getPillar() != "") {
+            x = rand.nextInt(myRows);
+            y = rand.nextInt(myColumns);
+        }
+        myMazeOfRooms[x][y].setPillar(thePillar);
+    }
 
-        return dungeonInformation.toString();
+    /**
+     * @return the Coordinates of the entrance
+     */
+    public Coordinates getEntrance() {
+        return myEntrance;
+    }
 
+    /**
+     * Checks if the adventurer is on the edge of the map and
+     * updates the Coordinates of the adventurer
+     * @param theMove the direction to move
+     */
+    void move(Direction theMove) {
+        if (theMove.equals(Direction.LEFT) && (getAdventurerY()-1 >=0)) {
+            myCurrentLocation.updateY(-1);
+        } else if (theMove.equals(Direction.RIGHT) && getAdventurerY() + 1 < myColumns) {
+            myCurrentLocation.updateY(1);
+        } else if (theMove.equals(Direction.UP) && getAdventurerX() -1 >= 0) {
+            myCurrentLocation.updateX(-1);
+        } else if (theMove.equals(Direction.DOWN) && getAdventurerX() + 1 < myRows) {
+            myCurrentLocation.updateX(1);
+        } else {
+            System.out.println("Never should've gotten here");
+        }
+        System.out.println(myMazeOfRooms[getAdventurerX()][getAdventurerY()].toString());
+    }
 
+    /**
+     * @return the Adventurer's X coordinate
+     */
+    int getAdventurerX() {
+        return myCurrentLocation.myX;
+    }
+
+    /**
+     * @return the Adventurer's Y coordinate
+     */
+    int getAdventurerY() {
+        return myCurrentLocation.myY;
+    }
+
+    /**
+     * @return the current Coordinates of the adventurer
+     */
+    Coordinates getCurrentLocation() {
+        return myCurrentLocation;
     }
 
 
-    public static void main(String args[]) {
-
-        // Model.Room room = new Model.Room();
-        // System.out.println(room);
-        Dungeon dungeon = new Dungeon(4, 4);
-        //   System.out.println(dungeon.myMazeOfRooms[1][1]);
-        // System.out.println(dungeon);
-        //System.out.println(dungeon);
+    /**
+     * Precondition: It must be used for east or west doors
+     * This method checks if the door is open or closed and returns
+     * the character representation of the door.
+     * @param theDoor
+     * @return
+     */
+    String printEWDoor(DoorStatus theDoor) {
+        String str = "";
+        if(theDoor.equals(DoorStatus.CLOSED)) {
+            str = "*";
+        } else {
+            str = "|";
+        }
+        return str;
+    }
+    /**
+     * Precondition: It must be used for north or south doors
+     * This method checks if the door is open or closed and returns
+     * the character representation of the door.
+     * @param theDoor
+     * @return
+     */
+    String printNSDoor(DoorStatus theDoor) {
+        String str = "";
+        if(theDoor.equals(DoorStatus.CLOSED)){
+            str = "*";
+        } else {
+            str = "-";
+        }
+        return str;
+    }
+    /**
+     * sets the current room according to the Adventurer's coordinates
+     */
+    void updateCurrentRoom() {
+        myCurrentRoom = myMazeOfRooms[getAdventurerX()][getAdventurerY()];
     }
 
-}
+    //=================
+    // Override Methods
+    //=================
+    @Override
+    public String toString() {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < myRows; i++) {
+
+                // create Model.Room top row
+                for (int j = 0; j < myColumns; j++) {
+                    sb.append("*"); // top-left corner
+                    sb.append((printNSDoor(myMazeOfRooms[i][j].getNorthDoor()))); // North door
+                    //sb.append("*"); // top-right corner
+                }
+                sb.append("*\n"); // go to middle row
+
+                // create Model.Room middle row
+                for (int j = 0; j < myColumns; j++) {
+                    sb.append((printEWDoor(myMazeOfRooms[i][j].getWestDoor()))); // West door
+                    sb.append((myMazeOfRooms[i][j].getMiddle())); // Contents of Model.Room
+                    //sb.append(printEWDoor(myMazeOfRooms[i][j].getEastDoor())); // East door
+                }
+                sb.append(printEWDoor(myMazeOfRooms[i][myColumns - 1].getEastDoor())); // East door
+                sb.append("\n"); // go to bottom row
+
+                if (i == (myRows - 1)) {
+                    // create Model.Room bottom row
+                    for (int j = 0; j < myColumns; j++) {
+                        sb.append("*"); // bottom-left corner
+                        sb.append(printNSDoor((myMazeOfRooms[i][j].getSouthDoor()))); // South door
+
+                    }
+                    sb.append("*"); // bottom-right corner
+                }
+            }
+            return sb.toString();
+        }
+    }
+
