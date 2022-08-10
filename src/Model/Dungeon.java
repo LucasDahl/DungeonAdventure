@@ -11,7 +11,8 @@ public class Dungeon implements Serializable {
 
     /**
      * This class stores a pair of integers representing an x and a y value,
-     * Coordinates, in the 2D array of Rooms composing Dungeon
+     * Coordinates, in the 2D array of Rooms composing Dungeon. Not designed
+     * for use outside of Dungeon.
      */
     class Coordinates {
         // **************************** Fields ****************************
@@ -38,11 +39,18 @@ public class Dungeon implements Serializable {
         //========
         // Setters
         //========
+
+        /**
+         * @param theX is the value to add or subtract to the current X
+         */
         void updateX(int theX) {
             myX += theX;
             myCurrentRoom = myMazeOfRooms[myX][myY];
         }
 
+        /**
+         * @param theY is the value to add or subtract to the current Y
+         */
         void updateY(int theY) {
             myY += theY;
             myCurrentRoom = myMazeOfRooms[myX][myY];
@@ -79,11 +87,13 @@ public class Dungeon implements Serializable {
                 myMazeOfRooms[row][col] = new Room();
             }
         }
-        generateMaze();
         placeEntrance();
         placeExit();
         placePillars();
         closeEdgeDoors();
+        System.out.println("New dungeon:\n" + this.toString());
+        generateMaze();
+        System.out.println("After generating maze:\n" + this.toString());
 
     }
 
@@ -112,12 +122,132 @@ public class Dungeon implements Serializable {
     }
 
     /**
+     * Precondition: the method placeEntrance() must have been executed
+     * before this one.
      * This method randomly generates a maze
      */
     private void generateMaze() {
         // in progress
         // recursive backtracker
+        // east and south doors only
+        // his m_maze is his int array of neighbor paths
+        //myCurrentRoom.getPath(Direction.NORTH);
+        //myCurrentRoom.getVisitedStatus();
+        //myCurrentRoom.setPath(Direction.NORTH,true);
 
+        int visitedRooms;
+        Stack<Coordinates> mazeStack = new Stack<Coordinates>();
+        mazeStack.push(getCurrentLocation());
+        visitedRooms = 1;
+        while (visitedRooms < (myRows * myColumns)) {
+            // Create a set of unvisited neighbors
+            Vector<Direction> neighbor = new Vector<>();
+            // North neighbor -
+            if((mazeStack.peek().getX() > 0) &&
+                    !roomOffset(mazeStack, Direction.NORTH).getVisitedStatus()) {
+                neighbor.add(Direction.NORTH);
+            }
+            // East neighbor
+            if((mazeStack.peek().getY() < myColumns - 1) &&
+                !roomOffset(mazeStack, Direction.EAST).getVisitedStatus()) {
+                neighbor.add(Direction.EAST);
+            }
+            // South neighbor
+            if(mazeStack.peek().getX() < myRows - 1 &&
+                    !roomOffset(mazeStack, Direction.SOUTH).getVisitedStatus()) {
+                neighbor.add(Direction.SOUTH);
+            }
+            // West neighbor
+            if((mazeStack.peek().getY() > 0) &&
+                    !roomOffset(mazeStack, Direction.WEST).getVisitedStatus()) {
+                neighbor.add(Direction.WEST);
+            }
+
+            // Are there any neighbors?
+            if (!neighbor.isEmpty()) {
+                Random rand = new Random();
+                // choose a random neighbor
+                Direction nextDirection = neighbor.get(rand.nextInt(neighbor.size()));
+
+                // Create a path between the neighbor and current room
+                switch (nextDirection) {
+                    case NORTH, UP: {
+                        roomOffset(mazeStack).setPath(Direction.NORTH, true);
+                        roomOffset(mazeStack, Direction.NORTH).setPath(Direction.SOUTH, true);
+                        myCurrentLocation.updateX(-1);
+                        break;
+                    }
+                    case EAST, RIGHT: {
+                        roomOffset(mazeStack).setPath(Direction.EAST, true);
+                        roomOffset(mazeStack, Direction.EAST).setPath(Direction.WEST, true);
+                        myCurrentLocation.updateY(1);
+                        break;
+                    }
+                    case SOUTH, DOWN: {
+                        roomOffset(mazeStack).setPath(Direction.SOUTH, true);
+                        roomOffset(mazeStack, Direction.SOUTH).setPath(Direction.NORTH, true);
+                        myCurrentLocation.updateX(1);
+                        break;
+                    }
+                    case WEST, LEFT: {
+                        roomOffset(mazeStack).setPath(Direction.WEST, true);
+                        roomOffset(mazeStack, Direction.WEST).setPath(Direction.EAST, true);
+                        myCurrentLocation.updateY(-1);
+                        break;
+                    }
+                }
+                mazeStack.push(myCurrentLocation);
+                myCurrentRoom.setVisitedStatus(true);
+                visitedRooms++;
+                //neighbor.clear();
+            } else {
+                if (mazeStack.size() > 0) {
+                    mazeStack.pop(); // backtrack
+                }
+            }
+
+        }
+        closeMazeDoors();
+    }
+    private Room roomOffset(Stack<Coordinates> theStack) {
+        int x = theStack.peek().getX();
+        int y = theStack.peek().getY();
+        return myMazeOfRooms[x][y];
+    }
+    private Room roomOffset(Stack<Coordinates> theStack, Direction theDirection) {
+        int x = theStack.peek().getX();
+        int y = theStack.peek().getY();
+        switch (theDirection) {
+            case NORTH, UP -> x--;
+            case EAST, RIGHT -> y++;
+            case SOUTH, DOWN -> x++;
+            case WEST, LEFT -> y--;
+        }
+        return myMazeOfRooms[x][y];
+    }
+    /**
+     * This is a helper method for generate maze that iterates through
+     * the dungeon and checks for paths. If a path doesn't exist between
+     * two rooms, the shared door is closed.
+     */
+    private void closeMazeDoors() {
+        for (int i = 0; i < myRows; i++) {
+            for (int j = 0; j < myColumns; j++) {
+                // if there is no path east in my current room
+                if (!myMazeOfRooms[i][j].getPath(Direction.EAST)) {
+                    myMazeOfRooms[i][j].setEastDoor(DoorStatus.CLOSED);
+                    if(j + 1 < myColumns) { // if I'm not already at the right edge
+                        myMazeOfRooms[i][j+1].setWestDoor(DoorStatus.CLOSED);
+                    }
+                }
+                if (!myMazeOfRooms[i][j].getPath(Direction.SOUTH)) {
+                    myMazeOfRooms[i][j].setSouthDoor(DoorStatus.CLOSED);
+                    if(i + 1 < myRows) { //if I'm not already at the bottom edge
+                        myMazeOfRooms[i+1][j].setNorthDoor(DoorStatus.CLOSED);
+                    }
+                }
+            }
+        }
     }
     private boolean isTraversalPossible() {
         // in progress
@@ -220,6 +350,8 @@ public class Dungeon implements Serializable {
         } else {
             System.out.println("Never should've gotten here");
         }
+        updateCurrentRoom();
+        // should this be passed to controller?
         System.out.println(myMazeOfRooms[getAdventurerX()][getAdventurerY()].toString());
     }
 
@@ -277,7 +409,8 @@ public class Dungeon implements Serializable {
         return str;
     }
     /**
-     * update the current room according to the Adventurer's coordinates
+     * update the current room according to the Adventurer's coordinates.
+     * This method should be called when manually updating the current Coordinates
      */
     void updateCurrentRoom() {
         myCurrentRoom = myMazeOfRooms[getAdventurerX()][getAdventurerY()];
@@ -288,7 +421,15 @@ public class Dungeon implements Serializable {
      * @param theRoom Coordinates to set as the current room
      */
     void updateCurrentRoom(Coordinates theRoom) {
+        myCurrentLocation = theRoom;
         myCurrentRoom = myMazeOfRooms[theRoom.getX()][theRoom.getY()];
+    }
+    void updateCurrentRoom(Direction theDirection) {
+        switch (theDirection) {
+            case NORTH, UP: {
+                myCurrentLocation.updateX(1);
+            }
+        }
     }
 
     //=================
@@ -332,8 +473,7 @@ public class Dungeon implements Serializable {
     // only here for testing
     public static void main(String[] args) {
         Dungeon dungeon = new Dungeon(3, 3);
-        System.out.println("Brand new dungeon");
-        System.out.println(dungeon);
+
     }
     }
 
