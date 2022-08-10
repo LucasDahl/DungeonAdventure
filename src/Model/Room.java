@@ -29,7 +29,11 @@ public class Room implements Serializable {
     private DoorStatus myEastDoor;
     private DoorStatus mySouthDoor;
     private DoorStatus myWestDoor;
-
+    private boolean myNorthPath;
+    private boolean myEastPath;
+    private boolean mySouthPath;
+    private boolean myWestPath;
+    private boolean myVisitedStatus;
     private boolean myEntrance;
     private boolean myExit;
     private int myItemCount;
@@ -44,16 +48,20 @@ public class Room implements Serializable {
         myPillarLetter = "";
         myItemCount = 0;    // counts: pits, potions, pillars,
                             // not counted: entrance, exit
-        myNorthDoor = DoorStatus.OPEN;
-        myEastDoor = DoorStatus.OPEN;
-        mySouthDoor = DoorStatus.OPEN;
-        myWestDoor = DoorStatus.OPEN;
+        openAllDoors();
         myEntrance = false;
         myExit = false;
+        defaultPaths();
         populateRoom();
     }
 
     // ******************************* Methods ******************************
+    void defaultPaths() {
+        myNorthPath = false;
+        myEastPath = false;
+        mySouthPath = false;
+        myWestPath = false;
+    }
     /**
      * Sets all doors to CLOSED
      */
@@ -156,6 +164,7 @@ public class Room implements Serializable {
     public DoorStatus getWestDoor() {
         return myWestDoor;
     }
+
     //========
     // Everything else Getters
     //========
@@ -217,6 +226,22 @@ public class Room implements Serializable {
     public Monster getMonster() {
         return myMonster1;
     }
+
+    /**
+     * @param theDirection the direction requested
+     * @return whether the room has a path in the given direction
+     */
+    public boolean getPath(Direction theDirection) {
+        boolean theRequestedPath;
+        switch (theDirection) {
+            case NORTH, UP -> theRequestedPath = myNorthPath;
+            case EAST, RIGHT -> theRequestedPath = myEastPath;
+            case SOUTH, DOWN -> theRequestedPath = mySouthPath;
+            case WEST, LEFT -> theRequestedPath = myWestPath;
+            default -> theRequestedPath = false;
+        }
+        return theRequestedPath;
+    }
     /**
      * Valid returns are "A", "E", "I", or "P"
      * @return the letter of the pillar in the room if there is one
@@ -230,6 +255,13 @@ public class Room implements Serializable {
      */
     public boolean getPit() {
         return myPit;
+    }
+
+    /**
+     * @return whether the room has been visited (for maze generation)
+     */
+    public boolean getVisitedStatus() {
+        return myVisitedStatus;
     }
     /**
      * Get the vision potion state of the room
@@ -272,6 +304,8 @@ public class Room implements Serializable {
     void setWestDoor(DoorStatus theWestDoor) {
         myWestDoor = theWestDoor;
     }
+
+
     //========
     // Everything else Setters
     //========
@@ -307,6 +341,19 @@ public class Room implements Serializable {
             myItemCount++;
         }
         this.myHealingPotion = theHealingPotion;
+    }
+
+    /**
+     * @param theDirection A Direction to set
+     * @param thePathExists true - the path exists, false - there is no path
+     */
+    void setPath(Direction theDirection, boolean thePathExists) {
+        switch (theDirection) {
+            case NORTH, UP -> myNorthPath = thePathExists;
+            case EAST, RIGHT -> myEastPath = thePathExists;
+            case SOUTH, DOWN -> mySouthPath = thePathExists;
+            case WEST, LEFT -> myWestPath = thePathExists;
+        }
     }
     /**
      * Designate the room to contain a pillar
@@ -346,6 +393,13 @@ public class Room implements Serializable {
         myVisionPotion = theVisionPotion;
     }
 
+    /**
+     * @param theStatus set true to mean room was visited,
+     *                  false means the room wasn't visited
+     */
+    void setVisitedStatus(boolean theStatus) {
+        myVisitedStatus = theStatus;
+    }
 
     //=================
     // Override Methods
