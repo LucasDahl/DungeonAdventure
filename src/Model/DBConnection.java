@@ -39,18 +39,19 @@ public class DBConnection {
     public DBConnection() throws SQLException {
 
         createMonsterTable();
+        fillMonsterTable();
 
         // Fill the DB
-//        if(checkDBSize("monster")) {
-//            fillMonsterTable();
-//        }
+        if(checkDBSize("monster")) {
+            fillMonsterTable();
+        }
 
         createHeroTable();
         fillHeroTable();
         // Fill the DB
-//        if(checkDBSize("monster")) {
-//            fillHeroTable();
-//        }
+        if(checkDBSize("hero")) {
+            fillHeroTable();
+        }
 
     }
 
@@ -82,6 +83,9 @@ public class DBConnection {
                 "DAMAGE_MAX TEXT NOT NULL, " +
                 "ATTACK_SPEED TEXT NOT NULL, " +
                 "HIT_CHANCE TEXT NOT NULL, " +
+                "HEAL_CHANCE TEXT NOT NULL, " +
+                "MIN_HEAL TEXT NOT NULL, " +
+                "MAX_HEAL TEXT NOT NULL, " +
                 "NUMBER_OF_ATTACKS TEXT NOT NULL)";
 
 
@@ -102,7 +106,7 @@ public class DBConnection {
         //System.out.println( "Attempting to insert two rows into questions table" );
 
         // Query the data
-        myQueryMonster = "INSERT INTO monster (NAME, HEALTH, DAMAGE_MIN, DAMAGE_MAX , ATTACK_SPEED , HIT_CHANCE , HEAL_CHANCE, MIN_HEAL, MAX_HEAL, NUMBER_OF_ATTACKS) VALUES ( 'Ogre', '200','30', '60', '2', '0.6', '0.1', '30', '60', '1') , ('Skeleton', '100','30', '50', '3', '0.8', '0.3', '30', '50', '1'), ('Gremlin', '70','30', '50', '3', '0.6', '0.4', '20', '40', '1'), ('Unkown', '1','1', '1', '1', '0.1', '0.1', '1', '1', '1')";
+        myQueryMonster = "INSERT INTO monster (NAME, HEALTH, DAMAGE_MIN, DAMAGE_MAX , ATTACK_SPEED , HIT_CHANCE , HEAL_CHANCE, MIN_HEAL, MAX_HEAL, NUMBER_OF_ATTACKS) VALUES ( 'Ogre', '200','30', '60', '2', '0.6', '0.1', '30', '60', '1') , ('Skeleton', '100','30', '50', '3', '0.8', '0.3', '30', '50', '1'), ('Gremlin', '70','15', '30', '5', '0.8', '0.4', '20', '40', '1'), ('Unkown', '1','1', '1', '1', '0.1', '0.1', '1', '1', '1')";
 
         try ( Connection conn = myMonsterTable.getConnection(); Statement stmt = conn.createStatement(); ) {
            int rv = stmt.executeUpdate( myQueryMonster );
@@ -124,19 +128,23 @@ public class DBConnection {
         // Debug statement
         //System.out.println( "Selecting all rows from monster table" );
 
-        String query = theMonster;
+        String query = theMonster.toUpperCase();
         Monster monster = null;
 
         // Determine the select statement
         switch (query) {
-            case "Ogre":
+            case "OGRE":
                 query = "SELECT * FROM monster WHERE NAME = 'Ogre'";
-            case "Skeleton":
+                break;
+            case "SKELETON":
                 query = "SELECT * FROM monster WHERE NAME = 'Skeleton'";
-            case "Gremlin":
+                break;
+            case "GREMLIN":
                 query = "SELECT * FROM monster WHERE NAME = 'Gremlin'";
+                break;
             default:
                 query = "SELECT * FROM monster WHERE NAME = 'Unkown'";
+                break;
         }
 
         try ( Connection conn = myMonsterTable.getConnection(); Statement stmt = conn.createStatement(); ) {
@@ -278,8 +286,10 @@ public class DBConnection {
                     hero = new Thief(name, health, damageMin, damageMax, attackSpeed, hitChance, blockChance, numberOfAttacks);
                     break;
                 default:
-                    query = "SELECT * FROM monster WHERE NAME = 'Unkown'";
+                    hero = new Thief(name, health, damageMin, damageMax, attackSpeed, hitChance, blockChance, numberOfAttacks);
             }
+
+            //hero = new Thief(name, health, damageMin, damageMax, attackSpeed, hitChance, blockChance, numberOfAttacks);
 
 
         } catch ( SQLException e ) {
@@ -293,15 +303,17 @@ public class DBConnection {
     private boolean checkDBSize(final String theTable) {
 
         // Properties
-        String query = "SELECT * FROM hero";
+        String query;
         SQLiteDataSource table;
         int num = 0;
 
         // pick which table to check
         if(theTable.equals("hero")) {
             table = myHeroTable;
+            query = "SELECT * FROM hero";
         } else {
             table = myMonsterTable;
+            query = "SELECT * FROM monster";
         }
 
         try ( Connection conn = table.getConnection(); Statement stmt = conn.createStatement(); ) {
