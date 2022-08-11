@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.TestInstance;
 
+import java.sql.SQLException;
+
 import static org.junit.Assert.*;
 
 /**
@@ -33,20 +35,31 @@ public class DungeonCharacterTest {
 
     @BeforeAll
     public void setUpDungeonCharacters() {
-        warrior = new Warrior("Model.Warrior");
-        thief = new Thief("Model.Thief");
-        priestess = new Priestess("Model.Priestess");
-        ogre = new Ogre();
-        skeleton = new Skeleton();
-        gremlin = new Gremlin();
+        try {
+            HeroFactory factory = new HeroFactory();
+            warrior = (Warrior) factory.createHero("hero");
+            thief = (Thief) factory.createHero("thief");
+            priestess = (Priestess) factory.createHero("priestess");
+            ogre = new Ogre();
+            skeleton = new Skeleton();
+            gremlin = new Gremlin();
+        } catch (Exception e) {
+            System.out.println("Error : " + e);
+        }
     }
 
     @BeforeAll
     public void setUpHeros() {
-        warrior1 = new Warrior("Warrior1");
-        thief1 = new Thief("Thief1");
-        priestess1 = new Priestess("Priestess1");
+        try {
+            HeroFactory factory = new HeroFactory();
+            warrior1 = (Warrior) factory.createHero("hero");
+            thief1 = (Thief) factory.createHero("thief");
+            priestess1 = (Priestess) factory.createHero("priestess");
+        } catch (Exception e) {
+            System.out.println("Error : " + e);
+        }
     }
+
 
     //==========
     // Test Name

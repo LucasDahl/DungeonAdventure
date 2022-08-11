@@ -1,10 +1,7 @@
 package View;
 
 import Controller.DungeonAdventure;
-import Model.Adventurer;
-import Model.Priestess;
-import Model.Thief;
-import Model.Warrior;
+import Model.*;
 
 import java.util.Scanner;
 
@@ -59,13 +56,25 @@ public class DungeonView {
 
 
     private static void displayHeroChoices() {
-        Warrior warrior = new Warrior("Warrior guy");
-        Thief thief = new Thief("Thief guy");
-        Priestess priestess = new Priestess("Priestess lady");
-        // Warrior, Thief, Priestess
-        System.out.println("Warrior's special skill is: " + warrior.getSpecialSkill());
-        System.out.println("Thief's special skill is: " + thief.getSpecialSkill());
-        System.out.println("Priestess's special skill is: " + priestess.getSpecialSkill());
+
+        Warrior warrior;
+        Thief thief;
+        Priestess priestess;
+
+        try{
+            warrior = (Warrior) new HeroFactory().createHero("warrior");
+            thief = (Thief) new HeroFactory().createHero("thief");
+            priestess = (Priestess) new HeroFactory().createHero("priestess");
+
+            // Warrior, Thief, Priestess
+            System.out.println("Warrior's special skill is: " + warrior.getSpecialSkill());
+            System.out.println("Thief's special skill is: " + thief.getSpecialSkill());
+            System.out.println("Priestess's special skill is: " + priestess.getSpecialSkill());
+
+        } catch(Exception e) {
+            System.out.println("ERROR: " + e);
+        }
+
     }
 
     private static void displayOptions() {

@@ -78,15 +78,15 @@ public class DungeonAdventure {
 
     public void setPlayerClass(final String theHeroChoice) {
         if (theHeroChoice.equals("t")) {
-            myAdventurer = new Adventurer(new Thief(myPlayerName));
+            myAdventurer = new Adventurer(myPlayerName);
             System.out.println("Thief Created");
         }
         if (theHeroChoice.equals("w")) {
-            myAdventurer = new Adventurer(new Warrior(myPlayerName));
+            myAdventurer = new Adventurer(myPlayerName);
             System.out.println("Warrior Created");
         }
         if (theHeroChoice.equals("p")) {
-            myAdventurer = new Adventurer(new Priestess(myPlayerName));
+            myAdventurer = new Adventurer(myPlayerName);
             System.out.println("Priestess Created");
         }
 
