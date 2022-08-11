@@ -22,8 +22,8 @@ public class Warrior extends Hero {
      *
      * @param theName the name of the Model.Hero
      */
-    public Warrior(final String theName) {
-        super(theName, 125, 4, 0.8, 35, 60, 0.4, 1);
+    public Warrior(final String theName, final double theHealth, final double theDamageMin, final double theDamageMax, final double theAttackSpeed, final double theHitChance,final double theBlockChance, final int theNumOfAttacks) {
+        super(theName, theHealth, theDamageMin, theDamageMax, theAttackSpeed, theHitChance, theBlockChance, theNumOfAttacks);
         MY_SPECIAL_SKILL = "Crushing Blow";
         mySpecialDamage = 75;
         MY_SPECIAL_CHANCE = 0.4;

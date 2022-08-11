@@ -16,7 +16,7 @@ public class Gremlin extends Monster {
      *  This is the default constructor
      */
     public Gremlin() {
-        super("Model.Gremlin", 70, 5, 0.8, 15, 30, 0.4, 20, 40, 1);
+        super("Gremlin", 70, 5, 0.8, 15, 30, 0.4, 20, 40, 1);
     }
 
     // **************************** Methods ***************************

@@ -18,19 +18,21 @@ public abstract class Hero extends DungeonCharacter {
      *  This constructor will set all the values for the class,
      *  by call the super class constructor.
      *
-     * @param the_name This is the name of the Model.Hero
-     * @param the_health This is the total starting health of the Model.Hero.
-     * @param the_damage_range_min This is the min attack range for the Model.Hero
-     * @param the_damage_range_max This is the max attack range for the Model.Hero
-     * @param the_attack_speed This is the attack speed for the Model.Hero
-     * @param the_hit_chance This is the chance to hit for the Model.Hero
-     * @param the_block_chance This is the chance to block for the Model.Hero
-     * @param the_num_of_attacks This is the total number of attacks per turn the Model.Hero gets
+     * @param theName This is the name of the Model.Hero
+     * @param theHealth This is the total starting health of the Model.Hero.
+     * @param theDamageMin This is the min attack range for the Model.Hero
+     * @param theDamageMax This is the max attack range for the Model.Hero
+     * @param theAttackSpeed This is the attack speed for the Model.Hero
+     * @param theHitChance This is the chance to hit for the Model.Hero
+     * @param theBlockChance This is the chance to block for the Model.Hero
+     * @param theNumOfAttacks This is the total number of attacks per turn the Model.Hero gets
      */
-    public Hero(final String the_name, final double the_health, final double the_attack_speed, final double the_hit_chance, final double the_damage_range_min, final double the_damage_range_max, final double the_block_chance, final int the_num_of_attacks) {
-        super(the_name, the_health, the_damage_range_min, the_damage_range_max, the_attack_speed, the_hit_chance, the_num_of_attacks);
-        MY_CHANCE_TO_BLOCK = the_block_chance;
+    public Hero(final String theName, final double theHealth, final double theDamageMin, final double theDamageMax, final double theAttackSpeed, final double theHitChance,final double theBlockChance, final int theNumOfAttacks) {
+        super(theName, theHealth, theDamageMin, theDamageMax, theAttackSpeed, theHitChance, theNumOfAttacks);
+        MY_CHANCE_TO_BLOCK = theBlockChance;
     }
+
+
 
     // **************************** Methods ***************************
 

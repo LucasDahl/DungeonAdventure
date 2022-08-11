@@ -44,7 +44,7 @@ public abstract class DungeonCharacter {
     // **************************** Methods ***************************
 
     // This is the battle method between two characters
-    protected void battle(final Monster theEnemy, final Hero theHero) {
+    protected void battle(final Model.Monster theEnemy, final Model.Hero theHero) {
 
         while(theEnemy.getHealth() > 0 || theHero.getHealth() > 0) {
 

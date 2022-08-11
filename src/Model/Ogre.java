@@ -15,7 +15,7 @@ public class Ogre extends Monster {
      *  This is the default constructor
      */
     public Ogre() {
-        super("Model.Ogre", 200, 2, 0.6, 30, 60, 0.1, 30, 60, 1);
+        super("Ogre", 200, 2, 0.6, 30, 60, 0.1, 30, 60, 1);
     }
 
     // **************************** Methods ***************************

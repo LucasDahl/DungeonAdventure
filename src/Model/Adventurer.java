@@ -27,12 +27,17 @@ public class Adventurer {
      *
      * @param theHero
      */
-    public Adventurer(final Hero theHero) {
+    public Adventurer(final String theName, final String theClass) {
 
         myNumberOfHealingPotions = 0;
         myNumberOfVisionPotions = 0;
         myListOfPillars = Collections.emptySet();
-        myCharacter = theHero;
+        try  {
+            myCharacter = new HeroFactory().createHero(theClass);
+            myCharacter.setName(theName);
+        } catch (Exception e) {
+            System.out.println("ERROR: " + e);
+        }
     }
 
     // **************************** Methods ***************************

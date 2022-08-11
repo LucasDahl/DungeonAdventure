@@ -6,12 +6,12 @@ package Model;
  *
  *
  */
-public abstract class Monster extends DungeonCharacter {
+public class Monster extends DungeonCharacter {
 
     // **************************** Fields ****************************
     private double myChanceToHeal;
-    private int myHealMin;
-    private int myHealMax;
+    private double myHealMin;
+    private double myHealMax;
 
     // ************************** Constructors ************************
 
@@ -29,17 +29,18 @@ public abstract class Monster extends DungeonCharacter {
      * @param theMaxHealPoints the max heal points of the monster
      * @param theNumberOfAttacks the total number of attacks
      */
-    public Monster(final String theName, final double theHealth, final double theAttackSpeed, final double theHitChance, final double theDamageRangeMin, final double theDamageRangeMax, final double theChanceToHeal, final int theMinHealPoints, final int theMaxHealPoints, final int theNumberOfAttacks) {
+    public Monster(final String theName, final double theHealth, final double theDamageRangeMin, final double theDamageRangeMax, final double theAttackSpeed, final double theHitChance, final double theChanceToHeal, final double theMinHealPoints, final double theMaxHealPoints, final int theNumberOfAttacks) {
         super(theName, theHealth, theDamageRangeMin, theDamageRangeMax, theAttackSpeed, theHitChance, theNumberOfAttacks);
         myChanceToHeal = theChanceToHeal;
         myHealMax = theMaxHealPoints;
         myHealMin = theMinHealPoints;
     }
+    //Monster(name, health, damageMin, damageMax, attackSpeed, hitChance, chanceToHeal, minHealPoints, maxHealPoints numberOfAttacks);
 
     // **************************** Methods ***************************
 
     // This method will have a monster heal its self
-    protected void heal() {
+    public void heal() {
 
         // Properties
         double chance = super.getMyRandomRange(0, 100);
@@ -55,25 +56,9 @@ public abstract class Monster extends DungeonCharacter {
     //=================
 
     @Override
-    public  String toString() {
+    public String toString() {
        return super.toString();
     }
-
-//    @Override
-//    public void attackBehavior(final Model.DungeonCharacter theOther) {
-//
-//        // Attack the other character
-//        for(int i = 0; i < getNumberOfAttacks(); i++) {
-//
-//            double attackHit = getMyRandomRange(super.getDamageRangeMin(), super.getDamageRangeMax());
-//            double damage = super.getDamage();
-//
-//            // The Model.Warrior hit the enemy
-//            if(attackHit > getChanceToHit()) {
-//                theOther.setHealth(theOther.getHealth() - damage);
-//            }
-//        }
-//    }
 
     @Override
     public boolean isDead() {

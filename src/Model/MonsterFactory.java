@@ -1,5 +1,9 @@
 package Model;
 
+import org.sqlite.core.DB;
+
+import java.sql.SQLException;
+
 /**
  * @author lucasdahl -> LDahl
  * @version 1.0
@@ -13,24 +17,19 @@ public class MonsterFactory {
     /**
      * This method will create a Model.Monster.
      *
-     * @param theMonster the name of the monster.
-     * @return the created monster
+     * @param theMonster theHero the name of the monster.
+     * @return this is the created monster
+     * @throws SQLException sql error
      */
-    public Monster createMonster(final String theMonster) {
+    public Monster createMonster(final String theMonster) throws SQLException {
 
         if(theMonster == null || theMonster.isEmpty()) {
             return null;
         }
 
-        switch (theMonster) {
-            case "Model.Ogre":
-                return new Ogre();
-            case "Model.Skeleton":
-                return new Skeleton();
-            case "Model.Gremlin":
-                return new Gremlin();
-            default:
-                throw new IllegalArgumentException("Unknown Model.Monster " + theMonster);
-        }
+        DBConnection sql = new DBConnection();
+
+        return sql.extractMonster(theMonster);
+
     }
 }

@@ -1,5 +1,7 @@
 package Model;
 
+import java.sql.SQLException;
+
 /**
  * @author lucasdahl -> LDahl
  * @version 1.0
@@ -11,28 +13,17 @@ package Model;
 public class HeroFactory {
 
     /**
-     *  This method will create a Model.Hero.
+     * This method will create a Model.Hero.
      *
-     * @param theHero the name of the hero.
+     * @param theHero theHero the name of the hero.
      * @return this is the created hero
+     * @throws SQLException sql error
      */
-    public Hero createHero(final String theHero, final String theName ) {
+    public Hero createHero(final String theHero) throws SQLException {
 
-        if(theHero == null || theHero.isEmpty()) {
-            return null;
-        }
+        DBConnection sql = new DBConnection();
 
-        switch (theHero) {
-            case "Model.Warrior":
-                return new Warrior(theName);
-            case "Model.Priestess":
-                return new Priestess(theName);
-            case "Model.Thief":
-                return new Thief(theName);
-            default:
-                throw new IllegalArgumentException("Unknown Model.Hero " + theHero);
-        }
+        return sql.extractHero(theHero);
     }
 }
-
 
