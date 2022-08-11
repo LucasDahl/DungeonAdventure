@@ -22,8 +22,8 @@ public class Thief extends Hero {
      *
      * @param theName the name of the Model.Hero
      */
-    public Thief(final String theName) {
-        super(theName, 75, 6, 0.8, 20, 40, 0.4, 1);
+    public Thief(final String theName, final double theHealth, final double theDamageMin, final double theDamageMax, final double theAttackSpeed, final double theHitChance,final double theBlockChance, final int theNumOfAttacks) {
+        super(theName, theHealth, theDamageMin, theDamageMax, theAttackSpeed, theHitChance, theBlockChance, theNumOfAttacks);
         MY_SPECIAL_SKILL = "Sneak Attack";
         MY_SPECIAL_CHANCE = 0.4;
     }
