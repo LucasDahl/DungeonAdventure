@@ -267,13 +267,16 @@ public class DBConnection {
             Double blockChance = Double.parseDouble(rs.getString( "BLOCK_CHANCE" ));
             Integer numberOfAttacks = Integer.parseInt(rs.getString( "NUMBER_OF_ATTACKS" ));
 
-            switch (theHero) {
+            switch (theHero.toUpperCase()) {
                 case "WARRIOR":
                     hero = new Warrior(name, health, damageMin, damageMax, attackSpeed, hitChance, blockChance, numberOfAttacks);
+                    break;
                 case "PRIESTESS":
                     hero = new Priestess(name, health, damageMin, damageMax, attackSpeed, hitChance, blockChance, numberOfAttacks);
+                    break;
                 case "THIEF":
                     hero = new Thief(name, health, damageMin, damageMax, attackSpeed, hitChance, blockChance, numberOfAttacks);
+                    break;
                 default:
                     query = "SELECT * FROM monster WHERE NAME = 'Unkown'";
             }
