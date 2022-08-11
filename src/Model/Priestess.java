@@ -19,8 +19,8 @@ public class Priestess extends Hero {
      *
      * @param theName the name of the Model.Hero
      */
-    public Priestess(final String theName) {
-        super(theName, 75, 5, 0.7, 25, 45, 0.3, 1);
+    public Priestess(final String theName, final double theHealth, final double theDamageMin, final double theDamageMax, final double theAttackSpeed, final double theHitChance,final double theBlockChance, final int theNumOfAttacks) {
+        super(theName, theHealth, theDamageMin, theDamageMax, theAttackSpeed, theHitChance, theBlockChance, theNumOfAttacks);
         MY_SPECIAL_SKILL = "Heal";
     }
 
