@@ -1,4 +1,5 @@
-package Model;/*
+package Model;
+/*
  * TCSS 360 - Summer 2022
  * Instructor: Tom Capaul
  * Model.Room class for Model.Dungeon Adventure game
@@ -28,7 +29,11 @@ public class Room implements Serializable {
     private DoorStatus myEastDoor;
     private DoorStatus mySouthDoor;
     private DoorStatus myWestDoor;
-
+    private boolean myNorthPath;
+    private boolean myEastPath;
+    private boolean mySouthPath;
+    private boolean myWestPath;
+    private boolean myVisitedStatus;
     private boolean myEntrance;
     private boolean myExit;
     private int myItemCount;
@@ -43,17 +48,106 @@ public class Room implements Serializable {
         myPillarLetter = "";
         myItemCount = 0;    // counts: pits, potions, pillars,
                             // not counted: entrance, exit
-        myNorthDoor = DoorStatus.OPEN;
-        myEastDoor = DoorStatus.OPEN;
-        mySouthDoor = DoorStatus.OPEN;
-        myWestDoor = DoorStatus.OPEN;
+        openAllDoors();
         myEntrance = false;
         myExit = false;
+        defaultPaths();
         populateRoom();
     }
 
     // ******************************* Methods ******************************
+    void defaultPaths() {
+        myNorthPath = false;
+        myEastPath = false;
+        mySouthPath = false;
+        myWestPath = false;
+    }
+    /**
+     * Sets all doors to CLOSED
+     */
+    void closeAllDoors() {
+        setNorthDoor(DoorStatus.CLOSED);
+        setEastDoor(DoorStatus.CLOSED);
+        setSouthDoor(DoorStatus.CLOSED);
+        setWestDoor(DoorStatus.CLOSED);
+    }
 
+    /**
+     * Sets all doors to OPEN
+     */
+    void openAllDoors() {
+        setNorthDoor(DoorStatus.OPEN);
+        setEastDoor(DoorStatus.OPEN);
+        setSouthDoor(DoorStatus.OPEN);
+        setWestDoor(DoorStatus.OPEN);
+    }
+    /**
+     * Clears all the items in the room.
+     */
+    void emptyRoom() {
+        setPillar("");
+        setPit(false);
+        setHealingPotion(false);
+        setVisionPotion(false);
+        if (myMonster1 != null) {
+            myMonster1.setHealth(0);
+        }
+        setEntrance(false);
+        setExit(false);
+    }
+
+    /**
+     * @return whether the Room has an alive monster
+     */
+    public boolean hasLiveMonster() {
+        boolean monsterIsDead = true;
+        if(myMonster1 != null) {
+            monsterIsDead = !getMonster().isDead();
+        }
+        return monsterIsDead;
+    }
+    /**
+     * Randomly assigns a pit, vision potion, healing potion, and a monster
+     * to the Model.Room.
+     */
+    void populateRoom() {
+        final int PIT_CHANCE = 20;
+        final int VISION_POTION_CHANCE = 10;
+        final int HEALING_POTION_CHANCE = 20;
+        final int MONSTER_CHANCE = 20;
+
+        Random rand = new Random();
+        if ((rand.nextInt(100) + 1) <= PIT_CHANCE) {
+            myPit = true;
+            myItemCount++;
+        } else {
+            myPit = false;
+        }
+        if ((rand.nextInt(100) + 1) <= VISION_POTION_CHANCE) {
+            myVisionPotion = true;
+            myItemCount++;
+        } else {
+            myVisionPotion = false;
+        }
+        if ((rand.nextInt(100) + 1) <= HEALING_POTION_CHANCE) {
+            myHealingPotion = true;
+            myItemCount++;
+        } else {
+            myHealingPotion = false;
+        }
+        // if random rolls a number less than monster chance, create a monster
+        // depending on the modulus of the roll
+        if((rand.nextInt(100) + 1) <= MONSTER_CHANCE) {
+            int pick = rand.nextInt(100) + 1;
+            if (pick % 3 == 0) {
+                myMonster1 = new Ogre();
+            } else if (pick % 3 == 1) {
+                myMonster1 = new Gremlin();
+            } else {
+                myMonster1 = new Skeleton();
+            }
+        }
+    }
 
     //========
     // Door Getters
@@ -70,6 +164,7 @@ public class Room implements Serializable {
     public DoorStatus getWestDoor() {
         return myWestDoor;
     }
+
     //========
     // Everything else Getters
     //========
@@ -131,6 +226,22 @@ public class Room implements Serializable {
     public Monster getMonster() {
         return myMonster1;
     }
+
+    /**
+     * @param theDirection the direction requested
+     * @return whether the room has a path in the given direction
+     */
+    public boolean getPath(Direction theDirection) {
+        boolean theRequestedPath;
+        switch (theDirection) {
+            case NORTH, UP -> theRequestedPath = myNorthPath;
+            case EAST, RIGHT -> theRequestedPath = myEastPath;
+            case SOUTH, DOWN -> theRequestedPath = mySouthPath;
+            case WEST, LEFT -> theRequestedPath = myWestPath;
+            default -> theRequestedPath = false;
+        }
+        return theRequestedPath;
+    }
     /**
      * Valid returns are "A", "E", "I", or "P"
      * @return the letter of the pillar in the room if there is one
@@ -144,6 +255,13 @@ public class Room implements Serializable {
      */
     public boolean getPit() {
         return myPit;
+    }
+
+    /**
+     * @return whether the room has been visited (for maze generation)
+     */
+    public boolean getVisitedStatus() {
+        return myVisitedStatus;
     }
     /**
      * Get the vision potion state of the room
@@ -186,6 +304,8 @@ public class Room implements Serializable {
     void setWestDoor(DoorStatus theWestDoor) {
         myWestDoor = theWestDoor;
     }
+
+
     //========
     // Everything else Setters
     //========
@@ -221,6 +341,19 @@ public class Room implements Serializable {
             myItemCount++;
         }
         this.myHealingPotion = theHealingPotion;
+    }
+
+    /**
+     * @param theDirection A Direction to set
+     * @param thePathExists true - the path exists, false - there is no path
+     */
+    void setPath(Direction theDirection, boolean thePathExists) {
+        switch (theDirection) {
+            case NORTH, UP -> myNorthPath = thePathExists;
+            case EAST, RIGHT -> myEastPath = thePathExists;
+            case SOUTH, DOWN -> mySouthPath = thePathExists;
+            case WEST, LEFT -> myWestPath = thePathExists;
+        }
     }
     /**
      * Designate the room to contain a pillar
@@ -259,80 +392,13 @@ public class Room implements Serializable {
         }
         myVisionPotion = theVisionPotion;
     }
-    /**
-     * Sets all doors to CLOSED
-     */
-    void closeAllDoors() {
-        setNorthDoor(DoorStatus.CLOSED);
-        setEastDoor(DoorStatus.CLOSED);
-        setSouthDoor(DoorStatus.CLOSED);
-        setWestDoor(DoorStatus.CLOSED);
-    }
 
     /**
-     * Sets all doors to OPEN
+     * @param theStatus set true to mean room was visited,
+     *                  false means the room wasn't visited
      */
-    void openAllDoors() {
-        setNorthDoor(DoorStatus.OPEN);
-        setEastDoor(DoorStatus.OPEN);
-        setSouthDoor(DoorStatus.OPEN);
-        setWestDoor(DoorStatus.OPEN);
-    }
-    /**
-     * Clears all the items in the room.
-     */
-    void emptyRoom() {
-        setPillar("");
-        setPit(false);
-        setHealingPotion(false);
-        setVisionPotion(false);
-        if (myMonster1 != null) {
-            myMonster1.setHealth(0);
-        }
-        setEntrance(false);
-        setExit(false);
-    }
-    /**
-     * Randomly assigns a pit, vision potion, healing potion, and a monster
-     * to the Model.Room.
-     */
-    void populateRoom() {
-        final int PIT_CHANCE = 20;
-        final int VISION_POTION_CHANCE = 10;
-        final int HEALING_POTION_CHANCE = 20;
-        final int MONSTER_CHANCE = 20;
-
-        Random rand = new Random();
-        if ((rand.nextInt(100) + 1) <= PIT_CHANCE) {
-            myPit = true;
-            myItemCount++;
-        } else {
-            myPit = false;
-        }
-        if ((rand.nextInt(100) + 1) <= VISION_POTION_CHANCE) {
-            myVisionPotion = true;
-            myItemCount++;
-        } else {
-            myVisionPotion = false;
-        }
-        if ((rand.nextInt(100) + 1) <= HEALING_POTION_CHANCE) {
-            myHealingPotion = true;
-            myItemCount++;
-        } else {
-            myHealingPotion = false;
-        }
-        // if random rolls a number less than monster chance, create a monster
-        // depending on the modulus of the roll
-        if((rand.nextInt(100) + 1) <= MONSTER_CHANCE) {
-            int pick = rand.nextInt(100) + 1;
-            if (pick % 3 == 0) {
-                myMonster1 = new Ogre();
-            } else if (pick % 3 == 1) {
-                myMonster1 = new Gremlin();
-            } else {
-                myMonster1 = new Skeleton();
-            }
-        }
+    void setVisitedStatus(boolean theStatus) {
+        myVisitedStatus = theStatus;
     }
 
     //=================
