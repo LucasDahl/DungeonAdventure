@@ -376,6 +376,7 @@ public class Dungeon implements Serializable {
         return myCurrentLocation;
     }
 
+
     /**
      * Precondition: It must be used for east or west doors
      * This method checks if the door is open or closed and returns
