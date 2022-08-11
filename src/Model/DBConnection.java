@@ -17,10 +17,6 @@ import org.sqlite.SQLiteDataSource;
  */
 public class DBConnection {
 
-    public static void main(String[] args) throws SQLException {
-        DBConnection sql = new DBConnection();
-    }
-
     // **************************** Fields ****************************
 
     // Monster
@@ -45,16 +41,16 @@ public class DBConnection {
         createMonsterTable();
 
         // Fill the DB
-        if(checkDBSize("monster")) {
-            fillMonsterTable();
-        }
+//        if(checkDBSize("monster")) {
+//            fillMonsterTable();
+//        }
 
         createHeroTable();
-
+        fillHeroTable();
         // Fill the DB
-        if(checkDBSize("monster")) {
-            fillHeroTable();
-        }
+//        if(checkDBSize("monster")) {
+//            fillHeroTable();
+//        }
 
     }
 
@@ -195,6 +191,7 @@ public class DBConnection {
                 "DAMAGE_MAX TEXT NOT NULL, " +
                 "ATTACK_SPEED TEXT NOT NULL, " +
                 "HIT_CHANCE TEXT NOT NULL, " +
+                "BLOCK_CHANCE TEXT NOT NULL, " +
                 "NUMBER_OF_ATTACKS TEXT NOT NULL)";
 
         try(Connection conn = myHeroTable.getConnection();
@@ -238,19 +235,23 @@ public class DBConnection {
         // Debug statement
         //System.out.println( "Selecting all rows from hero table" );
 
-        String query = theHero;
+        String query = theHero.toUpperCase();
         Hero hero = null;
 
         // Determine the select statement
         switch (query) {
-            case "Warrior":
-                query = "SELECT * FROM monster WHERE NAME = 'Warrior'";
-            case "Priestess":
-                query = "SELECT * FROM monster WHERE NAME = 'Priestess'";
-            case "Thief":
-                query = "SELECT * FROM monster WHERE NAME = 'Thief'";
+            case "WARRIOR":
+                query = "SELECT * FROM hero WHERE NAME = 'Warrior'";
+                break;
+            case "PRIESTESS":
+                query = "SELECT * FROM hero WHERE NAME = 'Priestess'";
+                break;
+            case "THIEF":
+                query = "SELECT * FROM hero WHERE NAME = 'Thief'";
+                break;
             default:
-                query = "SELECT * FROM monster WHERE NAME = 'Unkown'";
+                query = "SELECT * FROM hero WHERE NAME = 'Unkown'";
+                break;
         }
 
         try ( Connection conn = myHeroTable.getConnection(); Statement stmt = conn.createStatement(); ) {
@@ -267,11 +268,11 @@ public class DBConnection {
             Integer numberOfAttacks = Integer.parseInt(rs.getString( "NUMBER_OF_ATTACKS" ));
 
             switch (theHero) {
-                case "Warrior":
+                case "WARRIOR":
                     hero = new Warrior(name, health, damageMin, damageMax, attackSpeed, hitChance, blockChance, numberOfAttacks);
-                case "Priestess":
+                case "PRIESTESS":
                     hero = new Priestess(name, health, damageMin, damageMax, attackSpeed, hitChance, blockChance, numberOfAttacks);
-                case "Thief":
+                case "THIEF":
                     hero = new Thief(name, health, damageMin, damageMax, attackSpeed, hitChance, blockChance, numberOfAttacks);
                 default:
                     query = "SELECT * FROM monster WHERE NAME = 'Unkown'";
