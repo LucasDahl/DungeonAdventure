@@ -3,6 +3,8 @@ package Controller;
 import Model.*;
 import View.DungeonView;
 
+import java.util.Scanner;
+
 
 /*
  * TCSS 360 - Summer 2022
@@ -11,7 +13,7 @@ import View.DungeonView;
  * Package condition: Must be placed in the same package
  * as all component classes.
  */
-public class DungeonAdventure {
+public class DungeonAdventure implements Runnable {
     private static Dungeon myDungeon;
     private static Adventurer myAdventurer;
 
@@ -19,7 +21,21 @@ public class DungeonAdventure {
     final static int DUNGEON_ROWS = 4;
     final static int DUNGEON_COLUMNS = 4;
 
+
+    private Thread myGameThread;
+
     public DungeonAdventure() {
+        // startGameThread();
+    }
+
+    public void startGameThread() {
+
+        if (myPlayerName != null) {
+            // how we instantiate a thread;
+            // will call the run method
+            myGameThread = new Thread(this);
+            myGameThread.start();
+        }
 
     }
 
@@ -32,20 +48,21 @@ public class DungeonAdventure {
         boolean canExitHere = false;
         int pillarsCount = 0;
         String currentPillars = myAdventurer.getListOfPillars();
-        String[] neededPillars= {"a", "e", "i", "p"};
+        String[] neededPillars = {"a", "e", "i", "p"};
         if (myDungeon.myCurrentRoom.getExit()) {
             // Check for all 4 pillars
             for (int i = 0; i < neededPillars.length; i++) {
-                if(currentPillars.contains(neededPillars[i])){
+                if (currentPillars.contains(neededPillars[i])) {
                     pillarsCount++;
                 }
             }
-            if(pillarsCount == neededPillars.length){
+            if (pillarsCount == neededPillars.length) {
                 canExitHere = true;
             }
         }
         return canExitHere;
     }
+
     /**
      * Check if the monster is alive. If a room has an alive monster,
      * the adventurer should not be able to move out of the room.
@@ -65,6 +82,7 @@ public class DungeonAdventure {
      * This method looks at the current room's doors to see if they are open.
      * If open, the adventurer will be notified of the keyboard input to choose
      * one of the open doors.
+     *
      * @return a String of all the doors the adventurer can choose
      */
     private String reportOpenDoors() {
@@ -109,6 +127,32 @@ public class DungeonAdventure {
 
         System.out.println(myDungeon);
 
+    }
+
+    /**
+     * When an object implementing interface {@code Runnable} is used
+     * to create a thread, starting the thread causes the object's
+     * {@code run} method to be called in that separately executing
+     * thread.
+     * <p>
+     * The general contract of the method {@code run} is that it may
+     * take any action whatsoever.
+     *
+     * @see Thread#run()
+     */
+    @Override
+    public void run() {
+        while (myGameThread != null) {
+            // System.out.println("The game is playing");
+
+            // want to move from one dungeon to another.
+            Scanner scanner = new Scanner(System.in);
+
+            String input = scanner.nextLine();
+            Dungeon.Direction direction = myDungeon.getDirection(input);
+
+            myDungeon.move(direction);
+        }
     }
 }
 

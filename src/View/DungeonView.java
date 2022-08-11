@@ -44,6 +44,8 @@ public class DungeonView {
         System.out.println("Hero choice is: " + heroChoice);
         setHero(playerName, heroChoice);
 
+        dungeonAdventure.startGameThread();
+
 
     }
 
