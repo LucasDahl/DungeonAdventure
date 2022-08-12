@@ -16,6 +16,8 @@ Lost in a dungeon in a mysterious land, the exit will only open to this dangerou
 ## Game Play
 </div>
 
+An Adventurer must navigate a maze to find all four pillars of OO. Adventurers face many challenges in their quest, like traps or even dangerous monsters. However, even if they see the exit, it will not open unless they hold all four pillars.
+
 <div align="center">
 
 ## Controls
