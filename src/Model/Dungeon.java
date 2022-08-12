@@ -376,6 +376,7 @@ public class Dungeon implements Serializable {
      *
      * @param theMove the direction to move
      */
+    //public void move(Direction theMove, Adventurer theAdventurer) {
     public void move(Direction theMove) {
         if (theMove.equals(Direction.LEFT) && (getAdventurerY() - 1 >= 0)) {
             myCurrentLocation.updateY(-1);
@@ -389,7 +390,8 @@ public class Dungeon implements Serializable {
             System.out.println("The dungeon doesn't wrap around");
         }
         updateCurrentRoom();
-        // should this be passed to controller?
+
+        //autoPickUpItems(theAdventurer);
         System.out.println(myCurrentLocation);
         System.out.println(myMazeOfRooms[getAdventurerX()][getAdventurerY()].toString());
     }
