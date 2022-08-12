@@ -138,13 +138,17 @@ public class Room implements Serializable {
         // if random rolls a number less than monster chance, create a monster
         // depending on the modulus of the roll
         if((rand.nextInt(100) + 1) <= MONSTER_CHANCE) {
+
+            // Properties
             int pick = rand.nextInt(100) + 1;
+            MonsterFactory factory = new MonsterFactory();
+
             if (pick % 3 == 0) {
-                myMonster1 = new Ogre();
+                myMonster1 = factory.createMonster("Ogre");
             } else if (pick % 3 == 1) {
-                myMonster1 = new Gremlin();
+                myMonster1 = factory.createMonster("Gremlin");
             } else {
-                myMonster1 = new Skeleton();
+                myMonster1 = factory.createMonster("Skeleton");
             }
         }
     }
