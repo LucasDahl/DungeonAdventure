@@ -90,17 +90,13 @@ public class Dungeon implements Serializable {
         placeExit();
         placePillars();
         closeEdgeDoors();
-        System.out.println("New dungeon:\n" + this.toString());
         generateMaze();
-        System.out.println("After generating maze:\n" + this.toString());
-        myCurrentLocation = getEntrance(); // move this after maze generation is fixed
-
     }
 
     // ******************************* Methods ******************************
 
     /**
-     * This method goes through the dungeon and cloes all the doors
+     * This method goes through the dungeon and closes all the doors
      * at the edge of the dungeon.
      */
     private void closeEdgeDoors() {
@@ -128,17 +124,13 @@ public class Dungeon implements Serializable {
      * This method randomly generates a maze
      */
     private void generateMaze() {
-        // in progress
-        // recursive backtracker
-        // east and south doors only
-        // his m_maze is his int array of neighbor paths
-        //myCurrentRoom.getPath(Direction.NORTH);
-        //myCurrentRoom.getVisitedStatus();
-        //myCurrentRoom.setPath(Direction.NORTH,true);
-
+        int tempX = myCurrentLocation.getX();
+        int tempY = myCurrentLocation.getY();
+        Coordinates temp = new Coordinates(tempX,tempY);
         int visitedRooms;
         Stack<Coordinates> mazeStack = new Stack<Coordinates>();
-        mazeStack.push(getCurrentLocation());
+        mazeStack.push(temp);
+        myCurrentRoom.setVisitedStatus(true);
         visitedRooms = 1;
         while (visitedRooms < (myRows * myColumns)) {
             // Create a set of unvisited neighbors
@@ -197,17 +189,19 @@ public class Dungeon implements Serializable {
                         break;
                     }
                 }
-                mazeStack.push(myCurrentLocation);
+                tempX = myCurrentLocation.getX();
+                tempY = myCurrentLocation.getY();
+                Coordinates temp2 = new Coordinates(tempX,tempY);
+                mazeStack.push(temp2);
                 myCurrentRoom.setVisitedStatus(true);
                 visitedRooms++;
-                //neighbor.clear();
-            } else {
-                if (mazeStack.size() > 0) {
-                    mazeStack.pop(); // backtrack
-                }
-            }
 
+            } else {
+                myCurrentLocation = mazeStack.pop();
+            }
+            //if
         }
+        myCurrentLocation = getEntrance();
         closeMazeDoors();
     }
 
@@ -255,7 +249,7 @@ public class Dungeon implements Serializable {
     }
 
     private boolean isTraversalPossible() {
-        // in progress
+        // STILL IN PROGRESS!!! 8/11/2022
         boolean isTraversalPossible = false;
         Coordinates entrance = getEntrance();
         // try to reach the exit
@@ -274,7 +268,7 @@ public class Dungeon implements Serializable {
         x = rand.nextInt(myRows);
         y = rand.nextInt(myColumns);
         myMazeOfRooms[x][y].setEntrance(true);
-
+        myMazeOfRooms[x][y].setVisitedStatus(true);
         myEntrance = new Coordinates(x, y);
         myCurrentLocation = new Coordinates(x, y);
         myCurrentRoom = myMazeOfRooms[x][y];
@@ -488,6 +482,7 @@ public class Dungeon implements Serializable {
     // only here for testing
     public static void main(String[] args) {
         Dungeon dungeon = new Dungeon(3, 3);
+        System.out.println(dungeon);
 
     }
 }
