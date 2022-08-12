@@ -29,6 +29,8 @@ W - update <br>
 A - left <br>
 S - down <br>
 R - right <br>
+H - Use healing potion <br>
+V - Use vision potion <br>
 
 <div align="center">
 
