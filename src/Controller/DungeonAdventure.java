@@ -15,23 +15,35 @@ import static Model.Direction.*;
  * Package condition: Must be placed in the same package
  * as all component classes.
  */
+
+// SERIALIZE HERE! MAKE DUNGEON AND ADVENTURER INSTANCES, NOT STATIC
 public class DungeonAdventure implements Runnable {
-    private static Dungeon myDungeon;
-    private static Adventurer myAdventurer;
+    //singleton unique instance
+    private static DungeonAdventure myDungeonAdventure = new DungeonAdventure();
+    private Dungeon myDungeon;
+    private Adventurer myAdventurer;
 
     private String myPlayerName;
     final static int DUNGEON_ROWS = 4;
     final static int DUNGEON_COLUMNS = 4;
 
-    private boolean myAreDoorsOpen;
+    //private boolean myAreDoorsOpen;
 
 
     private Thread myGameThread;
 
-    public DungeonAdventure() {
+    private DungeonAdventure() {
+        myDungeon = new Dungeon(DUNGEON_ROWS, DUNGEON_COLUMNS);
         // startGameThread();
 
+    }
 
+    /**
+     * Single point of access for DungeonAdventure
+     * @return the only instance of DungeonAdventure allowed
+     */
+    public static synchronized DungeonAdventure getDungeonAdventure() {
+        return myDungeonAdventure;
     }
 
     public void startGameThread() {
@@ -155,24 +167,12 @@ public class DungeonAdventure implements Runnable {
     }
 
     public static void main(String[] args) {
-        myDungeon = new Dungeon(DUNGEON_ROWS, DUNGEON_COLUMNS);
-        new DungeonView();
-//        System.out.println(myDungeon);
-        //System.out.println("Entrance: " + Arrays.toString(myDungeon.getEntrance()));
-        //System.out.println("Exit: " + Arrays.toString(myDungeon.getExit()));
+        DungeonView view = new DungeonView();
+        DungeonAdventure game = DungeonAdventure.getDungeonAdventure();
+        System.out.println(game.myDungeon.getEntrance());
 
-        // intro();
-        System.out.println();
-
-        System.out.println("Showing dungeon: ");
-        System.out.println("Dungeon Entrance: ");
-        System.out.println(myDungeon.getEntrance());
-
-        System.out.println(myDungeon);
-
-        //System.out.println("Press any key to start");
-        Thread thread = new Thread();
-        thread.start();
+//        Thread thread = new Thread();
+//        thread.start();
     }
 
     /**
@@ -189,47 +189,8 @@ public class DungeonAdventure implements Runnable {
     @Override
     public void run() {
         while (myGameThread != null) {
-
-            //myAreDoorsOpen = myDungeon.myCurrentRoom.getIfDoorsAreOpen();
-            // System.out.println("The game is playing");
-
-            // want to move from one dungeon to another.
-//            Scanner scanner = new Scanner(System.in);
-//
-//            String input = scanner.nextLine();
-            //Dungeon.Direction direction = myDungeon.getDirection(input);
-
-            //myDungeon.move(direction);
-
-//            if (myAreDoorsOpen) {
-//                myDungeon.move(getPlayerMove());
-//            }
-
-//            Monster monster = myDungeon.getCurrentRoom().getMonster();
-//            System.out.println("Monster: " + monster);
-            // then there is a monster
-//            if (monster != null) {
-//                System.out.println("fight monster");
-
-
-                // want to close doors to lock the player into fighting
-                // close all doors
-
-                //myDungeon.myCurrentRoom.closeAllDoors();
-
-                // if all doors are closed then you cant move
-
-                //System.out.println(!myAreDoorsOpen);
-//                if (!myAreDoorsOpen) {
-//                    myGameThread.interrupt();
-//                    System.out.println("door is closed");
-//
-//                }
-
             DungeonView.informUser(reportOptions());
-            //myDungeon.move(getPlayerMove(), myAdventurer);
-            myDungeon.move(getPlayerMove());
-            //}
+            myDungeon.move(getPlayerMove(), myAdventurer);
         }
     }
 }
