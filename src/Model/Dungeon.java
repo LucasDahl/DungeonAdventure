@@ -1,5 +1,7 @@
 package Model;
 
+import View.DungeonView;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -94,11 +96,38 @@ public class Dungeon implements Serializable {
     }
 
     // ******************************* Methods ******************************
+    public void autoPickUpItems(final Adventurer theAdventurer){
+        pickUpPillar(theAdventurer);
+        pickUpPotions(theAdventurer);
+    }
 
-    public boolean checkForPillars() {
-        String pillar = myCurrentRoom.getPillar();
-        // pillar of abstraction
-        return !pillar.equals("");
+    private void pickUpPillar(final Adventurer theAdventurer) {
+        if(!myCurrentRoom.getPillar().equals("")) {
+            StringBuilder sb = new StringBuilder("You have found the pillar of ");
+            String pillar = myCurrentRoom.getPillar();
+            switch (pillar) {
+                case "A" -> sb.append("Abstraction!");
+                case "E" -> sb.append("Encapsulation!");
+                case "I" -> sb.append("Inheritance!");
+                case "P" -> sb.append("Polymorphism!");
+                default -> sb.append("Dungeon: pickUpPillar broke");
+            }
+            DungeonView.informUser(sb.toString());
+            theAdventurer.setListOfPillars(pillar); //update Adventurer's pillars
+            myCurrentRoom.setPillar(""); //remove pillar from the room
+        }
+    }
+    private void pickUpPotions(final Adventurer theAdventurer) {
+        if(myCurrentRoom.getHealingPotion()) {
+            DungeonView.informUser("You have found a healing potion!");
+            theAdventurer.setHealingPotions(1);
+            myCurrentRoom.setHealingPotion(false);
+        }
+        if(myCurrentRoom.getVisionPotion()) {
+            DungeonView.informUser("You have found a vision potion!");
+            theAdventurer.setVisionPotions(1);
+            myCurrentRoom.setVisionPotion(false);
+        }
     }
     /**
      * This method goes through the dungeon and closes all the doors
