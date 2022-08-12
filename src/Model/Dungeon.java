@@ -126,7 +126,7 @@ public class Dungeon implements Serializable {
     private void generateMaze() {
         int tempX = myCurrentLocation.getX();
         int tempY = myCurrentLocation.getY();
-        Coordinates temp = new Coordinates(tempX,tempY);
+        Coordinates temp = new Coordinates(tempX, tempY);
         int visitedRooms;
         Stack<Coordinates> mazeStack = new Stack<Coordinates>();
         mazeStack.push(temp);
@@ -192,7 +192,7 @@ public class Dungeon implements Serializable {
                 }
                 tempX = myCurrentLocation.getX();
                 tempY = myCurrentLocation.getY();
-                Coordinates temp2 = new Coordinates(tempX,tempY);
+                Coordinates temp2 = new Coordinates(tempX, tempY);
                 mazeStack.push(temp2);
                 myCurrentRoom.setVisitedStatus(true);
                 visitedRooms++;
@@ -355,6 +355,7 @@ public class Dungeon implements Serializable {
         }
         updateCurrentRoom();
         // should this be passed to controller?
+        System.out.println(myCurrentLocation);
         System.out.println(myMazeOfRooms[getAdventurerX()][getAdventurerY()].toString());
     }
 
@@ -440,6 +441,11 @@ public class Dungeon implements Serializable {
                 myCurrentLocation.updateX(1);
             }
         }
+    }
+
+
+    public Room getCurrentRoom() {
+        return myCurrentRoom;
     }
 
     //=================
