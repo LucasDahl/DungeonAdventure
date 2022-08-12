@@ -139,9 +139,29 @@ public class Adventurer {
         return myListOfPillars.toString();
     }
 
+    /**
+     *  This is the character class for the
+     *  hero.
+     *
+     * @return the HEro character.
+     */
+    public Hero getCharacter() {
+        return myCharacter;
+    }
+
     //========
     // Setters
     //========
+
+    /**
+     *  This will set the HEro class of the player,
+     *  which will account for changes in the object.
+     *
+     * @param theHero the hero with changed values.
+     */
+    public void setCharacter(final Hero theHero) {
+        myCharacter = theHero;
+    }
 
     /**
      * This method will set the number of
