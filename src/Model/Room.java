@@ -59,6 +59,7 @@ public class Room implements Serializable {
     }
 
     // ******************************* Methods ******************************
+
     void defaultPaths() {
         myNorthPath = false;
         myEastPath = false;

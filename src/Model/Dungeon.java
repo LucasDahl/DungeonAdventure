@@ -94,11 +94,27 @@ public class Dungeon implements Serializable {
     }
 
     // ******************************* Methods ******************************
+    public void autoPickUpItems(final Adventurer theAdventurer){
+        pickUpPillar(theAdventurer);
 
-    public boolean checkForPillars() {
-        String pillar = myCurrentRoom.getPillar();
-        // pillar of abstraction
-        return !pillar.equals("");
+    }
+
+    private void pickUpPillar(final Adventurer theAdventurer) {
+        if(!myCurrentRoom.getPillar().equals("")) {
+            System.out.print("You have found and stored the pillar of ");
+            String pillar = myCurrentRoom.getPillar();
+            switch (pillar) {
+                case "A" -> System.out.println("Abstraction!");
+                case "E" -> System.out.println("Encapsulation!");
+                case "I" -> System.out.println("Inheritance!");
+                case "P" -> System.out.println("Polymorphism!");
+                default -> System.out.println("Dungeon: pickUpPillar broke");
+            }
+            theAdventurer.setListOfPillars(pillar); //update Adventurer's pillars
+            myCurrentRoom.setPillar(""); //remove pillar from the room
+        }
+
+
     }
     /**
      * This method goes through the dungeon and closes all the doors
