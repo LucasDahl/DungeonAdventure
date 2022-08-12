@@ -21,15 +21,22 @@ public class MonsterFactory {
      * @return this is the created monster
      * @throws SQLException sql error
      */
-    public Monster createMonster(final String theMonster) throws SQLException {
+    public Monster createMonster(final String theMonster) {
+
+        DBConnection sql = null;
 
         if(theMonster == null || theMonster.isEmpty()) {
             return null;
         }
 
-        DBConnection sql = new DBConnection();
+        try {
+            sql = new DBConnection();
+            return sql.extractMonster(theMonster);
+        } catch(Exception e) {
+            System.out.println("Error: " + e);
+        }
 
-        return sql.extractMonster(theMonster);
+        return null;
 
     }
 }
