@@ -337,6 +337,7 @@ public class Dungeon implements Serializable {
         getEmptyRoom("P");
     }
 
+
     //========
     // Getters
     //========
@@ -414,6 +415,69 @@ public class Dungeon implements Serializable {
         return myCurrentLocation;
     }
 
+    public String getVisionPotionView() {
+        int x = getAdventurerX();
+        int y = getAdventurerY();
+        int xStart;
+        int xStop;
+        int yStart;
+        int yStop;
+
+        // set x boundaries
+        if(x > 0) {
+            xStart = x - 1;
+        } else {
+            xStart = x;
+        }
+        if (x < myRows - 1) {
+            xStop = x + 1;
+        } else {
+            xStop = x;
+        }
+
+        // set y boundaries
+        if(y > 0) {
+            yStart = y - 1;
+        } else {
+            yStart = y;
+        }
+        if (y < myColumns - 1) {
+            yStop = y + 1;
+        } else {
+            yStop = y;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = xStart; i < xStop + 1; i++) {
+
+            // create Model.Room top row
+            for (int j = yStart; j < yStop + 1; j++) {
+                sb.append("*"); // top-left corner
+                sb.append((printNSDoor(myMazeOfRooms[i][j].getNorthDoor()))); // North door
+                //sb.append("*"); // top-right corner
+            }
+            sb.append("*\n"); // go to middle row
+
+            // create Model.Room middle row
+            for (int j = 0; j < myColumns; j++) {
+                sb.append((printEWDoor(myMazeOfRooms[i][j].getWestDoor()))); // West door
+                sb.append((myMazeOfRooms[i][j].getMiddle())); // Contents of Model.Room
+                //sb.append(printEWDoor(myMazeOfRooms[i][j].getEastDoor())); // East door
+            }
+            sb.append(printEWDoor(myMazeOfRooms[i][myColumns - 1].getEastDoor())); // East door
+            sb.append("\n"); // go to bottom row
+
+            if (i == (myRows - 1)) {
+                // create Model.Room bottom row
+                for (int j = 0; j < myColumns; j++) {
+                    sb.append("*"); // bottom-left corner
+                    sb.append(printNSDoor((myMazeOfRooms[i][j].getSouthDoor()))); // South door
+
+                }
+                sb.append("*"); // bottom-right corner
+            }
+        }
+        return sb.toString();
+    }
 
     /**
      * Precondition: It must be used for east or west doors
