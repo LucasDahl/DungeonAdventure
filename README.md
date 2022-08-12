@@ -37,8 +37,7 @@ V - Use vision potion <br>
 ## Adventurer
 </div>
 
-Play as either a Warrior with the ability to deal a crushing blow, Priestess who can heal without potions, or a Thief that has a chance of a surprise attack.
-Chose the right Model.Hero for the job, as the way is plagued with dangerous enemies and traps, and it may just take all you have to make it to the end.
+Play as either a Warrior with the ability to deal a crushing blow, a Priestess who can heal without potions, or a Thief with a chance of a surprise attack. Chose the right Hero for the job, as the way is plagued with dangerous enemies and traps, and it may just take all you have to make it to the end.
 
 <div align="center">
 
