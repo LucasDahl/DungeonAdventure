@@ -387,13 +387,12 @@ public class Dungeon implements Serializable {
         } else if (theMove.equals(Direction.DOWN) && getAdventurerX() + 1 < myRows) {
             myCurrentLocation.updateX(1);
         } else {
-            System.out.println("The dungeon doesn't wrap around");
+
+            DungeonView.informUser("The dungeon doesn't wrap around");
         }
         updateCurrentRoom();
-
-        //autoPickUpItems(theAdventurer);
-        System.out.println(myCurrentLocation);
-        System.out.println(myMazeOfRooms[getAdventurerX()][getAdventurerY()].toString());
+        DungeonView.informUser(myCurrentLocation.toString());
+        DungeonView.informUser(myMazeOfRooms[getAdventurerX()][getAdventurerY()].toString());
     }
 
     /**

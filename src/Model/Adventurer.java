@@ -32,7 +32,7 @@ public class Adventurer {
 
         myNumberOfHealingPotions = 0;
         myNumberOfVisionPotions = 0;
-        myListOfPillars = Collections.emptySet();
+        myListOfPillars = new HashSet<String>();
         try  {
             myCharacter = new HeroFactory().createHero(theClass);
             myCharacter.setName(theName);
