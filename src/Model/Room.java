@@ -38,6 +38,9 @@ public class Room implements Serializable {
     private boolean myExit;
     private int myItemCount;
 
+
+    private boolean myAreDoorsOpen;
+
     // ***************************** Constructors ***************************
 
     /**
@@ -47,7 +50,7 @@ public class Room implements Serializable {
 
         myPillarLetter = "";
         myItemCount = 0;    // counts: pits, potions, pillars,
-                            // not counted: entrance, exit
+        // not counted: entrance, exit
         openAllDoors();
         myEntrance = false;
         myExit = false;
@@ -62,25 +65,30 @@ public class Room implements Serializable {
         mySouthPath = false;
         myWestPath = false;
     }
+
     /**
      * Sets all doors to CLOSED
      */
-    void closeAllDoors() {
+    public void closeAllDoors() {
         setNorthDoor(DoorStatus.CLOSED);
         setEastDoor(DoorStatus.CLOSED);
         setSouthDoor(DoorStatus.CLOSED);
         setWestDoor(DoorStatus.CLOSED);
+        myAreDoorsOpen = false;
+
     }
 
     /**
      * Sets all doors to OPEN
      */
-    void openAllDoors() {
+    public void openAllDoors() {
         setNorthDoor(DoorStatus.OPEN);
         setEastDoor(DoorStatus.OPEN);
         setSouthDoor(DoorStatus.OPEN);
         setWestDoor(DoorStatus.OPEN);
+        myAreDoorsOpen = true;
     }
+
     /**
      * Clears all the items in the room.
      */
@@ -101,11 +109,12 @@ public class Room implements Serializable {
      */
     public boolean hasLiveMonster() {
         boolean monsterIsDead = true;
-        if(myMonster1 != null) {
+        if (myMonster1 != null) {
             monsterIsDead = !getMonster().isDead();
         }
         return monsterIsDead;
     }
+
     /**
      * Randomly assigns a pit, vision potion, healing potion, and a monster
      * to the Model.Room.
@@ -137,7 +146,7 @@ public class Room implements Serializable {
         }
         // if random rolls a number less than monster chance, create a monster
         // depending on the modulus of the roll
-        if((rand.nextInt(100) + 1) <= MONSTER_CHANCE) {
+        if ((rand.nextInt(100) + 1) <= MONSTER_CHANCE) {
 
             // Properties
             int pick = rand.nextInt(100) + 1;
@@ -159,12 +168,15 @@ public class Room implements Serializable {
     public DoorStatus getNorthDoor() {
         return myNorthDoor;
     }
+
     public DoorStatus getEastDoor() {
         return myEastDoor;
     }
+
     public DoorStatus getSouthDoor() {
         return mySouthDoor;
     }
+
     public DoorStatus getWestDoor() {
         return myWestDoor;
     }
@@ -172,24 +184,28 @@ public class Room implements Serializable {
     //========
     // Everything else Getters
     //========
+
     /**
      * @return whether the room is the dungeon entrance or not
      */
     public boolean getEntrance() {
         return myEntrance;
     }
+
     /**
      * @return whether the room is the dungeon exit or not
      */
     public boolean getExit() {
         return myExit;
     }
+
     public boolean getHealingPotion() {
         return myHealingPotion;
     }
+
     /**
      * Pillars: A = Abstraction, E = Encapsulation
-     *          I = Inheritance, P = Polymorphism
+     * I = Inheritance, P = Polymorphism
      * H = healing potion only
      * V = vision potion only
      * X = pit only
@@ -225,6 +241,7 @@ public class Room implements Serializable {
 
     /**
      * Get the Monster in the room
+     *
      * @return the Monster of the room
      */
     public Monster getMonster() {
@@ -246,15 +263,19 @@ public class Room implements Serializable {
         }
         return theRequestedPath;
     }
+
     /**
      * Valid returns are "A", "E", "I", or "P"
+     *
      * @return the letter of the pillar in the room if there is one
      */
     public String getPillar() {
         return myPillarLetter;
     }
+
     /**
      * Get the pit state of the room (true = pit, false = no pit)
+     *
      * @return whether there is a pit in the room
      */
     public boolean getPit() {
@@ -267,12 +288,18 @@ public class Room implements Serializable {
     public boolean getVisitedStatus() {
         return myVisitedStatus;
     }
+
     /**
      * Get the vision potion state of the room
+     *
      * @return whether there is a vision potion
      */
     public boolean getVisionPotion() {
         return myVisionPotion;
+    }
+
+    public boolean getIfDoorsAreOpen() {
+        return myAreDoorsOpen;
     }
 
     //========
@@ -281,20 +308,25 @@ public class Room implements Serializable {
 
     /**
      * Set the north door as open or closed
+     *
      * @param theNorthDoor uses enumerated type DoorStatus
      */
     void setNorthDoor(DoorStatus theNorthDoor) {
         myNorthDoor = theNorthDoor;
     }
+
     /**
      * Set the east door as open or closed
+     *
      * @param theEastDoor uses enumerated type DoorStatus
      */
     void setEastDoor(DoorStatus theEastDoor) {
         myEastDoor = theEastDoor;
     }
+
     /**
      * Set the south door as open or closed
+     *
      * @param theSouthDoor uses enumerated type DoorStatus
      */
     void setSouthDoor(DoorStatus theSouthDoor) {
@@ -303,6 +335,7 @@ public class Room implements Serializable {
 
     /**
      * Set the west door as open or closed
+     *
      * @param theWestDoor uses enumerated type DoorStatus
      */
     void setWestDoor(DoorStatus theWestDoor) {
@@ -316,6 +349,7 @@ public class Room implements Serializable {
 
     /**
      * Set a room to be or not be a dungeon entrance
+     *
      * @param theEntrance of the dungeon
      */
     void setEntrance(final boolean theEntrance) {
@@ -324,8 +358,10 @@ public class Room implements Serializable {
         }
         myEntrance = theEntrance;
     }
+
     /**
      * Set a room to be or not be a dungeon exit
+     *
      * @param theExit of the dungeon
      */
     void setExit(final boolean theExit) {
@@ -334,8 +370,10 @@ public class Room implements Serializable {
         }
         myExit = theExit;
     }
+
     /**
      * Designate whether the room has a healing potion
+     *
      * @param theHealingPotion true places healing potion, false removes it
      */
     void setHealingPotion(final boolean theHealingPotion) {
@@ -348,7 +386,7 @@ public class Room implements Serializable {
     }
 
     /**
-     * @param theDirection A Direction to set
+     * @param theDirection  A Direction to set
      * @param thePathExists true - the path exists, false - there is no path
      */
     void setPath(Direction theDirection, boolean thePathExists) {
@@ -359,14 +397,16 @@ public class Room implements Serializable {
             case WEST, LEFT -> myWestPath = thePathExists;
         }
     }
+
     /**
      * Designate the room to contain a pillar
+     *
      * @param thePillarLetter "A", "E", "I", or "P"
      */
     void setPillar(String thePillarLetter) {
-        if (Objects.equals(thePillarLetter, "") && myPillarLetter.length()>0) {
+        if (Objects.equals(thePillarLetter, "") && myPillarLetter.length() > 0) {
             myItemCount--;
-        } else if (Objects.equals(myPillarLetter, "") && thePillarLetter.length() >0){
+        } else if (Objects.equals(myPillarLetter, "") && thePillarLetter.length() > 0) {
             myItemCount++;
         }
         myPillarLetter = thePillarLetter;
@@ -374,18 +414,21 @@ public class Room implements Serializable {
 
     /**
      * Designate whether the room has a pit
+     *
      * @param thePit true creates pit, false removes it
      */
     void setPit(boolean thePit) {
         if (!thePit && myPit) { // removing pit when there was a pit
             myItemCount--;
-        } else if (!myPit && thePit){ // had no pit, adding a pit
+        } else if (!myPit && thePit) { // had no pit, adding a pit
             myItemCount++;
         }
         myPit = thePit;
     }
+
     /**
      * Designate whether the room has a vision potion
+     *
      * @param theVisionPotion true places vision potion, false removes it
      */
     void setVisionPotion(final boolean theVisionPotion) {
