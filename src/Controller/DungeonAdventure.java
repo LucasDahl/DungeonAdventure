@@ -77,9 +77,10 @@ public class DungeonAdventure implements Runnable {
         StringBuilder sb = new StringBuilder();
         if (!(myDungeon.myCurrentRoom.getMonster() == null)) {
             if (!myDungeon.myCurrentRoom.hasLiveMonster()) {
-                // have room class have a method called hasLiveMonster()
-                sb.append("f - fight");
+                sb.append("f - fight\n");
             }
+        } else {
+            sb.append(reportOpenDoors());
         }
         return sb.toString();
     }
@@ -96,9 +97,23 @@ public class DungeonAdventure implements Runnable {
         if (myDungeon.myCurrentRoom.getNorthDoor().equals(DoorStatus.OPEN)) {
             sb.append("w - go through North Door\n");
         }
+        if (myDungeon.myCurrentRoom.getWestDoor().equals(DoorStatus.OPEN)) {
+            sb.append("a - go through West Door\n");
+        }
+        if (myDungeon.myCurrentRoom.getSouthDoor().equals(DoorStatus.OPEN)) {
+            sb.append("s - go through South Door\n");
+        }
+        if (myDungeon.myCurrentRoom.getEastDoor().equals(DoorStatus.OPEN)) {
+            sb.append("d - go through East Door\n");
+        }
         return sb.toString();
     }
 
+    private String reportOptions() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(checkMonster());
+        return sb.toString();
+    }
 
     public void setPlayerClass(final String theHeroChoice) {
         if (theHeroChoice.equals("t")) {
@@ -175,7 +190,7 @@ public class DungeonAdventure implements Runnable {
     public void run() {
         while (myGameThread != null) {
 
-            myAreDoorsOpen = myDungeon.myCurrentRoom.getIfDoorsAreOpen();
+            //myAreDoorsOpen = myDungeon.myCurrentRoom.getIfDoorsAreOpen();
             // System.out.println("The game is playing");
 
             // want to move from one dungeon to another.
@@ -186,33 +201,35 @@ public class DungeonAdventure implements Runnable {
 
             //myDungeon.move(direction);
 
-            if (myAreDoorsOpen) {
-                myDungeon.move(getPlayerMove());
-            }
+//            if (myAreDoorsOpen) {
+//                myDungeon.move(getPlayerMove());
+//            }
 
-            Monster monster = myDungeon.getCurrentRoom().getMonster();
-            System.out.println(monster);
+//            Monster monster = myDungeon.getCurrentRoom().getMonster();
+//            System.out.println("Monster: " + monster);
             // then there is a monster
-            if (monster != null) {
-                System.out.println("fight monster");
+//            if (monster != null) {
+//                System.out.println("fight monster");
 
 
                 // want to close doors to lock the player into fighting
                 // close all doors
 
-                myDungeon.myCurrentRoom.closeAllDoors();
+                //myDungeon.myCurrentRoom.closeAllDoors();
 
                 // if all doors are closed then you cant move
 
-                System.out.println(!myAreDoorsOpen);
-                if (!myAreDoorsOpen) {
-                    myGameThread.interrupt();
-                    System.out.println("door is closed");
+                //System.out.println(!myAreDoorsOpen);
+//                if (!myAreDoorsOpen) {
+//                    myGameThread.interrupt();
+//                    System.out.println("door is closed");
+//
+//                }
 
-                }
-
-
-            }
+            DungeonView.informUser(reportOptions());
+            //myDungeon.move(getPlayerMove(), myAdventurer);
+            myDungeon.move(getPlayerMove());
+            //}
         }
     }
 }

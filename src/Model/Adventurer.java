@@ -75,8 +75,6 @@ public class Adventurer {
             return true;
         }
 
-        System.out.print("Not enough vision potions");
-
         return false;
     }
 

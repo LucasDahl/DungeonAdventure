@@ -83,10 +83,10 @@ public class Room implements Serializable {
      * Sets all doors to OPEN
      */
     public void openAllDoors() {
-        setNorthDoor(DoorStatus.OPEN);
-        setEastDoor(DoorStatus.OPEN);
-        setSouthDoor(DoorStatus.OPEN);
-        setWestDoor(DoorStatus.OPEN);
+        setDoor(Direction.NORTH, DoorStatus.OPEN);
+        setDoor(Direction.EAST, DoorStatus.OPEN);
+        setDoor(Direction.SOUTH, DoorStatus.OPEN);
+        setDoor(Direction.WEST, DoorStatus.OPEN);
         myAreDoorsOpen = true;
     }
 
@@ -343,7 +343,14 @@ public class Room implements Serializable {
         myWestDoor = theWestDoor;
     }
 
-
+    void setDoor(Direction theDirection, DoorStatus theStatus) {
+        switch (theDirection) {
+            case NORTH, UP -> myNorthDoor = theStatus;
+            case EAST, RIGHT -> myEastDoor = theStatus;
+            case SOUTH, DOWN -> mySouthDoor = theStatus;
+            case WEST, LEFT -> myWestDoor = theStatus;
+        }
+    }
     //========
     // Everything else Setters
     //========
