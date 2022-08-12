@@ -25,7 +25,8 @@ public class Adventurer {
     /**
      *  This is the default constructor for the adventure
      *
-     * @param theHero
+     * @param theName the name of the player
+     * @param theClass the class the player picked.
      */
     public Adventurer(final String theName, final String theClass) {
 
@@ -73,6 +74,8 @@ public class Adventurer {
             myNumberOfVisionPotions--;
             return true;
         }
+
+        System.out.print("Not enough vision potions");
 
         return false;
     }
