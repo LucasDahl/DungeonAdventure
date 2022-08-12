@@ -118,6 +118,8 @@ Maximum heal points: 50 <br>
 ## Dungeon
 </div>
 
+Each Dungeon will have an entrance, exit and the four pillars of OO randomly placed for replayability. In addition, each room will have one to three doors randomly closed or open to create a maze, possibly containing a monster, trap, healing potion, or vision potion. Each playthrough will feel slightly different than previous attempts.
+
 <div align="center">
 
 ## Rooms
