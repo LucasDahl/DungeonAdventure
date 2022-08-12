@@ -595,4 +595,3 @@ public class Dungeon implements Serializable {
 
     }
 }
-

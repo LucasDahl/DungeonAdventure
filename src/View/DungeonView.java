@@ -12,8 +12,8 @@ public class DungeonView {
 
     private DungeonAdventure dungeonAdventure;
 
-    public DungeonView() {
-        dungeonAdventure = DungeonAdventure.getDungeonAdventure();
+    public DungeonView(DungeonAdventure theDungeonAdventure) {
+        dungeonAdventure = theDungeonAdventure;
         intro();
 
     }
