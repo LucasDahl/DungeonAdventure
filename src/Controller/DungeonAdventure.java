@@ -1,9 +1,14 @@
 package Controller;
 
-import Model.*;
+import Model.Adventurer;
+import Model.Direction;
+import Model.DoorStatus;
+import Model.Dungeon;
 import View.DungeonView;
 
 import java.util.Scanner;
+
+import static Model.Direction.*;
 
 
 /*
@@ -70,7 +75,7 @@ public class DungeonAdventure implements Runnable {
     private String checkMonster() {
         StringBuilder sb = new StringBuilder();
         if (!(myDungeon.myCurrentRoom.getMonster() == null)) {
-            if (!myDungeon.myCurrentRoom.getMonster().isDead()) {
+            if (!myDungeon.myCurrentRoom.hasLiveMonster()) {
                 // have room class have a method called hasLiveMonster()
                 sb.append("f - fight");
             }
@@ -109,6 +114,25 @@ public class DungeonAdventure implements Runnable {
         }
 
     }
+    // temp method - only here to test game loop
+    private Direction getPlayerMove() {
+        String userPrompt = "Type of the following movement characters:\n" +
+                "w - up\ta - left\ts - down\td - right";
+        String playerInput = DungeonView.promptUserForString(userPrompt);
+        playerInput.toLowerCase();
+        while (!(playerInput.equals("w") || playerInput.equals("a") ||
+                playerInput.equals("s") || playerInput.equals("d"))) {
+            playerInput = DungeonView.promptUserForString(userPrompt);
+        }
+        Direction direction;
+        switch (playerInput) {
+            case "w" -> direction = UP;
+            case "a" -> direction = LEFT;
+            case "s" -> direction = DOWN;
+            default -> direction = RIGHT;
+        }
+        return direction;
+    }
 
     public static void main(String[] args) {
         myDungeon = new Dungeon(DUNGEON_ROWS, DUNGEON_COLUMNS);
@@ -124,9 +148,11 @@ public class DungeonAdventure implements Runnable {
         System.out.println("Dungeon Entrance: ");
         System.out.println(myDungeon.getEntrance());
 
-
         System.out.println(myDungeon);
 
+        //System.out.println("Press any key to start");
+        Thread thread = new Thread();
+        thread.start();
     }
 
     /**
@@ -146,12 +172,13 @@ public class DungeonAdventure implements Runnable {
             // System.out.println("The game is playing");
 
             // want to move from one dungeon to another.
-            Scanner scanner = new Scanner(System.in);
+//            Scanner scanner = new Scanner(System.in);
+//
+//            String input = scanner.nextLine();
+            //Dungeon.Direction direction = myDungeon.getDirection(input);
 
-            String input = scanner.nextLine();
-            Dungeon.Direction direction = myDungeon.getDirection(input);
-
-            myDungeon.move(direction);
+            //myDungeon.move(direction);
+            myDungeon.move(getPlayerMove());
         }
     }
 }

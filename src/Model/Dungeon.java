@@ -1,7 +1,5 @@
 package Model;
 
-import View.DungeonView;
-
 import java.io.Serializable;
 import java.util.*;
 
@@ -18,6 +16,7 @@ public class Dungeon implements Serializable {
         // **************************** Fields ****************************
         int myX;
         int myY;
+
         // ************************** Constructors ************************
         Coordinates(int theX, int theY) {
             myX = theX;
@@ -94,26 +93,28 @@ public class Dungeon implements Serializable {
         System.out.println("New dungeon:\n" + this.toString());
         generateMaze();
         System.out.println("After generating maze:\n" + this.toString());
+        myCurrentLocation = getEntrance(); // move this after maze generation is fixed
 
     }
 
     // ******************************* Methods ******************************
+
     /**
      * This method goes through the dungeon and cloes all the doors
      * at the edge of the dungeon.
      */
     private void closeEdgeDoors() {
         //top edge
-        for (int i = 0; i < myColumns; i++){
+        for (int i = 0; i < myColumns; i++) {
             myMazeOfRooms[0][i].setNorthDoor(DoorStatus.CLOSED);
         }
         // right edge
         for (int i = 0; i < myRows; i++) {
-            myMazeOfRooms[i][myColumns-1].setEastDoor(DoorStatus.CLOSED);
+            myMazeOfRooms[i][myColumns - 1].setEastDoor(DoorStatus.CLOSED);
         }
         // bottom edge
         for (int i = 0; i < myColumns; i++) {
-            myMazeOfRooms[myRows-1][i].setSouthDoor(DoorStatus.CLOSED);
+            myMazeOfRooms[myRows - 1][i].setSouthDoor(DoorStatus.CLOSED);
         }
         // left edge
         for (int i = 0; i < myRows; i++) {
@@ -143,22 +144,22 @@ public class Dungeon implements Serializable {
             // Create a set of unvisited neighbors
             Vector<Direction> neighbor = new Vector<>();
             // North neighbor -
-            if((mazeStack.peek().getX() > 0) &&
+            if ((mazeStack.peek().getX() > 0) &&
                     !roomOffset(mazeStack, Direction.NORTH).getVisitedStatus()) {
                 neighbor.add(Direction.NORTH);
             }
             // East neighbor
-            if((mazeStack.peek().getY() < myColumns - 1) &&
-                !roomOffset(mazeStack, Direction.EAST).getVisitedStatus()) {
+            if ((mazeStack.peek().getY() < myColumns - 1) &&
+                    !roomOffset(mazeStack, Direction.EAST).getVisitedStatus()) {
                 neighbor.add(Direction.EAST);
             }
             // South neighbor
-            if(mazeStack.peek().getX() < myRows - 1 &&
+            if (mazeStack.peek().getX() < myRows - 1 &&
                     !roomOffset(mazeStack, Direction.SOUTH).getVisitedStatus()) {
                 neighbor.add(Direction.SOUTH);
             }
             // West neighbor
-            if((mazeStack.peek().getY() > 0) &&
+            if ((mazeStack.peek().getY() > 0) &&
                     !roomOffset(mazeStack, Direction.WEST).getVisitedStatus()) {
                 neighbor.add(Direction.WEST);
             }
@@ -209,11 +210,13 @@ public class Dungeon implements Serializable {
         }
         closeMazeDoors();
     }
+
     private Room roomOffset(Stack<Coordinates> theStack) {
         int x = theStack.peek().getX();
         int y = theStack.peek().getY();
         return myMazeOfRooms[x][y];
     }
+
     private Room roomOffset(Stack<Coordinates> theStack, Direction theDirection) {
         int x = theStack.peek().getX();
         int y = theStack.peek().getY();
@@ -225,6 +228,7 @@ public class Dungeon implements Serializable {
         }
         return myMazeOfRooms[x][y];
     }
+
     /**
      * This is a helper method for generate maze that iterates through
      * the dungeon and checks for paths. If a path doesn't exist between
@@ -236,19 +240,20 @@ public class Dungeon implements Serializable {
                 // if there is no path east in my current room
                 if (!myMazeOfRooms[i][j].getPath(Direction.EAST)) {
                     myMazeOfRooms[i][j].setEastDoor(DoorStatus.CLOSED);
-                    if(j + 1 < myColumns) { // if I'm not already at the right edge
-                        myMazeOfRooms[i][j+1].setWestDoor(DoorStatus.CLOSED);
+                    if (j + 1 < myColumns) { // if I'm not already at the right edge
+                        myMazeOfRooms[i][j + 1].setWestDoor(DoorStatus.CLOSED);
                     }
                 }
                 if (!myMazeOfRooms[i][j].getPath(Direction.SOUTH)) {
                     myMazeOfRooms[i][j].setSouthDoor(DoorStatus.CLOSED);
-                    if(i + 1 < myRows) { //if I'm not already at the bottom edge
-                        myMazeOfRooms[i+1][j].setNorthDoor(DoorStatus.CLOSED);
+                    if (i + 1 < myRows) { //if I'm not already at the bottom edge
+                        myMazeOfRooms[i + 1][j].setNorthDoor(DoorStatus.CLOSED);
                     }
                 }
             }
         }
     }
+
     private boolean isTraversalPossible() {
         // in progress
         boolean isTraversalPossible = false;
@@ -258,6 +263,7 @@ public class Dungeon implements Serializable {
         visitedRooms.add(myCurrentRoom);
         return isTraversalPossible;
     }
+
     /**
      * This method randomly chooses a room in the dungeon and assigns
      * it as the dungeon entrance.
@@ -269,8 +275,8 @@ public class Dungeon implements Serializable {
         y = rand.nextInt(myColumns);
         myMazeOfRooms[x][y].setEntrance(true);
 
-        myEntrance = new Coordinates(x,y);
-        myCurrentLocation = new Coordinates(x,y);
+        myEntrance = new Coordinates(x, y);
+        myCurrentLocation = new Coordinates(x, y);
         myCurrentRoom = myMazeOfRooms[x][y];
     }
 
@@ -283,7 +289,7 @@ public class Dungeon implements Serializable {
         int x, y;
         x = rand.nextInt(myRows);
         y = rand.nextInt(myColumns);
-        while(myMazeOfRooms[x][y].getEntrance()) {
+        while (myMazeOfRooms[x][y].getEntrance()) {
             x = rand.nextInt(myRows);
             y = rand.nextInt(myColumns);
         }
@@ -310,14 +316,15 @@ public class Dungeon implements Serializable {
      * This method checks if a random room is an entrance, exit, or
      * has pillars. If the room doesn't have any pillars, this method would
      * set the parameter the Pillar as the room's pillar.
+     *
      * @param thePillar a letter (a, e, i, p) representing a Pillar of OO
      */
-    private void getEmptyRoom(String thePillar){
+    private void getEmptyRoom(String thePillar) {
         Random rand = new Random();
         int x, y;
         x = rand.nextInt(myRows);
         y = rand.nextInt(myColumns);
-        while(myMazeOfRooms[x][y].getEntrance() ||
+        while (myMazeOfRooms[x][y].getEntrance() ||
                 myMazeOfRooms[x][y].getExit() ||
                 myMazeOfRooms[x][y].getPillar() != "") {
             x = rand.nextInt(myRows);
@@ -336,19 +343,20 @@ public class Dungeon implements Serializable {
     /**
      * Checks if the adventurer is on the edge of the map and
      * updates the Coordinates of the adventurer
+     *
      * @param theMove the direction to move
      */
     public void move(Direction theMove) {
-        if (theMove.equals(Direction.LEFT) && (getAdventurerY()-1 >=0)) {
+        if (theMove.equals(Direction.LEFT) && (getAdventurerY() - 1 >= 0)) {
             myCurrentLocation.updateY(-1);
         } else if (theMove.equals(Direction.RIGHT) && getAdventurerY() + 1 < myColumns) {
             myCurrentLocation.updateY(1);
-        } else if (theMove.equals(Direction.UP) && getAdventurerX() -1 >= 0) {
+        } else if (theMove.equals(Direction.UP) && getAdventurerX() - 1 >= 0) {
             myCurrentLocation.updateX(-1);
         } else if (theMove.equals(Direction.DOWN) && getAdventurerX() + 1 < myRows) {
             myCurrentLocation.updateX(1);
         } else {
-            System.out.println("Never should've gotten here");
+            System.out.println("You cannot go through walls");
         }
         updateCurrentRoom();
         // should this be passed to controller?
@@ -381,34 +389,38 @@ public class Dungeon implements Serializable {
      * Precondition: It must be used for east or west doors
      * This method checks if the door is open or closed and returns
      * the character representation of the door.
+     *
      * @param theDoor DoorStatus OPEN or CLOSED
      * @return * is a closed door. | is an open east/west door.
      */
     String printEWDoor(DoorStatus theDoor) {
         String str = "";
-        if(theDoor.equals(DoorStatus.CLOSED)) {
+        if (theDoor.equals(DoorStatus.CLOSED)) {
             str = "*";
         } else {
             str = "|";
         }
         return str;
     }
+
     /**
      * Precondition: It must be used for north or south doors
      * This method checks if the door is open or closed and returns
      * the character representation of the door.
+     *
      * @param theDoor DoorStatus OPEN or CLOSED
      * @return * is a closed door. - is an open north/south door.
      */
     String printNSDoor(DoorStatus theDoor) {
         String str = "";
-        if(theDoor.equals(DoorStatus.CLOSED)){
+        if (theDoor.equals(DoorStatus.CLOSED)) {
             str = "*";
         } else {
             str = "-";
         }
         return str;
     }
+
     /**
      * update the current room according to the Adventurer's coordinates.
      * This method should be called when manually updating the current Coordinates
@@ -419,12 +431,14 @@ public class Dungeon implements Serializable {
 
     /**
      * Use to manually set the Dungeon's current room
+     *
      * @param theRoom Coordinates to set as the current room
      */
     void updateCurrentRoom(Coordinates theRoom) {
         myCurrentLocation = theRoom;
         myCurrentRoom = myMazeOfRooms[theRoom.getX()][theRoom.getY()];
     }
+
     void updateCurrentRoom(Direction theDirection) {
         switch (theDirection) {
             case NORTH, UP: {
@@ -476,5 +490,5 @@ public class Dungeon implements Serializable {
         Dungeon dungeon = new Dungeon(3, 3);
 
     }
-    }
+}
 

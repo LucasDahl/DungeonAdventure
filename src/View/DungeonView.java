@@ -1,7 +1,10 @@
 package View;
 
 import Controller.DungeonAdventure;
-import Model.*;
+import Model.HeroFactory;
+import Model.Priestess;
+import Model.Thief;
+import Model.Warrior;
 
 import java.util.Scanner;
 
@@ -63,7 +66,7 @@ public class DungeonView {
         Thief thief;
         Priestess priestess;
 
-        try{
+        try {
             warrior = (Warrior) new HeroFactory().createHero("warrior");
             thief = (Thief) new HeroFactory().createHero("thief");
             priestess = (Priestess) new HeroFactory().createHero("priestess");
@@ -73,7 +76,7 @@ public class DungeonView {
             System.out.println("Thief's special skill is: " + thief.getSpecialSkill());
             System.out.println("Priestess's special skill is: " + priestess.getSpecialSkill());
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println("ERROR: " + e);
         }
 
@@ -88,7 +91,8 @@ public class DungeonView {
 
 
     }
-    private String promptUserForString(String theDisplayString) {
+
+    public static String promptUserForString(String theDisplayString) {
         Scanner input = new Scanner(System.in);
         System.out.println(theDisplayString);
         return input.next();
