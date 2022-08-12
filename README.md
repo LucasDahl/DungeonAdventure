@@ -23,10 +23,10 @@ Lost in a dungeon in a mysterious land, the exit will only open to this dangerou
 
 The controls are simply wasd, and in a later versions the controls will be applied to a GUI.
 
-W - update
-A - left
-S - down
-R - right
+W - update <br>
+A - left <br>
+S - down <br>
+R - right <br>
 
 <div align="center">
 
