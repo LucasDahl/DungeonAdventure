@@ -23,7 +23,7 @@ Lost in a dungeon in a mysterious land, the exit will only open to this dangerou
 
 <div align="center">
 
-## Model.Adventurer
+## Adventurer
 </div>
 
 Play as either a Model.Warrior with the ability to deal a crushing blow, a Model.Priestess who can heal without potions, or a Model.Thief that has a chance of a surprise attack.
