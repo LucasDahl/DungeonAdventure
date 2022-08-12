@@ -350,7 +350,7 @@ public class Dungeon implements Serializable {
         } else if (theMove.equals(Direction.DOWN) && getAdventurerX() + 1 < myRows) {
             myCurrentLocation.updateX(1);
         } else {
-            System.out.println("You cannot go through walls");
+            System.out.println("The dungeon doesn't wrap around");
         }
         updateCurrentRoom();
         // should this be passed to controller?
@@ -374,7 +374,7 @@ public class Dungeon implements Serializable {
     /**
      * @return the current Coordinates of the adventurer
      */
-    Coordinates getCurrentLocation() {
+    public Coordinates getCurrentLocation() {
         return myCurrentLocation;
     }
 
