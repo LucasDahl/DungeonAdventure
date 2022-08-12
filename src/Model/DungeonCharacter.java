@@ -43,8 +43,14 @@ public abstract class DungeonCharacter {
 
     // **************************** Methods ***************************
 
-    // This is the battle method between two characters
-    protected void battle(final Model.Monster theEnemy, final Model.Hero theHero) {
+    /**
+     *  This is the battle method shared by all subclasses.
+     *  it will have a hero and a monster fight.
+     *
+     * @param theEnemy the enemy of the hero.
+     * @param theHero the hero(player)
+     */
+    public void battle(final Model.Monster theEnemy, final Model.Hero theHero) {
 
         while(theEnemy.getHealth() > 0 || theHero.getHealth() > 0) {
 
@@ -82,8 +88,13 @@ public abstract class DungeonCharacter {
         }
     }
 
-    // This method will have a character another
-    protected void attack(final DungeonCharacter theEnemy) {
+    /**
+     *  This method is the attack method shared by all
+     *  subclasses, and is used to attack an enemy.
+     *
+     * @param theEnemy the enemy of the class calling the method
+     */
+    public void attack(final DungeonCharacter theEnemy) {
 
         // Set the number of attacks for the Model.Warrior
         setNumberOfAttacks(theEnemy.getNumberOfAttacks() + 1);

@@ -33,6 +33,7 @@ public class Adventurer {
         myNumberOfHealingPotions = 0;
         myNumberOfVisionPotions = 0;
         myListOfPillars = new HashSet<String>();
+
         try  {
             myCharacter = new HeroFactory().createHero(theClass);
             myCharacter.setName(theName);
@@ -42,6 +43,20 @@ public class Adventurer {
     }
 
     // **************************** Methods ***************************
+
+    /**
+     *  This method will let the controller
+     *  know if the player has found all the pillars.
+     *
+     * @return indicates if the player has all the pillars
+     */
+    public boolean hasAllPillars() {
+        if(myListOfPillars.size() >= 4) {
+            return true;
+        }
+
+        return false;
+    }
 
 
     /**
@@ -162,7 +177,7 @@ public class Adventurer {
 
     @Override
     public String toString() {
-        return "";
+        return myCharacter.toString() + " Number of healing potions: " + myNumberOfHealingPotions + " Number of vision potions: " + myNumberOfVisionPotions + " Pillars collected: " + getListOfPillars();
     }
 
 }
