@@ -105,7 +105,7 @@ public class DBConnection {
         //System.out.println( "Attempting to insert two rows into questions table" );
 
         // Query the data
-        myQueryMonster = "INSERT INTO monster (NAME, HEALTH, DAMAGE_MIN, DAMAGE_MAX , ATTACK_SPEED , HIT_CHANCE , HEAL_CHANCE, MIN_HEAL, MAX_HEAL, NUMBER_OF_ATTACKS) VALUES ( 'Ogre', '200','30', '60', '2', '0.6', '0.1', '30', '60', '1') , ('Skeleton', '100','30', '50', '3', '0.8', '0.3', '30', '50', '1'), ('Gremlin', '70','15', '30', '5', '0.8', '0.4', '20', '40', '1'), ('Unkown', '1','1', '1', '1', '0.1', '0.1', '1', '1', '1')";
+        myQueryMonster = "INSERT INTO monster (NAME, HEALTH, DAMAGE_MIN, DAMAGE_MAX , ATTACK_SPEED , HIT_CHANCE , HEAL_CHANCE, MIN_HEAL, MAX_HEAL, NUMBER_OF_ATTACKS) VALUES ( 'Ogre', '200','30', '60', '2', '0.6', '0.1', '30', '60', '1') , ('Skeleton', '100','30', '50', '3', '0.8', '0.3', '30', '50', '1'), ('Gremlin', '70','15', '30', '5', '0.8', '0.4', '20', '40', '1'), ('Unkown', '1','1', '1', '1', '0.1', '0.1', '1', '1', '1'), ('Boss', '100','100', '100', '100', '1.0', '1.0', '100', '100', '100')";
 
         try ( Connection conn = myMonsterTable.getConnection(); Statement stmt = conn.createStatement(); ) {
            int rv = stmt.executeUpdate( myQueryMonster );
@@ -140,6 +140,9 @@ public class DBConnection {
                 break;
             case "GREMLIN":
                 query = "SELECT * FROM monster WHERE NAME = 'Gremlin'";
+                break;
+            case "BOSS":
+                query = "SELECT * FROM monster WHERE NAME = 'Boss'";
                 break;
             default:
                 query = "SELECT * FROM monster WHERE NAME = 'Unkown'";
