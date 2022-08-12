@@ -132,7 +132,8 @@ public class Dungeon implements Serializable {
         mazeStack.push(temp);
         myCurrentRoom.setVisitedStatus(true);
         visitedRooms = 1;
-        while (visitedRooms < (myRows * myColumns)) {
+        // visit rooms until all rooms are visited
+        while (visitedRooms < (myRows * myColumns) + 1) {
             // Create a set of unvisited neighbors
             Vector<Direction> neighbor = new Vector<>();
             // North neighbor -
@@ -481,7 +482,7 @@ public class Dungeon implements Serializable {
 
     // only here for testing
     public static void main(String[] args) {
-        Dungeon dungeon = new Dungeon(3, 3);
+        Dungeon dungeon = new Dungeon(4, 4);
         System.out.println(dungeon);
 
     }
