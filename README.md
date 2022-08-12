@@ -35,7 +35,7 @@ Chose the right Model.Hero for the job, as the way is plagued with dangerous ene
 </div>
 
 
-### Model.Warrior: <br>
+### Warrior: <br>
 Hit points: 125 <br>
 Attack speed: 4 <br>
 Chance to hit: 0.8 (80 percent) <br>
@@ -46,7 +46,7 @@ Special attack: Crushing Blow<br>
 Special attack damage: 75 - 150;
 Special attack hit chance: 0.4 (40 percent)<br>
 
-### Model.Priestess: <br>
+### Priestess: <br>
 Hit points: 75 <br>
 Attack speed: 5 <br>
 Chance to hit: 0.7 (70 percent) <br>
@@ -56,7 +56,7 @@ Chance to block: 0.3 (30 percent) <br>
 Special skill: Heal <br>
 Heal range: 1 - 100<br>
 
-### Model.Thief: <br>
+### Thief: <br>
 Hit points: 75 <br>
 Attack speed: 6 <br>
 Chance to hit: 0.8 (80 percent) <br>
@@ -72,7 +72,7 @@ Special skill chance of no attack: 0.2 (20 percent) <br>
 ## Monsters
 </div>
 
-### Model.Ogre <br>
+### Ogre <br>
 Hit points: 200 <br>
 Attack speed: 2 <br>
 Chance to hit: 0.6 (60 percent) <br>
@@ -82,7 +82,7 @@ Chance to heal: 0.1 (10 percent) <br>
 Minimum heal points: 30 <br>
 Maximum heal points: 60 <br>
 
-### Model.Gremlin <br>
+### Gremlin <br>
 Hit points: 70 <br>
 Attack speed: 5 <br>
 Chance to hit: 0.8 (80 percent) <br>
@@ -92,7 +92,7 @@ Chance to heal: 0.4 (40 percent) <br>
 Minimum heal points: 20 <br>
 Maximum heal points: 40 <br>
 
-### Model.Skeleton <br>
+### Skeleton <br>
 Hit points: 100 <br>
 Attack speed: 3 <br>
 Chance to hit: 0.8 (80 percent) <br>
@@ -104,7 +104,7 @@ Maximum heal points: 50 <br>
 
 <div align="center">
 
-## Model.Dungeon
+## Dungeon
 </div>
 
 <div align="center">
