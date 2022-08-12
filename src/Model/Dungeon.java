@@ -95,6 +95,11 @@ public class Dungeon implements Serializable {
 
     // ******************************* Methods ******************************
 
+    public boolean checkForPillars() {
+        String pillar = myCurrentRoom.getPillar();
+        // pillar of abstraction
+        return !pillar.equals("");
+    }
     /**
      * This method goes through the dungeon and closes all the doors
      * at the edge of the dungeon.
@@ -430,7 +435,7 @@ public class Dungeon implements Serializable {
      *
      * @param theRoom Coordinates to set as the current room
      */
-    void updateCurrentRoom(Coordinates theRoom) {
+    public void updateCurrentRoom(Coordinates theRoom) {
         myCurrentLocation = theRoom;
         myCurrentRoom = myMazeOfRooms[theRoom.getX()][theRoom.getY()];
     }

@@ -108,11 +108,11 @@ public class Room implements Serializable {
      * @return whether the Room has an alive monster
      */
     public boolean hasLiveMonster() {
-        boolean monsterIsDead = true;
+        boolean monsterIsAlive = false;
         if (myMonster1 != null) {
-            monsterIsDead = !getMonster().isDead();
+            monsterIsAlive = !getMonster().isDead();
         }
-        return monsterIsDead;
+        return monsterIsAlive;
     }
 
     /**
