@@ -12,9 +12,10 @@ public class DungeonView {
 
     private DungeonAdventure dungeonAdventure;
 
-    public DungeonView() {
-        dungeonAdventure = new DungeonAdventure();
+    public DungeonView(DungeonAdventure theDungeonAdventure) {
+        dungeonAdventure = theDungeonAdventure;
         intro();
+
     }
 
     // view is what the user sees
@@ -56,7 +57,6 @@ public class DungeonView {
         dungeonAdventure.setPlayerName(thePlayerName);
         dungeonAdventure.setPlayerClass(theHeroChoice);
         System.out.println("Good luck, " + thePlayerName);
-
     }
 
 

@@ -234,7 +234,6 @@ public class Dungeon implements Serializable {
             } else {
                 myCurrentLocation = mazeStack.pop();
             }
-            //if
         }
         myCurrentLocation = getEntrance();
         closeMazeDoors();
@@ -376,8 +375,8 @@ public class Dungeon implements Serializable {
      *
      * @param theMove the direction to move
      */
-    //public void move(Direction theMove, Adventurer theAdventurer) {
-    public void move(Direction theMove) {
+    public void move(final Direction theMove, final Adventurer theAdventurer) {
+    //public void move(Direction theMove) {
         if (theMove.equals(Direction.LEFT) && (getAdventurerY() - 1 >= 0)) {
             myCurrentLocation.updateY(-1);
         } else if (theMove.equals(Direction.RIGHT) && getAdventurerY() + 1 < myColumns) {
@@ -390,9 +389,13 @@ public class Dungeon implements Serializable {
 
             DungeonView.informUser("The dungeon doesn't wrap around");
         }
+        DungeonView.informUser("You are currently at " +
+                myCurrentLocation.toString());
+        DungeonView.informUser(myCurrentRoom.toString());
         updateCurrentRoom();
-        DungeonView.informUser(myCurrentLocation.toString());
-        DungeonView.informUser(myMazeOfRooms[getAdventurerX()][getAdventurerY()].toString());
+        autoPickUpItems(theAdventurer); // don't delete until resolvedasd
+        //DungeonView.informUser(myCurrentLocation.toString());
+        //DungeonView.informUser(myMazeOfRooms[getAdventurerX()][getAdventurerY()].toString());
     }
 
     /**
@@ -592,4 +595,3 @@ public class Dungeon implements Serializable {
 
     }
 }
-

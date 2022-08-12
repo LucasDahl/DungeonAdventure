@@ -411,7 +411,7 @@ public class Room implements Serializable {
      *
      * @param thePillarLetter "A", "E", "I", or "P"
      */
-    void setPillar(String thePillarLetter) {
+    void setPillar(final String thePillarLetter) {
         if (Objects.equals(thePillarLetter, "") && myPillarLetter.length() > 0) {
             myItemCount--;
         } else if (Objects.equals(myPillarLetter, "") && thePillarLetter.length() > 0) {
