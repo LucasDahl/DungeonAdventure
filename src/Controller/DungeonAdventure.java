@@ -18,7 +18,7 @@ import static Model.Direction.*;
 
 // SERIALIZE HERE! MAKE DUNGEON AND ADVENTURER INSTANCES, NOT STATIC
 public class DungeonAdventure implements Runnable {
-    //singleton unique instance
+    //singleton - eager instance
     private static DungeonAdventure myDungeonAdventure = new DungeonAdventure();
     private Dungeon myDungeon;
     private Adventurer myAdventurer;
@@ -34,7 +34,7 @@ public class DungeonAdventure implements Runnable {
 
     private DungeonAdventure() {
         myDungeon = new Dungeon(DUNGEON_ROWS, DUNGEON_COLUMNS);
-        // startGameThread();
+        // startGameThread(); in DungeonView
 
     }
 
@@ -66,8 +66,9 @@ public class DungeonAdventure implements Runnable {
         boolean canExitHere = false;
         int pillarsCount = 0;
         String currentPillars = myAdventurer.getListOfPillars();
-        String[] neededPillars = {"a", "e", "i", "p"};
+        String[] neededPillars = {"A", "E", "I", "P"};
         if (myDungeon.myCurrentRoom.getExit()) {
+            DungeonView.informUser("You found the exit!");
             // Check for all 4 pillars
             for (int i = 0; i < neededPillars.length; i++) {
                 if (currentPillars.contains(neededPillars[i])) {
@@ -76,6 +77,8 @@ public class DungeonAdventure implements Runnable {
             }
             if (pillarsCount == neededPillars.length) {
                 canExitHere = true;
+                DungeonView.informUser("Congratulations " +
+                        myPlayerName + "! You win!");
             }
         }
         return canExitHere;
@@ -190,6 +193,9 @@ public class DungeonAdventure implements Runnable {
     public void run() {
         while (myGameThread != null) {
             DungeonView.informUser(reportOptions());
+            if(getDungeonAdventure().checkExitConditions()) {
+                myGameThread = null; // force stop the game?
+            }
             myDungeon.move(getPlayerMove(), myAdventurer);
         }
     }

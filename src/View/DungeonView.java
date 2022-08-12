@@ -15,6 +15,7 @@ public class DungeonView {
     public DungeonView() {
         dungeonAdventure = DungeonAdventure.getDungeonAdventure();
         intro();
+
     }
 
     // view is what the user sees
