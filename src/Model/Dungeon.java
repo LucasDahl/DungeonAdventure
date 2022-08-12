@@ -96,12 +96,12 @@ public class Dungeon implements Serializable {
     // ******************************* Methods ******************************
     public void autoPickUpItems(final Adventurer theAdventurer){
         pickUpPillar(theAdventurer);
-
+        pickUpPotions(theAdventurer);
     }
 
     private void pickUpPillar(final Adventurer theAdventurer) {
         if(!myCurrentRoom.getPillar().equals("")) {
-            System.out.print("You have found and stored the pillar of ");
+            System.out.print("You have found the pillar of ");
             String pillar = myCurrentRoom.getPillar();
             switch (pillar) {
                 case "A" -> System.out.println("Abstraction!");
@@ -113,8 +113,18 @@ public class Dungeon implements Serializable {
             theAdventurer.setListOfPillars(pillar); //update Adventurer's pillars
             myCurrentRoom.setPillar(""); //remove pillar from the room
         }
-
-
+    }
+    private void pickUpPotions(final Adventurer theAdventurer) {
+        if(myCurrentRoom.getHealingPotion()) {
+            System.out.println("You have found a healing potion!");
+            theAdventurer.setHealingPotions(1);
+            myCurrentRoom.setHealingPotion(false);
+        }
+        if(myCurrentRoom.getVisionPotion()) {
+            System.out.println("You have found a vision potion!");
+            theAdventurer.setVisionPotions(1);
+            myCurrentRoom.setVisionPotion(false);
+        }
     }
     /**
      * This method goes through the dungeon and closes all the doors
