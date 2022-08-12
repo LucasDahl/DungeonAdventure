@@ -92,6 +92,9 @@ public class DungeonView {
 
     }
 
+    public static void informUser(String theDisplayMessage) {
+        System.out.println(theDisplayMessage);
+    }
     public static String promptUserForString(String theDisplayString) {
         Scanner input = new Scanner(System.in);
         System.out.println(theDisplayString);

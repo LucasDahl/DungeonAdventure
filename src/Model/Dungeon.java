@@ -1,5 +1,7 @@
 package Model;
 
+import View.DungeonView;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -101,27 +103,28 @@ public class Dungeon implements Serializable {
 
     private void pickUpPillar(final Adventurer theAdventurer) {
         if(!myCurrentRoom.getPillar().equals("")) {
-            System.out.print("You have found the pillar of ");
+            StringBuilder sb = new StringBuilder("You have found the pillar of ");
             String pillar = myCurrentRoom.getPillar();
             switch (pillar) {
-                case "A" -> System.out.println("Abstraction!");
-                case "E" -> System.out.println("Encapsulation!");
-                case "I" -> System.out.println("Inheritance!");
-                case "P" -> System.out.println("Polymorphism!");
-                default -> System.out.println("Dungeon: pickUpPillar broke");
+                case "A" -> sb.append("Abstraction!");
+                case "E" -> sb.append("Encapsulation!");
+                case "I" -> sb.append("Inheritance!");
+                case "P" -> sb.append("Polymorphism!");
+                default -> sb.append("Dungeon: pickUpPillar broke");
             }
+            DungeonView.informUser(sb.toString());
             theAdventurer.setListOfPillars(pillar); //update Adventurer's pillars
             myCurrentRoom.setPillar(""); //remove pillar from the room
         }
     }
     private void pickUpPotions(final Adventurer theAdventurer) {
         if(myCurrentRoom.getHealingPotion()) {
-            System.out.println("You have found a healing potion!");
+            DungeonView.informUser("You have found a healing potion!");
             theAdventurer.setHealingPotions(1);
             myCurrentRoom.setHealingPotion(false);
         }
         if(myCurrentRoom.getVisionPotion()) {
-            System.out.println("You have found a vision potion!");
+            DungeonView.informUser("You have found a vision potion!");
             theAdventurer.setVisionPotions(1);
             myCurrentRoom.setVisionPotion(false);
         }
