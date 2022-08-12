@@ -21,6 +21,13 @@ Lost in a dungeon in a mysterious land, the exit will only open to this dangerou
 ## Controls
 </div>
 
+The controls are simply wasd, and in a later versions the controls will be applied to a GUI.
+
+W - update
+A - left
+S - down
+R - right
+
 <div align="center">
 
 ## Adventurer
