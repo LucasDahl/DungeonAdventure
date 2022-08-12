@@ -19,11 +19,21 @@ public class HeroFactory {
      * @return this is the created hero
      * @throws SQLException sql error
      */
-    public Hero createHero(final String theHero) throws SQLException {
+    public Hero createHero(final String theHero) {
 
-        DBConnection sql = new DBConnection();
+        // Properties
+        DBConnection sql = null;
 
-        return sql.extractHero(theHero);
+        try {
+
+            sql = new DBConnection();
+            return sql.extractHero(theHero);
+
+        } catch(Exception e) {
+            System.out.println("Error: " + e);
+        }
+
+        return null;
     }
 }
 
