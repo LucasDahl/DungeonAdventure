@@ -39,7 +39,6 @@ public class DBConnection {
     public DBConnection() throws SQLException {
 
         createMonsterTable();
-        fillMonsterTable();
 
         // Fill the DB
         if(checkDBSize("monster")) {
@@ -47,7 +46,7 @@ public class DBConnection {
         }
 
         createHeroTable();
-        fillHeroTable();
+
         // Fill the DB
         if(checkDBSize("hero")) {
             fillHeroTable();
@@ -288,8 +287,6 @@ public class DBConnection {
                 default:
                     hero = new Thief(name, health, damageMin, damageMax, attackSpeed, hitChance, blockChance, numberOfAttacks);
             }
-
-            //hero = new Thief(name, health, damageMin, damageMax, attackSpeed, hitChance, blockChance, numberOfAttacks);
 
 
         } catch ( SQLException e ) {
