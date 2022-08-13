@@ -40,6 +40,7 @@ public class DungeonAdventure implements Runnable {
 
     /**
      * Single point of access for DungeonAdventure
+     *
      * @return the only instance of DungeonAdventure allowed
      */
     public static synchronized DungeonAdventure getDungeonAdventure() {
@@ -172,7 +173,16 @@ public class DungeonAdventure implements Runnable {
     public static void main(String[] args) {
         DungeonView view = new DungeonView(getDungeonAdventure());
         DungeonAdventure game = DungeonAdventure.getDungeonAdventure();
-        System.out.println(game.myDungeon.getEntrance());
+        //System.out.println(game.myDungeon.getEntrance());
+
+//        Adventurer adventurer = new Adventurer("dude", "warrior");
+//        MonsterFactory factory = new MonsterFactory();
+//        Monster skeleton = factory.createMonster("Skeleton");
+//        skeleton.battle(skeleton,adventurer.getCharacter());
+
+
+
+
 
 //        Thread thread = new Thread();
 //        thread.start();
@@ -193,10 +203,14 @@ public class DungeonAdventure implements Runnable {
     public void run() {
         while (myGameThread != null) {
             DungeonView.informUser(reportOptions());
-            if(getDungeonAdventure().checkExitConditions()) {
+
+            if (getDungeonAdventure().checkExitConditions()) {
                 myGameThread = null; // force stop the game?
+            } else {
+                myDungeon.move(getPlayerMove(), myAdventurer);
             }
-            myDungeon.move(getPlayerMove(), myAdventurer);
+
+
         }
     }
 }

@@ -377,7 +377,7 @@ public class Dungeon implements Serializable {
      */
     public void move(final Direction theMove, final Adventurer theAdventurer) {
     //public void move(Direction theMove) {
-        if (theMove.equals(Direction.LEFT) && (getAdventurerY() - 1 >= 0)) {
+        if (theMove.equals(Direction.LEFT) && (getAdventurerY() - 1 >= 0) && myCurrentRoom.getWestDoor().equals(DoorStatus.OPEN)) {
             myCurrentLocation.updateY(-1);
         } else if (theMove.equals(Direction.RIGHT) && getAdventurerY() + 1 < myColumns) {
             myCurrentLocation.updateY(1);
