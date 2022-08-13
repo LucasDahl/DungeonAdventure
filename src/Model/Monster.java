@@ -1,5 +1,7 @@
 package Model;
 
+import View.DungeonView;
+
 /**
  * @author Lucas Dahl - LDahl
  * @version 1.0
@@ -47,7 +49,12 @@ public class Monster extends DungeonCharacter {
         double healPoints = super.getMyRandomRange(myHealMin, myHealMax);
 
         if(chance <= myChanceToHeal) {
+
+            // Set the health
             super.setHealth(super.getHealth() + healPoints);
+
+            // Let the user know the monster healed
+            DungeonView.informUser("Healed for : " + healPoints + " points.");
         }
     }
 
