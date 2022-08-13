@@ -181,9 +181,6 @@ public class DungeonAdventure implements Runnable {
 //        skeleton.battle(skeleton,adventurer.getCharacter());
 
 
-
-
-
 //        Thread thread = new Thread();
 //        thread.start();
     }
@@ -201,6 +198,9 @@ public class DungeonAdventure implements Runnable {
      */
     @Override
     public void run() {
+
+        DungeonView.informUser(myDungeon.getCurrentRoom().toString());
+        DungeonView.informUser(myDungeon.getCurrentLocation().toString());
         while (myGameThread != null) {
             DungeonView.informUser(reportOptions());
 
@@ -208,6 +208,23 @@ public class DungeonAdventure implements Runnable {
                 myGameThread = null; // force stop the game?
             } else {
                 myDungeon.move(getPlayerMove(), myAdventurer);
+
+                while (myDungeon.myCurrentRoom.hasLiveMonster()) {
+                    //  System.out.println("FIGHT");
+
+                    myDungeon.myCurrentRoom.getMonster().battle(myDungeon.myCurrentRoom.getMonster(), myAdventurer.getCharacter());
+
+                    if (myAdventurer.getCharacter().isDead()) {
+                        break;
+                    }
+                    if (myDungeon.myCurrentRoom.getMonster().isDead()) {
+                        break;
+                    }
+                }
+
+                if (myAdventurer.getCharacter().isDead()) {
+                    break;
+                }
             }
 
 
