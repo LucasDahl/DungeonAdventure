@@ -236,6 +236,7 @@ public class Dungeon implements Serializable {
             }
         }
         myCurrentLocation = getEntrance();
+        updateCurrentRoom(myCurrentLocation);
         closeMazeDoors();
     }
 
