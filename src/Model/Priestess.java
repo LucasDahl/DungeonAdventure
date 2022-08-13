@@ -1,5 +1,7 @@
 package Model;
 
+import View.DungeonView;
+
 /**
  * @author Lucas Dahl - LDahl
  * @version 1.0
@@ -60,7 +62,15 @@ public class Priestess extends Hero {
 
     @Override
     protected void specialSkill(DungeonCharacter theEnemy) {
-        super.setHealth(super.getHealth() + healPoints());
+
+        // Properties
+        double totalHealed = healPoints();
+
+        // Set the health
+        super.setHealth(super.getHealth() + totalHealed);
+
+        // Let the user know how much they healed
+        DungeonView.informUser("Healed for : " + totalHealed + " points.");
     }
 
     @Override
