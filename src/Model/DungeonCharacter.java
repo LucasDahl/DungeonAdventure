@@ -1,5 +1,8 @@
 package Model;
 
+import Controller.DungeonAdventure;
+import View.DungeonView;
+
 import java.util.Random;
 import java.util.Scanner;
 
@@ -52,7 +55,7 @@ public abstract class DungeonCharacter {
      */
     public void battle(final Model.Monster theEnemy, final Model.Hero theHero) {
 
-        while(theEnemy.getHealth() > 0 || theHero.getHealth() > 0) {
+        while(!theEnemy.isDead() && !theHero.isDead()) {
 
             // See who attacks first. If players speed becomes too low
             // enemy may be able to attack twice in a row.
@@ -61,7 +64,7 @@ public abstract class DungeonCharacter {
                 int attackType;
                 Scanner input = new Scanner(System.in);
 
-                System.out.print("Press 1 for normal attack, or 2 for special attack: ");
+                DungeonView.informUser("Press 1 for normal attack, or 2 for special skill: ");
                 attackType = input.nextInt();
 
                 if(attackType == 1) {
@@ -72,19 +75,23 @@ public abstract class DungeonCharacter {
                     System.out.println("Invalid option, turned missed");
                 }
 
+            }
+
+            // If the player blocks, enemy doesn't attack
+            if(!theHero.defend()) {
+                theEnemy.attack(theHero);
             } else {
 
-                // If the player blocks, enemy doesn't attack
-                if(!theHero.defend()) {
-                    theEnemy.attack(theHero);
-                } else {
-                    System.out.println("You blocked the attack");
-                }
-
-                // The monster has a chance to heal
-                theEnemy.heal();
-
+                DungeonView.informUser("You blocked the attack");
             }
+
+            // The monster has a chance to heal
+            theEnemy.heal();
+
+            // Show the health
+            DungeonView.informUser(theHero.getName() + ": " + theHero.getHealth());
+            DungeonView.informUser(theEnemy.getName() + ": " + theEnemy.getHealth());
+
         }
     }
 
@@ -97,7 +104,9 @@ public abstract class DungeonCharacter {
     public void attack(final DungeonCharacter theEnemy) {
 
         // Set the number of attacks for the Model.Warrior
-        setNumberOfAttacks(theEnemy.getNumberOfAttacks() + 1);
+        if(getAttackSpeed() > theEnemy.getAttackSpeed() * 2) {
+            setNumberOfAttacks(theEnemy.getNumberOfAttacks() + 1);
+        }
 
         // Attack the other character
         for(int i = 0; i < this.getNumberOfAttacks(); i++) {
@@ -107,6 +116,7 @@ public abstract class DungeonCharacter {
 
             // The Model.Warrior hit the enemy
             if(attackHit > getChanceToHit()) {
+                System.out.println(damage);
                 theEnemy.setHealth(theEnemy.getHealth() - damage);
             }
         }
