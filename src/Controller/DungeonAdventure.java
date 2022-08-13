@@ -223,6 +223,11 @@ public class DungeonAdventure implements Runnable {
                 }
 
                 if (myAdventurer.getCharacter().isDead()) {
+//                    myGameThread = null;
+//                    myPlayerName = null;
+//                    DungeonView.informUser("You have Died.\nThe Game will restart.\n");
+//
+//                    DungeonView view = new DungeonView(getDungeonAdventure());
                     break;
                 }
             }
