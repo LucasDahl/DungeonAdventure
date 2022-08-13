@@ -14,7 +14,7 @@ public class Dungeon implements Serializable {
      * Coordinates, in the 2D array of Rooms composing Dungeon. Not designed
      * for use outside of Dungeon.
      */
-    class Coordinates {
+    public class Coordinates {
         // **************************** Fields ****************************
         int myX;
         int myY;
@@ -380,11 +380,11 @@ public class Dungeon implements Serializable {
     //public void move(Direction theMove) {
         if (theMove.equals(Direction.LEFT) && (getAdventurerY() - 1 >= 0) && myCurrentRoom.getWestDoor().equals(DoorStatus.OPEN)) {
             myCurrentLocation.updateY(-1);
-        } else if (theMove.equals(Direction.RIGHT) && getAdventurerY() + 1 < myColumns) {
+        } else if (theMove.equals(Direction.RIGHT) && getAdventurerY() + 1 < myColumns && myCurrentRoom.getEastDoor().equals(DoorStatus.OPEN)) {
             myCurrentLocation.updateY(1);
-        } else if (theMove.equals(Direction.UP) && getAdventurerX() - 1 >= 0) {
+        } else if (theMove.equals(Direction.UP) && getAdventurerX() - 1 >= 0 && myCurrentRoom.getNorthDoor().equals(DoorStatus.OPEN)) {
             myCurrentLocation.updateX(-1);
-        } else if (theMove.equals(Direction.DOWN) && getAdventurerX() + 1 < myRows) {
+        } else if (theMove.equals(Direction.DOWN) && getAdventurerX() + 1 < myRows && myCurrentRoom.getSouthDoor().equals(DoorStatus.OPEN)) {
             myCurrentLocation.updateX(1);
         } else {
 
