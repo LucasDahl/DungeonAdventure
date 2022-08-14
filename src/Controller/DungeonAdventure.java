@@ -20,7 +20,7 @@ import static Model.Direction.*;
 public class DungeonAdventure implements Runnable {
     //singleton - eager instance
     private static final DungeonAdventure myDungeonAdventure = new DungeonAdventure();
-    private final Dungeon myDungeon;
+    private Dungeon myDungeon;
     private Adventurer myAdventurer;
 
     private String myPlayerName;
