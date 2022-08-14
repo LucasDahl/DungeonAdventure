@@ -206,7 +206,7 @@ public class DungeonAdventure implements Runnable {
             DungeonView.informUser(reportOptions());
 
             if (getDungeonAdventure().checkExitConditions()) {
-                myGameThread = null; // force stop the game?
+                myGameThread = null; // stop the game when they can exit/win
             } else {
                 myDungeon.move(getPlayerMove(), myAdventurer);
 
@@ -218,22 +218,8 @@ public class DungeonAdventure implements Runnable {
                     if (myAdventurer.getCharacter().isDead()) {
                         break;
                     }
-                    if (myDungeon.myCurrentRoom.getMonster().isDead()) {
-                        break;
-                    }
-                }
-
-                if (myAdventurer.getCharacter().isDead()) {
-//                    myGameThread = null;
-//                    myPlayerName = null;
-//                    DungeonView.informUser("You have Died.\nThe Game will restart.\n");
-//
-//                    DungeonView view = new DungeonView(getDungeonAdventure());
-                    break;
                 }
             }
-
-
         }
     }
 }
