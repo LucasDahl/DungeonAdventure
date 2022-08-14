@@ -19,8 +19,8 @@ import static Model.Direction.*;
 // SERIALIZE HERE! MAKE DUNGEON AND ADVENTURER INSTANCES, NOT STATIC
 public class DungeonAdventure implements Runnable {
     //singleton - eager instance
-    private static DungeonAdventure myDungeonAdventure = new DungeonAdventure();
-    private Dungeon myDungeon;
+    private static final DungeonAdventure myDungeonAdventure = new DungeonAdventure();
+    private final Dungeon myDungeon;
     private Adventurer myAdventurer;
 
     private String myPlayerName;
@@ -165,7 +165,8 @@ public class DungeonAdventure implements Runnable {
             case "w" -> direction = UP;
             case "a" -> direction = LEFT;
             case "s" -> direction = DOWN;
-            default -> direction = RIGHT;
+            case "d" -> direction = RIGHT;
+            default -> direction = NEUTRAL;
         }
         return direction;
     }
