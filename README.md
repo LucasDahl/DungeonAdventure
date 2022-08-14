@@ -23,14 +23,15 @@ An Adventurer must navigate a maze to find all four pillars of OO. Adventurers f
 ## Controls
 </div>
 
-The controls are simply wasd, and in a later versions the controls will be applied to a GUI.
+The controls are simpel wasd contorls, with a few eaxtra to use items.
 
-W - update <br>
-A - left <br>
-S - down <br>
-R - right <br>
+W - Up <br>
+A - Left <br>
+S - Down <br>
+R - Right <br>
 H - Use healing potion <br>
 V - Use vision potion <br>
+B - Initiate battle <br>
 
 <div align="center">
 
