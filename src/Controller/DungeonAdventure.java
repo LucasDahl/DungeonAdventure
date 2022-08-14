@@ -216,6 +216,7 @@ public class DungeonAdventure implements Runnable {
                     myDungeon.myCurrentRoom.getMonster().battle(myDungeon.myCurrentRoom.getMonster(), myAdventurer.getCharacter());
 
                     if (myAdventurer.getCharacter().isDead()) {
+                        DungeonView.informUser("You Died. Better luck next time. ");
                         break;
                     }
                 }
