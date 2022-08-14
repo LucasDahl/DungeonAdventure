@@ -28,7 +28,7 @@ The controls are simpel wasd contorls, with a few eaxtra to use items.
 W - Up <br>
 A - Left <br>
 S - Down <br>
-R - Right <br>
+D - Right <br>
 H - Use healing potion <br>
 V - Use vision potion <br>
 B - Initiate battle <br>
