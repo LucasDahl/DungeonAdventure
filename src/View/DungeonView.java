@@ -87,16 +87,6 @@ public class DungeonView {
 
     }
 
-    private static void displayOptions() {
-        // p -pickup, h - heal, v - vision f - fight
-        StringBuilder sb = new StringBuilder();
-//        if (myDungeon.myCurrentRoom.getExit()) {
-//
-//        }
-
-
-    }
-
     public static void informUser(String theDisplayMessage) {
         System.out.println(theDisplayMessage);
     }
