@@ -168,13 +168,6 @@ public class DungeonAdventure implements Runnable {
     }
 
     private Direction translateMove(String thePlayerInput) {
-        //String thePlayerInput = DungeonView.promptUserForString(reportOptions());
-        //thePlayerInput = thePlayerInput.toLowerCase();
-//        while (!(thePlayerInput.equals("w") || thePlayerInput.equals("a") ||
-//                thePlayerInput.equals("s") || thePlayerInput.equals("d"))) {
-//            DungeonView.informUser("Invalid move. Please select again.");
-//            thePlayerInput = DungeonView.promptUserForString(reportOpenDoors());
-//        }
         Direction direction;
         switch (thePlayerInput) {
             case "w" -> direction = UP;
@@ -238,6 +231,8 @@ public class DungeonAdventure implements Runnable {
                     break;
                 }
                 case "map": {
+                    DungeonView.informUser("You are currently at: " +
+                            myDungeon.getCurrentLocation());
                     DungeonView.informUser(myDungeon.toString());
                     break;
                 }
