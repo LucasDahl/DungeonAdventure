@@ -86,8 +86,6 @@ public class DungeonAdventure implements Runnable {
             } else {
                 DungeonView.informUser("Continue searching the dungeon" +
                         " for the remaining Pillars of OO!");
-                DungeonView.informUser("You currently have " +
-                        currentPillars.length() + " pillars.");
                 DungeonView.informUser("Your current pillars: " +
                         myAdventurer.getListOfPillars());
             }
@@ -185,7 +183,7 @@ public class DungeonAdventure implements Runnable {
     private void battle() {
         if (myDungeon.myCurrentRoom.hasLiveMonster()) {
             myDungeon.myCurrentRoom.getMonster().battle(myDungeon.
-                myCurrentRoom.getMonster(), myAdventurer.getCharacter());
+                    myCurrentRoom.getMonster(), myAdventurer);
             if (myAdventurer.getCharacter().isDead()) {
                 DungeonView.informUser("You died. Better luck next time.");
                 myGameThread = null; //end game
@@ -195,7 +193,7 @@ public class DungeonAdventure implements Runnable {
         }
     }
     private void nextTurn(){
-        String[] cheatsList = {"ko", "map"};
+        String[] cheatsList = {"ko", "map", "teleport"};
         Set<String> cheats = new HashSet<>(List.of(cheatsList));
 
         String[] movesList = {"w", "a", "s", "d"};
@@ -231,6 +229,8 @@ public class DungeonAdventure implements Runnable {
                 }
                 case "v": {
                     if(myAdventurer.useVisionPotion()) {
+                        DungeonView.informUser( "You are currently at : " +
+                                myDungeon.getCurrentLocation().toString());
                         DungeonView.informUser(myDungeon.getVisionPotionView());
                     }
                     break;
@@ -241,12 +241,21 @@ public class DungeonAdventure implements Runnable {
                 }
                 case "ko": {
                     myDungeon.myCurrentRoom.setMonster(null);
+                    DungeonView.informUser("You have ko'd the monster");
                     break;
                 }
                 case "map": {
                     DungeonView.informUser("You are currently at: " +
                             myDungeon.getCurrentLocation());
                     DungeonView.informUser(myDungeon.toString());
+                    break;
+                }
+                case "teleport": {
+                    String xInput = DungeonView.promptUserForString("X coordinate?");
+                    String yInput = DungeonView.promptUserForString("Y coordinate?");
+                    int x = Integer.parseInt(xInput);
+                    int y = Integer.parseInt(yInput);
+                    myDungeon.teleport(x, y, myAdventurer);
                     break;
                 }
                 default: {
