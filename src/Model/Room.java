@@ -394,7 +394,7 @@ public class Room implements Serializable {
         }
         this.myHealingPotion = theHealingPotion;
     }
-    void setMonster(final Monster theMonster) {
+    public void setMonster(final Monster theMonster) {
         myMonster1 = theMonster;
     }
     /**
