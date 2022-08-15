@@ -65,6 +65,7 @@ public class Room implements Serializable {
         myEastPath = false;
         mySouthPath = false;
         myWestPath = false;
+        myVisitedStatus = false;
     }
 
     /**
