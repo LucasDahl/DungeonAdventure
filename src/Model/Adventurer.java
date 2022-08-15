@@ -19,6 +19,7 @@ public class Adventurer {
     private Hero myCharacter;
     private int myNumberOfHealingPotions;
     private int myNumberOfVisionPotions;
+    private int potionHealth;
     private Set<String> myListOfPillars;
 
     // ************************** Constructors ************************
@@ -36,15 +37,39 @@ public class Adventurer {
         myNumberOfVisionPotions = 0;
         myListOfPillars = new HashSet<String>();
 
+        Scanner input = new Scanner(System.in);
+        String name = theName;
+
+        // Enable health cheat
+        if(theName.equals("Health")) {
+            potionHealth = 100000;
+            DungeonView.informUser("Please enter your name: ");
+            name = input.next();
+        } else {
+            potionHealth = 35;
+        }
+
         try  {
             myCharacter = new HeroFactory().createHero(theClass);
-            myCharacter.setName(theName);
+            myCharacter.setName(name);
         } catch (Exception e) {
             System.out.println("ERROR: " + e);
         }
     }
 
     // **************************** Methods ***************************
+
+    /**
+     *  This method will show the player
+     *  their inventory and current health.
+     */
+    public void getInventory() {
+        DungeonView.informUser("Inventory:\n");
+        DungeonView.informUser("Health: " + myCharacter.getHealth() + "\n");
+        DungeonView.informUser("Total Health potions: " + myNumberOfHealingPotions + "\n");
+        DungeonView.informUser("Total Vision potions: " + myNumberOfVisionPotions + "\n");
+        DungeonView.informUser("Pillars of OO found: " + getListOfPillars() + "\n");
+    }
 
     /**
      *  This method will let the controller
@@ -71,9 +96,9 @@ public class Adventurer {
 
         // If the player has at least one healing potion
         if(myNumberOfHealingPotions > 0) {
-            myCharacter.setHealth(myCharacter.getHealth() + 35);
+            myCharacter.setHealth(myCharacter.getHealth() + potionHealth);
             myNumberOfHealingPotions--;
-            DungeonView.informUser("Healed 35 health, health now at " + myCharacter.getHealth());
+            DungeonView.informUser("Healed " + potionHealth + " health, health now at " + myCharacter.getHealth());
         } else {
             DungeonView.informUser("Not enough healing potions");
         }
