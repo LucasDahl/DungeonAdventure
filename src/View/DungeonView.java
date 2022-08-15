@@ -54,7 +54,6 @@ public class DungeonView {
         }
         setHero(playerName, heroChoice);
 
-        dungeonAdventure.startGameThread();
 
 
     }

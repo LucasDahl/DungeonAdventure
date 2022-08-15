@@ -260,6 +260,7 @@ public class DungeonAdventure implements Runnable {
     public static void main(String[] args) {
         DungeonView view = new DungeonView(getDungeonAdventure());
         DungeonAdventure game = DungeonAdventure.getDungeonAdventure();
+        game.startGameThread();
     }
 
     /**
