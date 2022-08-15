@@ -23,7 +23,7 @@ An Adventurer must navigate a maze to find all four pillars of OO. Adventurers f
 ## Controls
 </div>
 
-The controls are simpel wasd contorls, with a few eaxtra to use items.
+The controls are simple wasd contorls, with a few extra to use items.
 
 W - Up <br>
 A - Left <br>
@@ -134,5 +134,3 @@ Could possibly contain one of each of the following: <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vision Potion: Shows the player the adjacent rooms <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Healing Potion: Can be used to recover some health points <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Model.Monster <br>
-
-All rooms have 4 doors. By default, they are open. <br>
