@@ -343,6 +343,13 @@ public class Dungeon implements Serializable {
         getEmptyRoom("P");
     }
 
+    public void teleport(final int theX, final int theY, Adventurer theAdventurer) {
+        Coordinates teleportLocation = new Coordinates(theX,theY);
+        updateCurrentRoom(teleportLocation);
+        DungeonView.informUser("You are currently at: " + myCurrentLocation);
+        DungeonView.informUser(myCurrentRoom.toString());
+        adventurerInteractions(theAdventurer);
+    }
 
     //========
     // Getters
@@ -399,11 +406,17 @@ public class Dungeon implements Serializable {
                 myCurrentLocation.toString());
         DungeonView.informUser(myCurrentRoom.toString());
         updateCurrentRoom();
+        adventurerInteractions(theAdventurer);
+//        checkPitInteraction(theAdventurer);
+//        autoPickUpItems(theAdventurer);
+//        checkForMonsters();
+    }
+
+    private void adventurerInteractions(Adventurer theAdventurer){
         checkPitInteraction(theAdventurer);
         autoPickUpItems(theAdventurer);
         checkForMonsters();
     }
-
     private void checkPitInteraction(Adventurer theAdventurer) {
         int pitDamage = 10;
         if(myCurrentRoom.getPit()) {
@@ -560,15 +573,6 @@ public class Dungeon implements Serializable {
         myCurrentLocation = theRoom;
         myCurrentRoom = myMazeOfRooms[theRoom.getX()][theRoom.getY()];
     }
-
-    void updateCurrentRoom(Direction theDirection) {
-        switch (theDirection) {
-            case NORTH, UP: {
-                myCurrentLocation.updateX(1);
-            }
-        }
-    }
-
 
     public Room getCurrentRoom() {
         return myCurrentRoom;
