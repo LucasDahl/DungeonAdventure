@@ -30,8 +30,6 @@ public class DungeonAdventure implements Runnable {
     final static int DUNGEON_ROWS = 4;
     final static int DUNGEON_COLUMNS = 4;
 
-    //private boolean myAreDoorsOpen;
-
 
     private Thread myGameThread;
 
@@ -104,9 +102,6 @@ public class DungeonAdventure implements Runnable {
                 sb.append("b - battle\n");
             }
         }
-//        else {
-//            sb.append(reportOpenDoors());
-//        }
         return sb.toString();
     }
     private String checkPotions() {
@@ -168,7 +163,12 @@ public class DungeonAdventure implements Runnable {
         }
 
     }
-
+    private void checkPlayerDeath() {
+        if (myAdventurer.getCharacter().isDead()) {
+            DungeonView.informUser("You died. Better luck next time.");
+            myGameThread = null;
+        }
+    }
     private Direction translateMove(String thePlayerInput) {
         Direction direction;
         switch (thePlayerInput) {
@@ -184,10 +184,6 @@ public class DungeonAdventure implements Runnable {
         if (myDungeon.myCurrentRoom.hasLiveMonster()) {
             myDungeon.myCurrentRoom.getMonster().battle(myDungeon.
                     myCurrentRoom.getMonster(), myAdventurer);
-            if (myAdventurer.getCharacter().isDead()) {
-                DungeonView.informUser("You died. Better luck next time.");
-                myGameThread = null; //end game
-            }
         } else {
             DungeonView.informUser("Nothing to battle.");
         }
@@ -263,6 +259,7 @@ public class DungeonAdventure implements Runnable {
                 }
             }
         }
+        checkPlayerDeath();
 
     }
 
