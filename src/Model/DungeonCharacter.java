@@ -102,8 +102,8 @@ public abstract class DungeonCharacter {
             theEnemy.heal();
 
             // Show the health
-            DungeonView.informUser(theHero.getName() + ": " + theHero.getHealth());
-            DungeonView.informUser(theEnemy.getName() + ": " + theEnemy.getHealth());
+            DungeonView.informUser(theHero.getName() + "'s health: " + (int) theHero.getHealth());
+            DungeonView.informUser(theEnemy.getName() + "'s health : " + (int) theEnemy.getHealth());
 
         }
 
@@ -142,7 +142,7 @@ public abstract class DungeonCharacter {
 
             // The Model.Warrior hit the enemy
             if(attackHit > getChanceToHit()) {
-                DungeonView.informUser(theEnemy.getName() + " took " + damage + " from " + getName());
+                DungeonView.informUser(theEnemy.getName() + " took " + (int)  damage + " from " + getName());
                 theEnemy.setHealth(theEnemy.getHealth() - damage);
             }
         }
