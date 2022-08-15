@@ -251,16 +251,6 @@ public class DungeonAdventure implements Runnable {
     public static void main(String[] args) {
         DungeonView view = new DungeonView(getDungeonAdventure());
         DungeonAdventure game = DungeonAdventure.getDungeonAdventure();
-        //System.out.println(game.myDungeon.getEntrance());
-
-//        Adventurer adventurer = new Adventurer("dude", "warrior");
-//        MonsterFactory factory = new MonsterFactory();
-//        Monster skeleton = factory.createMonster("Skeleton");
-//        skeleton.battle(skeleton,adventurer.getCharacter());
-
-
-//        Thread thread = new Thread();
-//        thread.start();
     }
 
     /**
@@ -286,22 +276,7 @@ public class DungeonAdventure implements Runnable {
                 myGameThread = null; // stop the game when they can exit/win
             } else {
                 nextTurn();
-                //DungeonView.informUser(reportOptions());
-                //myDungeon.move(getPlayerMove(), myAdventurer);
 
-//                while (myDungeon.myCurrentRoom.hasLiveMonster() &&
-//                        !myAdventurer.getCharacter().isDead()) {
-//                    //  System.out.println("FIGHT");
-//
-//                    myDungeon.myCurrentRoom.getMonster().battle(
-//                            myDungeon.myCurrentRoom.getMonster(), myAdventurer.getCharacter());
-//
-//                    if (myAdventurer.getCharacter().isDead()) {
-//                        DungeonView.informUser("You Died. Better luck next time. ");
-//                        myGameThread = null;
-//                        //break;
-//                    }
-//                }
             }
         }
     }
