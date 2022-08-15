@@ -35,7 +35,6 @@ public class DungeonAdventure implements Runnable {
 
     private DungeonAdventure() {
         myDungeon = new Dungeon(DUNGEON_ROWS, DUNGEON_COLUMNS);
-        // startGameThread(); in DungeonView
 
     }
 
@@ -58,8 +57,46 @@ public class DungeonAdventure implements Runnable {
         }
 
     }
+    private void gameStart() {
+        myDungeon = new Dungeon(DUNGEON_ROWS, DUNGEON_COLUMNS);
+        intro();
+        myGameThread = null;
+        startGameThread();
 
+    }
+    private void intro() {
+        String inputName;
+        String defaultName = "nameless bum";
+        String playerName;
+        DungeonView.informUser("You are trapped in a dungeon!");
+        DungeonView.informUser("Only by finding the four Pillars of OO can you leave.");
+        inputName = DungeonView.promptUserForString("What is your name? ");
 
+        if (inputName.equals("")) {
+            playerName = defaultName;
+        } else {
+            playerName = inputName;
+        }
+        DungeonView.informUser("Select your class " + playerName + ".\n");
+        DungeonView.displayHeroChoices();
+        String heroChoice;
+        heroChoice = DungeonView.promptUserForString("Type \"w\" for Warrior," +
+                " \"t\" for Thief, \"p\" for Priestess: ");
+
+        heroChoice.toLowerCase();
+        if (!(heroChoice.equals("w") || heroChoice.equals("t") || heroChoice.equals("p"))) {
+            DungeonView.informUser("Invalid option. Warrior selected.");
+            heroChoice = "w";
+        } else {
+            DungeonView.informUser("Hero choice is: " + heroChoice);
+        }
+        setHero(playerName, heroChoice);
+    }
+    private void setHero(final String thePlayerName, final String theHeroChoice) {
+        myDungeonAdventure.setPlayerName(thePlayerName);
+        myDungeonAdventure.setPlayerClass(theHeroChoice);
+        DungeonView.informUser("Good luck, " + thePlayerName);
+    }
     public void setPlayerName(final String theName) {
         myPlayerName = theName;
     }
@@ -81,6 +118,11 @@ public class DungeonAdventure implements Runnable {
                 canExitHere = true;
                 DungeonView.informUser("Congratulations " +
                         myPlayerName + "! You win!");
+                if (gameReset()) {
+                    gameStart();
+                } else {
+                    myGameThread = null;
+                }
             } else {
                 DungeonView.informUser("Continue searching the dungeon" +
                         " for the remaining Pillars of OO!");
@@ -161,12 +203,21 @@ public class DungeonAdventure implements Runnable {
             myAdventurer = new Adventurer(myPlayerName, "priestess");
             System.out.println("Priestess Created");
         }
-
+    }
+    private boolean gameReset() {
+        String resetPrompt= "Do you want to restart the game? [y/n]";
+        String userInput = DungeonView.promptUserForString(resetPrompt);
+        userInput.toLowerCase();
+        return (userInput.equals("y"));
     }
     private void checkPlayerDeath() {
         if (myAdventurer.getCharacter().isDead()) {
             DungeonView.informUser("You died. Better luck next time.");
-            myGameThread = null;
+            if (gameReset()) {
+                gameStart();
+            } else {
+                myGameThread = null;
+            }
         }
     }
     private Direction translateMove(String thePlayerInput) {
@@ -260,13 +311,11 @@ public class DungeonAdventure implements Runnable {
             }
         }
         checkPlayerDeath();
-
     }
 
     public static void main(String[] args) {
-        DungeonView view = new DungeonView(getDungeonAdventure());
         DungeonAdventure game = DungeonAdventure.getDungeonAdventure();
-        game.startGameThread();
+        game.gameStart();
     }
 
     /**
@@ -289,10 +338,13 @@ public class DungeonAdventure implements Runnable {
         while (myGameThread != null) {
 
             if (getDungeonAdventure().checkExitConditions()) {
-                myGameThread = null; // stop the game when they can exit/win
+                if (gameReset()) {
+                    gameStart();
+                } else {
+                    myGameThread = null; // stop the game when they can exit/win
+                }
             } else {
                 nextTurn();
-
             }
         }
     }
