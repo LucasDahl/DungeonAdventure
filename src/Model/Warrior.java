@@ -85,7 +85,7 @@ public class Warrior extends Hero {
         System.out.println(getSpecialSkill());
 
         // The enemy was hit.
-        if(super.getMyRandomRange(0, 100) < MY_SPECIAL_CHANCE) {
+        if(super.getMyRandomRange(0, 100) < (MY_SPECIAL_CHANCE * 100)) {
             theEnemy.setHealth(theEnemy.getHealth() - getMySpecialDamage());
             System.out.println("The " + theEnemy.getName() + " took " + mySpecialDamage + " points of damage.");
         } else {

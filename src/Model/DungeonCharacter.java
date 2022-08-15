@@ -51,28 +51,41 @@ public abstract class DungeonCharacter {
      *  it will have a hero and a monster fight.
      *
      * @param theEnemy the enemy of the hero.
-     * @param theHero the hero(player)
+     * @param theAdventurer the hero(player)
      */
-    public void battle(final Model.Monster theEnemy, final Model.Hero theHero) {
+    public void battle(final Model.Monster theEnemy, final Adventurer theAdventurer /*final Model.Hero theHero*/) {
 
+        // Properties
+        Hero theHero = theAdventurer.getCharacter();
+
+        // Inform the user
+        DungeonView.informUser(theEnemy.getName() + " Attacked!");
+
+        // Battle
         while(!theEnemy.isDead() && !theHero.isDead()) {
 
             // See who attacks first. If players speed becomes too low
             // enemy may be able to attack twice in a row.
             if(theHero.getAttackSpeed() > theEnemy.getAttackSpeed()) {
 
+                // properties
                 int attackType;
                 Scanner input = new Scanner(System.in);
 
-                DungeonView.informUser("Press 1 for normal attack, or 2 for special skill: ");
+                // Get input from the user
+                DungeonView.informUser("Press 1 for normal attack, 2 for special skill 3 to heal, or 4 to flee: ");
                 attackType = input.nextInt();
 
                 if(attackType == 1) {
                     theHero.attack(theEnemy);
                 } else if(attackType == 2) {
                     theHero.specialSkill(theEnemy);
+                } else if(attackType == 3) {
+                    theAdventurer.useHealPotion();
+                } else if(attackType == 4) {
+                    return;
                 } else {
-                    System.out.println("Invalid option, turned missed");
+                    DungeonView.informUser("Invalid option, turned missed");
                 }
 
             }
@@ -93,6 +106,19 @@ public abstract class DungeonCharacter {
             DungeonView.informUser(theEnemy.getName() + ": " + theEnemy.getHealth());
 
         }
+
+        // Battle over!
+        DungeonView.informUser("Battle over!");
+
+        String winner;
+
+        // Get the winner
+        if(theHero.isDead()) {
+            winner = theEnemy.getName();
+        } else {
+            winner = theHero.getName();
+        }
+
     }
 
     /**
@@ -116,7 +142,7 @@ public abstract class DungeonCharacter {
 
             // The Model.Warrior hit the enemy
             if(attackHit > getChanceToHit()) {
-                System.out.println(damage);
+                DungeonView.informUser(theEnemy.getName() + " took " + damage + " from " + getName());
                 theEnemy.setHealth(theEnemy.getHealth() - damage);
             }
         }
@@ -189,7 +215,11 @@ public abstract class DungeonCharacter {
 
     // This method will set the health
     protected void setHealth(final double theHealth) {
-        myHealthPoints = theHealth;
+        if(theHealth < 0) {
+            myHealthPoints = 0;
+        } else {
+            myHealthPoints = theHealth;
+        }
     }
 
     // Sets the name
