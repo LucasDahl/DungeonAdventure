@@ -100,7 +100,7 @@ public class DungeonAdventure implements Runnable {
     private String checkMonster() {
         StringBuilder sb = new StringBuilder();
         if (!(myDungeon.myCurrentRoom.getMonster() == null)) {
-            if (!myDungeon.myCurrentRoom.hasLiveMonster()) {
+            if (myDungeon.myCurrentRoom.hasLiveMonster()) {
                 sb.append("b - battle\n");
             }
         } else {
@@ -128,7 +128,7 @@ public class DungeonAdventure implements Runnable {
      */
     private String reportOpenDoors() {
         StringBuilder sb = new StringBuilder("\nType one of valid letters " +
-                "listed below to choose a direction.\n");
+                "listed below\n");
         if (myDungeon.myCurrentRoom.getNorthDoor().equals(DoorStatus.OPEN)) {
             sb.append("w - go through North Door\n");
         }
@@ -182,6 +182,10 @@ public class DungeonAdventure implements Runnable {
         if (myDungeon.myCurrentRoom.hasLiveMonster()) {
             myDungeon.myCurrentRoom.getMonster().battle(myDungeon.
                 myCurrentRoom.getMonster(), myAdventurer.getCharacter());
+            if (myAdventurer.getCharacter().isDead()) {
+                DungeonView.informUser("You died. Better luck next time.");
+                myGameThread = null; //end game
+            }
         } else {
             DungeonView.informUser("Nothing to battle.");
         }

@@ -408,11 +408,12 @@ public class Dungeon implements Serializable {
         int pitDamage = 10;
         if(myCurrentRoom.getPit()) {
             theAdventurer.takeDamage(pitDamage);
+
+            DungeonView.informUser("You have fallen into a pit! -"
+                    + pitDamage + " health");
+            DungeonView.informUser("Your current health is: " +
+                    theAdventurer.getCharacter().getHealth());
         }
-        DungeonView.informUser("You have fallen into a pit! -"
-        + pitDamage + " health");
-        DungeonView.informUser("Your current health is: " +
-                theAdventurer.getCharacter().getHealth());
     }
     private void checkForMonsters(){
         if (myCurrentRoom.hasLiveMonster()) {
