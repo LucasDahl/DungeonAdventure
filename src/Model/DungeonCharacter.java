@@ -64,30 +64,24 @@ public abstract class DungeonCharacter {
         // Battle
         while(!theEnemy.isDead() && !theHero.isDead()) {
 
-            // See who attacks first. If players speed becomes too low
-            // enemy may be able to attack twice in a row.
-            if(theHero.getAttackSpeed() > theEnemy.getAttackSpeed()) {
+            // properties
+            int attackType;
+            Scanner input = new Scanner(System.in);
 
-                // properties
-                int attackType;
-                Scanner input = new Scanner(System.in);
+            // Get input from the user
+            DungeonView.informUser("Press 1 for normal attack, 2 for special skill 3 to heal, or 4 to flee: ");
+            attackType = input.nextInt();
 
-                // Get input from the user
-                DungeonView.informUser("Press 1 for normal attack, 2 for special skill 3 to heal, or 4 to flee: ");
-                attackType = input.nextInt();
-
-                if(attackType == 1) {
-                    theHero.attack(theEnemy);
-                } else if(attackType == 2) {
-                    theHero.specialSkill(theEnemy);
-                } else if(attackType == 3) {
-                    theAdventurer.useHealPotion();
-                } else if(attackType == 4) {
-                    return;
-                } else {
-                    DungeonView.informUser("Invalid option, turned missed");
-                }
-
+            if(attackType == 1) {
+                theHero.attack(theEnemy);
+            } else if(attackType == 2) {
+                theHero.specialSkill(theEnemy);
+            } else if(attackType == 3) {
+                theAdventurer.useHealPotion();
+            } else if(attackType == 4) {
+                return;
+            } else {
+                DungeonView.informUser("Invalid option, turned missed");
             }
 
             // If the player blocks, enemy doesn't attack
