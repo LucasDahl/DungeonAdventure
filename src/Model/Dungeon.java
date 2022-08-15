@@ -473,6 +473,7 @@ public class Dungeon implements Serializable {
         } else {
             yStop = y;
         }
+
         StringBuilder sb = new StringBuilder();
         for (int i = xStart; i < xStop + 1; i++) {
 
@@ -485,7 +486,7 @@ public class Dungeon implements Serializable {
             sb.append("*\n"); // go to middle row
 
             // create Model.Room middle row
-            for (int j = 0; j < myColumns; j++) {
+            for (int j = yStart; j < yStop + 1; j++) {
                 sb.append((printEWDoor(myMazeOfRooms[i][j].getWestDoor()))); // West door
                 sb.append((myMazeOfRooms[i][j].getMiddle())); // Contents of Model.Room
                 //sb.append(printEWDoor(myMazeOfRooms[i][j].getEastDoor())); // East door
@@ -495,7 +496,7 @@ public class Dungeon implements Serializable {
 
             if (i == (myRows - 1)) {
                 // create Model.Room bottom row
-                for (int j = 0; j < myColumns; j++) {
+                for (int j = yStart; j < yStop + 1; j++) {
                     sb.append("*"); // bottom-left corner
                     sb.append(printNSDoor((myMazeOfRooms[i][j].getSouthDoor()))); // South door
 
@@ -615,6 +616,10 @@ public class Dungeon implements Serializable {
     public static void main(String[] args) {
         Dungeon dungeon = new Dungeon(4, 4);
         System.out.println(dungeon);
+        System.out.println();
+        System.out.println(dungeon.getCurrentLocation().toString());
+        System.out.println("Vision potion view");
+        System.out.println(dungeon.getVisionPotionView());
 
     }
 }

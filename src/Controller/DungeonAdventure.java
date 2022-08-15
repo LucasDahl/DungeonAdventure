@@ -86,8 +86,10 @@ public class DungeonAdventure implements Runnable {
             } else {
                 DungeonView.informUser("Continue searching the dungeon" +
                         " for the remaining Pillars of OO!");
-                DungeonView.informUser("Your currently have" +
+                DungeonView.informUser("You currently have " +
                         currentPillars.length() + " pillars.");
+                DungeonView.informUser("Your current pillars: " +
+                        myAdventurer.getListOfPillars());
             }
         }
         return canExitHere;
@@ -103,9 +105,10 @@ public class DungeonAdventure implements Runnable {
             if (myDungeon.myCurrentRoom.hasLiveMonster()) {
                 sb.append("b - battle\n");
             }
-        } else {
-            sb.append(reportOpenDoors());
         }
+//        else {
+//            sb.append(reportOpenDoors());
+//        }
         return sb.toString();
     }
     private String checkPotions() {
@@ -146,7 +149,8 @@ public class DungeonAdventure implements Runnable {
 
     private String reportOptions() {
         StringBuilder sb = new StringBuilder();
-        sb.append(checkMonster()); // if no monster, moves are displayed
+        sb.append(checkMonster());
+        sb.append(reportOpenDoors());
         sb.append(checkPotions());
         return sb.toString();
     }
@@ -218,6 +222,11 @@ public class DungeonAdventure implements Runnable {
             switch (playerInput) {
                 case "h": {
                     myAdventurer.useHealPotion();
+                    DungeonView.informUser("You have used a healing potion!");
+                    DungeonView.informUser("You have " +
+                            myAdventurer.getHealingPotions() + " healing potions remaining.");
+//                    DungeonView.informUser("Current health: " +
+//                            myAdventurer.getCharacter().getHealth());
                     break;
                 }
                 case "v": {
@@ -251,6 +260,7 @@ public class DungeonAdventure implements Runnable {
     public static void main(String[] args) {
         DungeonView view = new DungeonView(getDungeonAdventure());
         DungeonAdventure game = DungeonAdventure.getDungeonAdventure();
+        game.startGameThread();
     }
 
     /**
