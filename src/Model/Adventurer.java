@@ -1,5 +1,7 @@
 package Model;
 
+import View.DungeonView;
+
 import java.util.*;
 
 /**
@@ -63,17 +65,17 @@ public class Adventurer {
      * This method will heal the player if they
      * have any health potions.
      *
-     * @return a message to let the player know if they healed or not
+
      */
-    public String useHealPotion() {
+    public void useHealPotion() {
 
         // If the player has at least one healing potion
         if(myNumberOfHealingPotions > 0) {
-            myCharacter.setHealth(myCharacter.getHealth() + 20);
+            myCharacter.setHealth(myCharacter.getHealth() + 35);
             myNumberOfHealingPotions--;
-            return "Healed 20 health";
+            DungeonView.informUser("Healed 35 health, health now at " + myCharacter.getHealth());
         } else {
-            return "Not enough healing potions";
+            DungeonView.informUser("Not enough healing potions");
         }
     }
 
