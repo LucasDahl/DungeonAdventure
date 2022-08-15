@@ -45,7 +45,13 @@ public class DungeonView {
         displayHeroChoices();
         System.out.print("Type \"w\" for Warrior, \"t\" for Thief, \"p\" for Priestess: ");
         String heroChoice = input.next();
-        System.out.println("Hero choice is: " + heroChoice);
+        heroChoice.toLowerCase();
+        if (!(heroChoice.equals("w") || heroChoice.equals("t") || heroChoice.equals("p"))) {
+            System.out.println("Invalid option. Warrior selected.");
+            heroChoice = "w";
+        } else {
+            System.out.println("Hero choice is: " + heroChoice);
+        }
         setHero(playerName, heroChoice);
 
         dungeonAdventure.startGameThread();

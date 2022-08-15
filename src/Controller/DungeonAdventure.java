@@ -3,7 +3,10 @@ package Controller;
 import Model.*;
 import View.DungeonView;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import static Model.Direction.*;
 
@@ -19,7 +22,7 @@ import static Model.Direction.*;
 // SERIALIZE HERE! MAKE DUNGEON AND ADVENTURER INSTANCES, NOT STATIC
 public class DungeonAdventure implements Runnable {
     //singleton - eager instance
-    private static DungeonAdventure myDungeonAdventure = new DungeonAdventure();
+    private static final DungeonAdventure myDungeonAdventure = new DungeonAdventure();
     private Dungeon myDungeon;
     private Adventurer myAdventurer;
 
@@ -76,10 +79,15 @@ public class DungeonAdventure implements Runnable {
                     pillarsCount++;
                 }
             }
-            if (pillarsCount == neededPillars.length) {
+            if (pillarsCount >= neededPillars.length) {
                 canExitHere = true;
                 DungeonView.informUser("Congratulations " +
                         myPlayerName + "! You win!");
+            } else {
+                DungeonView.informUser("Continue searching the dungeon" +
+                        " for the remaining Pillars of OO!");
+                DungeonView.informUser("Your currently have" +
+                        currentPillars.length() + " pillars.");
             }
         }
         return canExitHere;
@@ -93,10 +101,20 @@ public class DungeonAdventure implements Runnable {
         StringBuilder sb = new StringBuilder();
         if (!(myDungeon.myCurrentRoom.getMonster() == null)) {
             if (!myDungeon.myCurrentRoom.hasLiveMonster()) {
-                sb.append("f - fight\n");
+                sb.append("b - battle\n");
             }
         } else {
             sb.append(reportOpenDoors());
+        }
+        return sb.toString();
+    }
+    private String checkPotions() {
+        StringBuilder sb = new StringBuilder();
+        if (myAdventurer.getHealingPotions() > 0) {
+            sb.append("h - use healing potion\n");
+        }
+        if (myAdventurer.getVisionPotions() > 0) {
+            sb.append("v - use vision potion\n");
         }
         return sb.toString();
     }
@@ -109,7 +127,8 @@ public class DungeonAdventure implements Runnable {
      * @return a String of all the doors the adventurer can choose
      */
     private String reportOpenDoors() {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder("\nType one of valid letters " +
+                "listed below to choose a direction.\n");
         if (myDungeon.myCurrentRoom.getNorthDoor().equals(DoorStatus.OPEN)) {
             sb.append("w - go through North Door\n");
         }
@@ -127,7 +146,8 @@ public class DungeonAdventure implements Runnable {
 
     private String reportOptions() {
         StringBuilder sb = new StringBuilder();
-        sb.append(checkMonster());
+        sb.append(checkMonster()); // if no monster, moves are displayed
+        sb.append(checkPotions());
         return sb.toString();
     }
 
@@ -147,27 +167,86 @@ public class DungeonAdventure implements Runnable {
 
     }
 
-    // temp method - only here to test game loop
-    private Direction getPlayerMove() {
-
-
-        String userPrompt = "Type of the following movement characters:\n" +
-                "w - up\ta - left\ts - down\td - right";
-        String playerInput = DungeonView.promptUserForString(userPrompt);
-        playerInput = playerInput.toLowerCase();
-        while (!(playerInput.equals("w") || playerInput.equals("a") ||
-                playerInput.equals("s") || playerInput.equals("d"))) {
-
-            playerInput = DungeonView.promptUserForString(userPrompt);
-        }
+    private Direction translateMove(String thePlayerInput) {
+        //String thePlayerInput = DungeonView.promptUserForString(reportOptions());
+        //thePlayerInput = thePlayerInput.toLowerCase();
+//        while (!(thePlayerInput.equals("w") || thePlayerInput.equals("a") ||
+//                thePlayerInput.equals("s") || thePlayerInput.equals("d"))) {
+//            DungeonView.informUser("Invalid move. Please select again.");
+//            thePlayerInput = DungeonView.promptUserForString(reportOpenDoors());
+//        }
         Direction direction;
-        switch (playerInput) {
+        switch (thePlayerInput) {
             case "w" -> direction = UP;
             case "a" -> direction = LEFT;
             case "s" -> direction = DOWN;
-            default -> direction = RIGHT;
+            case "d" -> direction = RIGHT;
+            default -> direction = NEUTRAL;
         }
         return direction;
+    }
+    private void battle() {
+        if (myDungeon.myCurrentRoom.hasLiveMonster()) {
+            myDungeon.myCurrentRoom.getMonster().battle(myDungeon.
+                myCurrentRoom.getMonster(), myAdventurer.getCharacter());
+        } else {
+            DungeonView.informUser("Nothing to battle.");
+        }
+    }
+    private void nextTurn(){
+        String[] cheatsList = {"ko", "map"};
+        Set<String> cheats = new HashSet<>(List.of(cheatsList));
+
+        String[] movesList = {"w", "a", "s", "d"};
+        Set<String> moves = new HashSet<>(List.of(movesList));
+
+        String[] otherOptions = {"h", "v", "b"};
+        Set<String> other = new HashSet<>(List.of(otherOptions));
+
+        Set<String> expectedInputs = new HashSet<>();
+        expectedInputs.addAll(cheats);
+        expectedInputs.addAll(moves);
+        expectedInputs.addAll(other);
+
+        String playerInput = DungeonView.promptUserForString(reportOptions());
+        playerInput.toLowerCase();
+        while (!expectedInputs.contains(playerInput)) {
+            DungeonView.informUser("Invalid choice. Please select again");
+            playerInput = DungeonView.promptUserForString(reportOptions());
+        }
+
+        if (moves.contains(playerInput)) {
+            myDungeon.move(translateMove(playerInput),myAdventurer);
+        } else {
+            switch (playerInput) {
+                case "h": {
+                    myAdventurer.useHealPotion();
+                    break;
+                }
+                case "v": {
+                    if(myAdventurer.useVisionPotion()) {
+                        DungeonView.informUser(myDungeon.getVisionPotionView());
+                    }
+                    break;
+                }
+                case "b": {
+                    battle();
+                    break;
+                }
+                case "ko": {
+                    myDungeon.myCurrentRoom.setMonster(null);
+                    break;
+                }
+                case "map": {
+                    DungeonView.informUser(myDungeon.toString());
+                    break;
+                }
+                default: {
+                    nextTurn(); //should never be here
+                }
+            }
+        }
+
     }
 
     public static void main(String[] args) {
@@ -198,41 +277,33 @@ public class DungeonAdventure implements Runnable {
      */
     @Override
     public void run() {
-
+        DungeonView.informUser("Starting Coordinates: " +
+                myDungeon.getCurrentLocation().toString());
         DungeonView.informUser(myDungeon.getCurrentRoom().toString());
-        DungeonView.informUser(myDungeon.getCurrentLocation().toString());
+
         while (myGameThread != null) {
-            DungeonView.informUser(reportOptions());
 
             if (getDungeonAdventure().checkExitConditions()) {
-                myGameThread = null; // force stop the game?
+                myGameThread = null; // stop the game when they can exit/win
             } else {
-                myDungeon.move(getPlayerMove(), myAdventurer);
+                nextTurn();
+                //DungeonView.informUser(reportOptions());
+                //myDungeon.move(getPlayerMove(), myAdventurer);
 
-                while (myDungeon.myCurrentRoom.hasLiveMonster()) {
-                    //  System.out.println("FIGHT");
-
-                    myDungeon.myCurrentRoom.getMonster().battle(myDungeon.myCurrentRoom.getMonster(), myAdventurer.getCharacter());
-
-                    if (myAdventurer.getCharacter().isDead()) {
-                        break;
-                    }
-                    if (myDungeon.myCurrentRoom.getMonster().isDead()) {
-                        break;
-                    }
-                }
-
-                if (myAdventurer.getCharacter().isDead()) {
-//                    myGameThread = null;
-//                    myPlayerName = null;
-//                    DungeonView.informUser("You have Died.\nThe Game will restart.\n");
+//                while (myDungeon.myCurrentRoom.hasLiveMonster() &&
+//                        !myAdventurer.getCharacter().isDead()) {
+//                    //  System.out.println("FIGHT");
 //
-//                    DungeonView view = new DungeonView(getDungeonAdventure());
-                    break;
-                }
+//                    myDungeon.myCurrentRoom.getMonster().battle(
+//                            myDungeon.myCurrentRoom.getMonster(), myAdventurer.getCharacter());
+//
+//                    if (myAdventurer.getCharacter().isDead()) {
+//                        DungeonView.informUser("You Died. Better luck next time. ");
+//                        myGameThread = null;
+//                        //break;
+//                    }
+//                }
             }
-
-
         }
     }
 }
