@@ -96,7 +96,7 @@ public class Dungeon implements Serializable {
     }
 
     // ******************************* Methods ******************************
-    public void autoPickUpItems(final Adventurer theAdventurer){
+    void autoPickUpItems(final Adventurer theAdventurer){
         pickUpPillar(theAdventurer);
         pickUpPotions(theAdventurer);
     }
@@ -114,6 +114,8 @@ public class Dungeon implements Serializable {
             }
             DungeonView.informUser(sb.toString());
             theAdventurer.setListOfPillars(pillar); //update Adventurer's pillars
+            DungeonView.informUser("Your current Pillars: " +
+                    theAdventurer.getListOfPillars());
             myCurrentRoom.setPillar(""); //remove pillar from the room
         }
     }
@@ -122,11 +124,15 @@ public class Dungeon implements Serializable {
             DungeonView.informUser("You have found a healing potion!");
             theAdventurer.setHealingPotions(1);
             myCurrentRoom.setHealingPotion(false);
+            DungeonView.informUser("You currently have " +
+                    theAdventurer.getHealingPotions() + " healing potions.");
         }
         if(myCurrentRoom.getVisionPotion()) {
             DungeonView.informUser("You have found a vision potion!");
             theAdventurer.setVisionPotions(1);
             myCurrentRoom.setVisionPotion(false);
+            DungeonView.informUser("You currently have " +
+                    theAdventurer.getVisionPotions() + " vision potions.");
         }
     }
     /**
@@ -387,16 +393,34 @@ public class Dungeon implements Serializable {
             myCurrentLocation.updateX(1);
         } else {
 
-            DungeonView.informUser("Invalid choice. Please try again");
+            //DungeonView.informUser("Invalid choice. Please try again");
         }
         DungeonView.informUser("You are currently at " +
                 myCurrentLocation.toString());
         DungeonView.informUser(myCurrentRoom.toString());
         updateCurrentRoom();
-        autoPickUpItems(theAdventurer); // don't delete until resolved
-
+        checkPitInteraction(theAdventurer);
+        autoPickUpItems(theAdventurer);
+        checkForMonsters();
     }
 
+    private void checkPitInteraction(Adventurer theAdventurer) {
+        int pitDamage = 10;
+        if(myCurrentRoom.getPit()) {
+            theAdventurer.takeDamage(pitDamage);
+
+            DungeonView.informUser("You have fallen into a pit! -"
+                    + pitDamage + " health");
+            DungeonView.informUser("Your current health is: " +
+                    theAdventurer.getCharacter().getHealth());
+        }
+    }
+    private void checkForMonsters(){
+        if (myCurrentRoom.hasLiveMonster()) {
+            DungeonView.informUser("You have encountered a monster: " +
+                myCurrentRoom.getMonster().getName());
+        }
+    }
     /**
      * @return the Adventurer's X coordinate
      */

@@ -100,7 +100,7 @@ public class DungeonAdventure implements Runnable {
     private String checkMonster() {
         StringBuilder sb = new StringBuilder();
         if (!(myDungeon.myCurrentRoom.getMonster() == null)) {
-            if (!myDungeon.myCurrentRoom.hasLiveMonster()) {
+            if (myDungeon.myCurrentRoom.hasLiveMonster()) {
                 sb.append("b - battle\n");
             }
         } else {
@@ -128,7 +128,7 @@ public class DungeonAdventure implements Runnable {
      */
     private String reportOpenDoors() {
         StringBuilder sb = new StringBuilder("\nType one of valid letters " +
-                "listed below to choose a direction.\n");
+                "listed below\n");
         if (myDungeon.myCurrentRoom.getNorthDoor().equals(DoorStatus.OPEN)) {
             sb.append("w - go through North Door\n");
         }
@@ -168,13 +168,6 @@ public class DungeonAdventure implements Runnable {
     }
 
     private Direction translateMove(String thePlayerInput) {
-        //String thePlayerInput = DungeonView.promptUserForString(reportOptions());
-        //thePlayerInput = thePlayerInput.toLowerCase();
-//        while (!(thePlayerInput.equals("w") || thePlayerInput.equals("a") ||
-//                thePlayerInput.equals("s") || thePlayerInput.equals("d"))) {
-//            DungeonView.informUser("Invalid move. Please select again.");
-//            thePlayerInput = DungeonView.promptUserForString(reportOpenDoors());
-//        }
         Direction direction;
         switch (thePlayerInput) {
             case "w" -> direction = UP;
@@ -189,6 +182,10 @@ public class DungeonAdventure implements Runnable {
         if (myDungeon.myCurrentRoom.hasLiveMonster()) {
             myDungeon.myCurrentRoom.getMonster().battle(myDungeon.
                 myCurrentRoom.getMonster(), myAdventurer.getCharacter());
+            if (myAdventurer.getCharacter().isDead()) {
+                DungeonView.informUser("You died. Better luck next time.");
+                myGameThread = null; //end game
+            }
         } else {
             DungeonView.informUser("Nothing to battle.");
         }
@@ -238,6 +235,8 @@ public class DungeonAdventure implements Runnable {
                     break;
                 }
                 case "map": {
+                    DungeonView.informUser("You are currently at: " +
+                            myDungeon.getCurrentLocation());
                     DungeonView.informUser(myDungeon.toString());
                     break;
                 }
@@ -252,16 +251,6 @@ public class DungeonAdventure implements Runnable {
     public static void main(String[] args) {
         DungeonView view = new DungeonView(getDungeonAdventure());
         DungeonAdventure game = DungeonAdventure.getDungeonAdventure();
-        //System.out.println(game.myDungeon.getEntrance());
-
-//        Adventurer adventurer = new Adventurer("dude", "warrior");
-//        MonsterFactory factory = new MonsterFactory();
-//        Monster skeleton = factory.createMonster("Skeleton");
-//        skeleton.battle(skeleton,adventurer.getCharacter());
-
-
-//        Thread thread = new Thread();
-//        thread.start();
     }
 
     /**
@@ -287,22 +276,7 @@ public class DungeonAdventure implements Runnable {
                 myGameThread = null; // stop the game when they can exit/win
             } else {
                 nextTurn();
-                //DungeonView.informUser(reportOptions());
-                //myDungeon.move(getPlayerMove(), myAdventurer);
 
-//                while (myDungeon.myCurrentRoom.hasLiveMonster() &&
-//                        !myAdventurer.getCharacter().isDead()) {
-//                    //  System.out.println("FIGHT");
-//
-//                    myDungeon.myCurrentRoom.getMonster().battle(
-//                            myDungeon.myCurrentRoom.getMonster(), myAdventurer.getCharacter());
-//
-//                    if (myAdventurer.getCharacter().isDead()) {
-//                        DungeonView.informUser("You Died. Better luck next time. ");
-//                        myGameThread = null;
-//                        //break;
-//                    }
-//                }
             }
         }
     }
