@@ -9,63 +9,17 @@ import Model.Warrior;
 import java.util.Scanner;
 
 public class DungeonView {
+    // singleton DungeonView
+    private static final DungeonView myDungeonView = new DungeonView();
 
-    private DungeonAdventure dungeonAdventure;
-
-    public DungeonView(DungeonAdventure theDungeonAdventure) {
-        dungeonAdventure = theDungeonAdventure;
-        intro();
-
+    private DungeonView() {
+        // purposely left empty
     }
 
-    // view is what the user sees
-    // view sends info to controller
-
-    // so a printout line is view but the user input should be sent to controller.
-
-    private void intro() {
-        Scanner input = new Scanner(System.in);
-        String defaultName = "nameless bum";
-        String playerName;
-        System.out.println("You are trapped in a dungeon!");
-        System.out.println("Only by finding the four Pillars of OO can you leave.");
-        System.out.print("What is your name? ");
-        String inputName = input.nextLine();
-
-
-        // take the input and pass it to controller.
-        // pass the name, pass the class selection and then create the adventurer in DungeonAdventure
-
-        if (inputName.equals("")) {
-            playerName = defaultName;
-        } else {
-            playerName = inputName;
-        }
-        System.out.println("Select your class " + playerName + ".\n");
-        displayHeroChoices();
-        System.out.print("Type \"w\" for Warrior, \"t\" for Thief, \"p\" for Priestess: ");
-        String heroChoice = input.next();
-        heroChoice.toLowerCase();
-        if (!(heroChoice.equals("w") || heroChoice.equals("t") || heroChoice.equals("p"))) {
-            System.out.println("Invalid option. Warrior selected.");
-            heroChoice = "w";
-        } else {
-            System.out.println("Hero choice is: " + heroChoice);
-        }
-        setHero(playerName, heroChoice);
-
-
-
+    public DungeonView getDungeonView() {
+        return myDungeonView;
     }
-
-    private void setHero(final String thePlayerName, final String theHeroChoice) {
-        dungeonAdventure.setPlayerName(thePlayerName);
-        dungeonAdventure.setPlayerClass(theHeroChoice);
-        System.out.println("Good luck, " + thePlayerName);
-    }
-
-
-    private static void displayHeroChoices() {
+    public static void displayHeroChoices() {
 
         Warrior warrior;
         Thief thief;
