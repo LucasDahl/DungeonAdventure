@@ -53,7 +53,7 @@ public abstract class DungeonCharacter {
      * @param theEnemy the enemy of the hero.
      * @param theAdventurer the hero(player)
      */
-    public void battle(final Model.Monster theEnemy, final Adventurer theAdventurer /*final Model.Hero theHero*/) {
+    public void battle(final Model.Monster theEnemy, final Adventurer theAdventurer) {
 
         // Properties
         Hero theHero = theAdventurer.getCharacter();
@@ -65,12 +65,23 @@ public abstract class DungeonCharacter {
         while(!theEnemy.isDead() && !theHero.isDead()) {
 
             // properties
-            int attackType;
+            int attackType = 0;
             Scanner input = new Scanner(System.in);
 
             // Get input from the user
             DungeonView.informUser("Press 1 for normal attack, 2 for special skill 3 to heal, or 4 to flee: ");
-            attackType = input.nextInt();
+            input.next();
+
+            // Make sure the user entered a value
+            while(true) {
+                try {
+                    attackType = Integer.parseInt(input.toString());
+                    break;
+                } catch(Exception e) {
+                    DungeonView.informUser("Invalid option, please pick again: ");
+                }
+                input.next();
+            }
 
             if(attackType == 1) {
                 theHero.attack(theEnemy);
@@ -80,8 +91,6 @@ public abstract class DungeonCharacter {
                 theAdventurer.useHealPotion();
             } else if(attackType == 4) {
                 return;
-            } else {
-                DungeonView.informUser("Invalid option, turned missed");
             }
 
             // If the player blocks, enemy doesn't attack
