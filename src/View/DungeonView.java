@@ -24,9 +24,14 @@ public class DungeonView {
     // so a printout line is view but the user input should be sent to controller.
 
     private void intro() {
+
+
+
         Scanner input = new Scanner(System.in);
         String defaultName = "nameless bum";
         String playerName;
+
+        System.out.println("\t\t Dungeon Adventure");
         System.out.println("You are trapped in a dungeon!");
         System.out.println("Only by finding the four Pillars of OO can you leave.");
         System.out.print("What is your name? ");
