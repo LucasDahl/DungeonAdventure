@@ -65,6 +65,7 @@ public class Room implements Serializable {
         myEastPath = false;
         mySouthPath = false;
         myWestPath = false;
+        myVisitedStatus = false;
     }
 
     /**
@@ -365,6 +366,7 @@ public class Room implements Serializable {
             emptyRoom();
         }
         myEntrance = theEntrance;
+        setMonster(null);
     }
 
     /**
@@ -377,6 +379,7 @@ public class Room implements Serializable {
             emptyRoom();
         }
         myExit = theExit;
+        setMonster(null);
     }
 
     /**
@@ -392,7 +395,9 @@ public class Room implements Serializable {
         }
         this.myHealingPotion = theHealingPotion;
     }
-
+    public void setMonster(final Monster theMonster) {
+        myMonster1 = theMonster;
+    }
     /**
      * @param theDirection  A Direction to set
      * @param thePathExists true - the path exists, false - there is no path

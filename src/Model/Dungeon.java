@@ -14,7 +14,7 @@ public class Dungeon implements Serializable {
      * Coordinates, in the 2D array of Rooms composing Dungeon. Not designed
      * for use outside of Dungeon.
      */
-    class Coordinates {
+    public class Coordinates {
         // **************************** Fields ****************************
         int myX;
         int myY;
@@ -96,7 +96,7 @@ public class Dungeon implements Serializable {
     }
 
     // ******************************* Methods ******************************
-    public void autoPickUpItems(final Adventurer theAdventurer){
+    void autoPickUpItems(final Adventurer theAdventurer){
         pickUpPillar(theAdventurer);
         pickUpPotions(theAdventurer);
     }
@@ -114,6 +114,8 @@ public class Dungeon implements Serializable {
             }
             DungeonView.informUser(sb.toString());
             theAdventurer.setListOfPillars(pillar); //update Adventurer's pillars
+            DungeonView.informUser("Your current Pillars: " +
+                    theAdventurer.getListOfPillars());
             myCurrentRoom.setPillar(""); //remove pillar from the room
         }
     }
@@ -122,11 +124,15 @@ public class Dungeon implements Serializable {
             DungeonView.informUser("You have found a healing potion!");
             theAdventurer.setHealingPotions(1);
             myCurrentRoom.setHealingPotion(false);
+            DungeonView.informUser("You currently have " +
+                    theAdventurer.getHealingPotions() + " healing potions.");
         }
         if(myCurrentRoom.getVisionPotion()) {
             DungeonView.informUser("You have found a vision potion!");
             theAdventurer.setVisionPotions(1);
             myCurrentRoom.setVisionPotion(false);
+            DungeonView.informUser("You currently have " +
+                    theAdventurer.getVisionPotions() + " vision potions.");
         }
     }
     /**
@@ -232,10 +238,14 @@ public class Dungeon implements Serializable {
                 visitedRooms++;
 
             } else {
+                if(visitedRooms == myRows * myColumns) {
+                    break;
+                }
                 myCurrentLocation = mazeStack.pop();
             }
         }
         myCurrentLocation = getEntrance();
+        updateCurrentRoom(myCurrentLocation);
         closeMazeDoors();
     }
 
@@ -336,6 +346,13 @@ public class Dungeon implements Serializable {
         getEmptyRoom("P");
     }
 
+    public void teleport(final int theX, final int theY, Adventurer theAdventurer) {
+        Coordinates teleportLocation = new Coordinates(theX,theY);
+        updateCurrentRoom(teleportLocation);
+        DungeonView.informUser("You are currently at: " + myCurrentLocation);
+        DungeonView.informUser(myCurrentRoom.toString());
+        adventurerInteractions(theAdventurer);
+    }
 
     //========
     // Getters
@@ -376,28 +393,50 @@ public class Dungeon implements Serializable {
      * @param theMove the direction to move
      */
     public void move(final Direction theMove, final Adventurer theAdventurer) {
-    //public void move(Direction theMove) {
-        if (theMove.equals(Direction.LEFT) && (getAdventurerY() - 1 >= 0)) {
+        if (theMove.equals(Direction.LEFT) && (getAdventurerY() - 1 >= 0) && myCurrentRoom.getWestDoor().equals(DoorStatus.OPEN)) {
             myCurrentLocation.updateY(-1);
-        } else if (theMove.equals(Direction.RIGHT) && getAdventurerY() + 1 < myColumns) {
+        } else if (theMove.equals(Direction.RIGHT) && getAdventurerY() + 1 < myColumns && myCurrentRoom.getEastDoor().equals(DoorStatus.OPEN)) {
             myCurrentLocation.updateY(1);
-        } else if (theMove.equals(Direction.UP) && getAdventurerX() - 1 >= 0) {
+        } else if (theMove.equals(Direction.UP) && getAdventurerX() - 1 >= 0 && myCurrentRoom.getNorthDoor().equals(DoorStatus.OPEN)) {
             myCurrentLocation.updateX(-1);
-        } else if (theMove.equals(Direction.DOWN) && getAdventurerX() + 1 < myRows) {
+        } else if (theMove.equals(Direction.DOWN) && getAdventurerX() + 1 < myRows && myCurrentRoom.getSouthDoor().equals(DoorStatus.OPEN)) {
             myCurrentLocation.updateX(1);
         } else {
 
-            DungeonView.informUser("The dungeon doesn't wrap around");
+            //DungeonView.informUser("Invalid choice. Please try again");
         }
         DungeonView.informUser("You are currently at " +
                 myCurrentLocation.toString());
         DungeonView.informUser(myCurrentRoom.toString());
         updateCurrentRoom();
-        autoPickUpItems(theAdventurer); // don't delete until resolvedasd
-        //DungeonView.informUser(myCurrentLocation.toString());
-        //DungeonView.informUser(myMazeOfRooms[getAdventurerX()][getAdventurerY()].toString());
+        adventurerInteractions(theAdventurer);
+//        checkPitInteraction(theAdventurer);
+//        autoPickUpItems(theAdventurer);
+//        checkForMonsters();
     }
 
+    private void adventurerInteractions(Adventurer theAdventurer){
+        checkPitInteraction(theAdventurer);
+        autoPickUpItems(theAdventurer);
+        checkForMonsters();
+    }
+    private void checkPitInteraction(Adventurer theAdventurer) {
+        int pitDamage = 10;
+        if(myCurrentRoom.getPit()) {
+            theAdventurer.takeDamage(pitDamage);
+
+            DungeonView.informUser("You have fallen into a pit! -"
+                    + pitDamage + " health");
+            DungeonView.informUser("Your current health is: " +
+                    theAdventurer.getCharacter().getHealth());
+        }
+    }
+    private void checkForMonsters(){
+        if (myCurrentRoom.hasLiveMonster()) {
+            DungeonView.informUser("You have encountered a monster: " +
+                myCurrentRoom.getMonster().getName());
+        }
+    }
     /**
      * @return the Adventurer's X coordinate
      */
@@ -450,6 +489,7 @@ public class Dungeon implements Serializable {
         } else {
             yStop = y;
         }
+
         StringBuilder sb = new StringBuilder();
         for (int i = xStart; i < xStop + 1; i++) {
 
@@ -462,7 +502,7 @@ public class Dungeon implements Serializable {
             sb.append("*\n"); // go to middle row
 
             // create Model.Room middle row
-            for (int j = 0; j < myColumns; j++) {
+            for (int j = yStart; j < yStop + 1; j++) {
                 sb.append((printEWDoor(myMazeOfRooms[i][j].getWestDoor()))); // West door
                 sb.append((myMazeOfRooms[i][j].getMiddle())); // Contents of Model.Room
                 //sb.append(printEWDoor(myMazeOfRooms[i][j].getEastDoor())); // East door
@@ -472,7 +512,7 @@ public class Dungeon implements Serializable {
 
             if (i == (myRows - 1)) {
                 // create Model.Room bottom row
-                for (int j = 0; j < myColumns; j++) {
+                for (int j = yStart; j < yStop + 1; j++) {
                     sb.append("*"); // bottom-left corner
                     sb.append(printNSDoor((myMazeOfRooms[i][j].getSouthDoor()))); // South door
 
@@ -537,15 +577,6 @@ public class Dungeon implements Serializable {
         myCurrentRoom = myMazeOfRooms[theRoom.getX()][theRoom.getY()];
     }
 
-    void updateCurrentRoom(Direction theDirection) {
-        switch (theDirection) {
-            case NORTH, UP: {
-                myCurrentLocation.updateX(1);
-            }
-        }
-    }
-
-
     public Room getCurrentRoom() {
         return myCurrentRoom;
     }
@@ -592,6 +623,10 @@ public class Dungeon implements Serializable {
     public static void main(String[] args) {
         Dungeon dungeon = new Dungeon(4, 4);
         System.out.println(dungeon);
+        System.out.println();
+        System.out.println(dungeon.getCurrentLocation().toString());
+        System.out.println("Vision potion view");
+        System.out.println(dungeon.getVisionPotionView());
 
     }
 }

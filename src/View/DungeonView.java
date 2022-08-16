@@ -9,6 +9,9 @@ import Model.Warrior;
 import java.util.Scanner;
 
 public class DungeonView {
+    // singleton DungeonView
+    private static final DungeonView myDungeonView = new DungeonView();
+
 
     private DungeonAdventure dungeonAdventure;
 
@@ -56,16 +59,16 @@ public class DungeonView {
         dungeonAdventure.startGameThread();
 
 
+
+    private DungeonView() {
+        // purposely left empty
+
     }
 
-    private void setHero(final String thePlayerName, final String theHeroChoice) {
-        dungeonAdventure.setPlayerName(thePlayerName);
-        dungeonAdventure.setPlayerClass(theHeroChoice);
-        System.out.println("Good luck, " + thePlayerName);
+    public DungeonView getDungeonView() {
+        return myDungeonView;
     }
-
-
-    private static void displayHeroChoices() {
+    public static void displayHeroChoices() {
 
         Warrior warrior;
         Thief thief;
@@ -84,16 +87,6 @@ public class DungeonView {
         } catch (Exception e) {
             System.out.println("ERROR: " + e);
         }
-
-    }
-
-    private static void displayOptions() {
-        // p -pickup, h - heal, v - vision f - fight
-        StringBuilder sb = new StringBuilder();
-//        if (myDungeon.myCurrentRoom.getExit()) {
-//
-//        }
-
 
     }
 
