@@ -238,6 +238,9 @@ public class Dungeon implements Serializable {
                 visitedRooms++;
 
             } else {
+                if(visitedRooms == myRows * myColumns) {
+                    break;
+                }
                 myCurrentLocation = mazeStack.pop();
             }
         }

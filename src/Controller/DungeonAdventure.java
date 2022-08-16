@@ -5,7 +5,6 @@ import View.DungeonView;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 
 import static Model.Direction.*;
@@ -48,7 +47,8 @@ public class DungeonAdventure implements Runnable {
     }
 
     public void startGameThread() {
-
+        myDungeon = new Dungeon(DUNGEON_ROWS, DUNGEON_COLUMNS);
+        intro();
         if (myPlayerName != null) {
             // how we instantiate a thread;
             // will call the run method
@@ -59,8 +59,6 @@ public class DungeonAdventure implements Runnable {
     }
     private void gameStart() {
         myDungeon = new Dungeon(DUNGEON_ROWS, DUNGEON_COLUMNS);
-        intro();
-        myGameThread = null;
         startGameThread();
 
     }
@@ -100,8 +98,18 @@ public class DungeonAdventure implements Runnable {
     public void setPlayerName(final String theName) {
         myPlayerName = theName;
     }
-
-    private boolean checkExitConditions() {
+    private boolean quietCheckExitConditions() {
+        String currentPillars = myAdventurer.getListOfPillars();
+        String[] neededPillars = {"A", "E", "I", "P"};
+        int pillarsCount = 0;
+        for (int i = 0; i < neededPillars.length; i++) {
+            if (currentPillars.contains(neededPillars[i])) {
+                pillarsCount++;
+            }
+        }
+        return (myDungeon.myCurrentRoom.getExit() && (pillarsCount>= neededPillars.length));
+    }
+    private boolean isRoomExit() {
         boolean canExitHere = false;
         int pillarsCount = 0;
         String currentPillars = myAdventurer.getListOfPillars();
@@ -118,11 +126,7 @@ public class DungeonAdventure implements Runnable {
                 canExitHere = true;
                 DungeonView.informUser("Congratulations " +
                         myPlayerName + "! You win!");
-                if (gameReset()) {
-                    gameStart();
-                } else {
-                    myGameThread = null;
-                }
+
             } else {
                 DungeonView.informUser("Continue searching the dungeon" +
                         " for the remaining Pillars of OO!");
@@ -141,7 +145,7 @@ public class DungeonAdventure implements Runnable {
         StringBuilder sb = new StringBuilder();
         if (!(myDungeon.myCurrentRoom.getMonster() == null)) {
             if (myDungeon.myCurrentRoom.hasLiveMonster()) {
-                sb.append("b - battle\n");
+                sb.append("b - battle");
             }
         }
         return sb.toString();
@@ -184,40 +188,40 @@ public class DungeonAdventure implements Runnable {
 
     private String reportOptions() {
         StringBuilder sb = new StringBuilder();
-        sb.append(checkMonster());
         sb.append(reportOpenDoors());
         sb.append(checkPotions());
+        sb.append(checkMonster());
         return sb.toString();
     }
 
     public void setPlayerClass(final String theHeroChoice) {
         if (theHeroChoice.equals("t")) {
             myAdventurer = new Adventurer(myPlayerName, "thief");
-            System.out.println("Thief Created");
+            DungeonView.informUser("Thief Created");
         }
         if (theHeroChoice.equals("w")) {
             myAdventurer = new Adventurer(myPlayerName, "warrior");
-            System.out.println("Warrior Created");
+            DungeonView.informUser("Warrior Created");
         }
         if (theHeroChoice.equals("p")) {
             myAdventurer = new Adventurer(myPlayerName, "priestess");
-            System.out.println("Priestess Created");
+            DungeonView.informUser("Priestess Created");
         }
     }
-    private boolean gameReset() {
+    private void askReplay() {
         String resetPrompt= "Do you want to restart the game? [y/n]";
         String userInput = DungeonView.promptUserForString(resetPrompt);
         userInput.toLowerCase();
-        return (userInput.equals("y"));
+        if (userInput.equals("y")) {
+            gameStart();
+        } else {
+            myGameThread = null;
+        }
     }
     private void checkPlayerDeath() {
         if (myAdventurer.getCharacter().isDead()) {
             DungeonView.informUser("You died. Better luck next time.");
-            if (gameReset()) {
-                gameStart();
-            } else {
-                myGameThread = null;
-            }
+            //askReplay();
         }
     }
     private Direction translateMove(String thePlayerInput) {
@@ -257,21 +261,23 @@ public class DungeonAdventure implements Runnable {
         String playerInput = DungeonView.promptUserForString(reportOptions());
         playerInput.toLowerCase();
         while (!expectedInputs.contains(playerInput)) {
+            if(myAdventurer.getCharacter().isDead() || quietCheckExitConditions()) {
+                break;
+            }
             DungeonView.informUser("Invalid choice. Please select again");
             playerInput = DungeonView.promptUserForString(reportOptions());
         }
 
         if (moves.contains(playerInput)) {
             myDungeon.move(translateMove(playerInput),myAdventurer);
+            isRoomExit();
+
         } else {
             switch (playerInput) {
                 case "h": {
                     myAdventurer.useHealPotion();
-                    DungeonView.informUser("You have used a healing potion!");
                     DungeonView.informUser("You have " +
                             myAdventurer.getHealingPotions() + " healing potions remaining.");
-//                    DungeonView.informUser("Current health: " +
-//                            myAdventurer.getCharacter().getHealth());
                     break;
                 }
                 case "v": {
@@ -303,19 +309,21 @@ public class DungeonAdventure implements Runnable {
                     int x = Integer.parseInt(xInput);
                     int y = Integer.parseInt(yInput);
                     myDungeon.teleport(x, y, myAdventurer);
+                    isRoomExit();
                     break;
                 }
                 default: {
-                    nextTurn(); //should never be here
+                    break; //should never be here
                 }
             }
         }
-        checkPlayerDeath();
     }
 
     public static void main(String[] args) {
         DungeonAdventure game = DungeonAdventure.getDungeonAdventure();
-        game.gameStart();
+        game.startGameThread();
+
+
     }
 
     /**
@@ -336,13 +344,10 @@ public class DungeonAdventure implements Runnable {
         DungeonView.informUser(myDungeon.getCurrentRoom().toString());
 
         while (myGameThread != null) {
-
-            if (getDungeonAdventure().checkExitConditions()) {
-                if (gameReset()) {
-                    gameStart();
-                } else {
-                    myGameThread = null; // stop the game when they can exit/win
-                }
+            if (quietCheckExitConditions() || myAdventurer.getCharacter().isDead()) {
+                checkPlayerDeath();
+                askReplay();
+                break;
             } else {
                 nextTurn();
             }
