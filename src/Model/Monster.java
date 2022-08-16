@@ -54,7 +54,7 @@ public class Monster extends DungeonCharacter {
             super.setHealth(super.getHealth() + healPoints);
 
             // Let the user know the monster healed
-            DungeonView.informUser("Healed for : " + healPoints + " points.");
+            DungeonView.informUser("Healed for : " + (int) healPoints + " points.");
         }
     }
 
