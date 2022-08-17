@@ -275,9 +275,8 @@ public class Dungeon implements Serializable {
     }
 
     /**
-     * A helper method
-     * @param theStack
-     * @return
+     * @param theStack a stack of Rooms
+     * @return the Room at the top of the stack without offset
      */
     private Room roomOffset(Stack<Coordinates> theStack) {
         int x = theStack.peek().getX();
@@ -285,6 +284,13 @@ public class Dungeon implements Serializable {
         return myMazeOfRooms[x][y];
     }
 
+    /**
+     * Precondition: offsets applied must lead to an existing Room
+     * @param theStack a stack of Rooms
+     * @param theDirection the direction to offset
+     * @return the Room based on the Room at the top of the stack offset
+     * in the given direction
+     */
     private Room roomOffset(Stack<Coordinates> theStack, Direction theDirection) {
         int x = theStack.peek().getX();
         int y = theStack.peek().getY();
@@ -417,23 +423,27 @@ public class Dungeon implements Serializable {
     }
 
     /**
-     * Checks if the adventurer is on the edge of the map and
-     * updates the Coordinates of the adventurer
+     * Checks if the adventurer is on the edge of the map and the direction
+     * they want to move has an open door before updating the Coordinates
+     * of the adventurer
      *
      * @param theMove the direction to move
      */
     public void move(final Direction theMove, final Adventurer theAdventurer) {
-        if (theMove.equals(Direction.LEFT) && (getAdventurerY() - 1 >= 0) && myCurrentRoom.getWestDoor().equals(DoorStatus.OPEN)) {
+        if (theMove.equals(Direction.LEFT) && (getAdventurerY() - 1 >= 0) &&
+                myCurrentRoom.getWestDoor().equals(DoorStatus.OPEN)) {
             myCurrentLocation.updateY(-1);
-        } else if (theMove.equals(Direction.RIGHT) && getAdventurerY() + 1 < myColumns && myCurrentRoom.getEastDoor().equals(DoorStatus.OPEN)) {
+        } else if (theMove.equals(Direction.RIGHT) && getAdventurerY() + 1 < myColumns &&
+                myCurrentRoom.getEastDoor().equals(DoorStatus.OPEN)) {
             myCurrentLocation.updateY(1);
-        } else if (theMove.equals(Direction.UP) && getAdventurerX() - 1 >= 0 && myCurrentRoom.getNorthDoor().equals(DoorStatus.OPEN)) {
+        } else if (theMove.equals(Direction.UP) && getAdventurerX() - 1 >= 0 &&
+                myCurrentRoom.getNorthDoor().equals(DoorStatus.OPEN)) {
             myCurrentLocation.updateX(-1);
-        } else if (theMove.equals(Direction.DOWN) && getAdventurerX() + 1 < myRows && myCurrentRoom.getSouthDoor().equals(DoorStatus.OPEN)) {
+        } else if (theMove.equals(Direction.DOWN) && getAdventurerX() + 1 < myRows &&
+                myCurrentRoom.getSouthDoor().equals(DoorStatus.OPEN)) {
             myCurrentLocation.updateX(1);
         } else {
 
-            //DungeonView.informUser("Invalid choice. Please try again");
         }
         DungeonView.informUser("You are currently at " +
                 myCurrentLocation.toString());
@@ -442,11 +452,21 @@ public class Dungeon implements Serializable {
         adventurerInteractions(theAdventurer);
     }
 
+    /**
+     * This method summarizes the interactions an adventurer would have.
+     * @param theAdventurer the adventurer wandering the dungeon
+     */
     private void adventurerInteractions(Adventurer theAdventurer){
         checkPitInteraction(theAdventurer);
         autoPickUpItems(theAdventurer);
         checkForMonsters();
     }
+
+    /**
+     * Checks to see if there's a pit in the room and causes the adventurer
+     * to take damage if there is.
+     * @param theAdventurer the adventurer wandering the dungeon
+     */
     private void checkPitInteraction(Adventurer theAdventurer) {
         int pitDamage = 10;
         if(myCurrentRoom.getPit()) {
@@ -458,6 +478,10 @@ public class Dungeon implements Serializable {
                     theAdventurer.getCharacter().getHealth());
         }
     }
+
+    /**
+     * Checks the current room for a monster and generates a notification for the player
+     */
     private void checkForMonsters(){
         if (myCurrentRoom.hasLiveMonster()) {
             DungeonView.informUser("You have encountered a monster: " +
@@ -485,6 +509,9 @@ public class Dungeon implements Serializable {
         return myCurrentLocation;
     }
 
+    /**
+     * @return the String representation of the Dungeon after using a vision potion
+     */
     public String getVisionPotionView() {
         int x = getAdventurerX();
         int y = getAdventurerY();

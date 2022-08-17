@@ -38,9 +38,6 @@ public class Room implements Serializable {
     private boolean myExit;
     private int myItemCount;
 
-
-    private boolean myAreDoorsOpen;
-
     // ***************************** Constructors ***************************
 
     /**
@@ -76,8 +73,6 @@ public class Room implements Serializable {
         setEastDoor(DoorStatus.CLOSED);
         setSouthDoor(DoorStatus.CLOSED);
         setWestDoor(DoorStatus.CLOSED);
-        myAreDoorsOpen = false;
-
     }
 
     /**
@@ -88,7 +83,6 @@ public class Room implements Serializable {
         setDoor(Direction.EAST, DoorStatus.OPEN);
         setDoor(Direction.SOUTH, DoorStatus.OPEN);
         setDoor(Direction.WEST, DoorStatus.OPEN);
-        myAreDoorsOpen = true;
     }
 
     /**
@@ -300,9 +294,6 @@ public class Room implements Serializable {
         return myVisionPotion;
     }
 
-    public boolean getIfDoorsAreOpen() {
-        return myAreDoorsOpen;
-    }
 
     //========
     // Door Setters
