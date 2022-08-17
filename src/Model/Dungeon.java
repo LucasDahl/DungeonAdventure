@@ -42,7 +42,7 @@ public class Dungeon implements Serializable {
         //========
 
         /**
-         * @param theX is the value to add or subtract to the current X
+         * @param theX the value to add or subtract to the current X
          */
         void updateX(int theX) {
             myX += theX;
@@ -50,7 +50,7 @@ public class Dungeon implements Serializable {
         }
 
         /**
-         * @param theY is the value to add or subtract to the current Y
+         * @param theY the value to add or subtract to the current Y
          */
         void updateY(int theY) {
             myY += theY;
@@ -69,15 +69,21 @@ public class Dungeon implements Serializable {
     }
 
     // ******************************* Fields *******************************
+    private Coordinates myCurrentLocation;
     private Coordinates myEntrance;
     private Coordinates myExit;
-    private Coordinates myCurrentLocation;
     private final Room[][] myMazeOfRooms;
     public Room myCurrentRoom;
 
     private final int myColumns;
     private final int myRows;
 
+    // ************************** Constructors ************************
+
+    /**
+     * @param theRows number of rows for 2D array of Rooms
+     * @param theColumns number of rows for 2D array of Rooms
+     */
     public Dungeon(final int theRows, final int theColumns) {
         myRows = theRows;
         myColumns = theColumns;
@@ -96,11 +102,23 @@ public class Dungeon implements Serializable {
     }
 
     // ******************************* Methods ******************************
-    void autoPickUpItems(final Adventurer theAdventurer){
+
+    /**
+     * This method updates the adventurer's inventory counts based on what they
+     * find in the room
+     * @param theAdventurer the adventurer in the dungeon
+     */
+    private void autoPickUpItems(final Adventurer theAdventurer){
         pickUpPillar(theAdventurer);
         pickUpPotions(theAdventurer);
     }
 
+    /**
+     * Checks the room for a pillar and notifies the player what pillar
+     * they've found. It then updates the adventurer to have the pillar
+     * in their collection and removes the pillar from the room.
+     * @param theAdventurer the adventurer exploring the dungeon
+     */
     private void pickUpPillar(final Adventurer theAdventurer) {
         if(!myCurrentRoom.getPillar().equals("")) {
             StringBuilder sb = new StringBuilder("You have found the pillar of ");
@@ -119,6 +137,13 @@ public class Dungeon implements Serializable {
             myCurrentRoom.setPillar(""); //remove pillar from the room
         }
     }
+
+    /**
+     * This method checks the room for healing potions and vision potions.
+     * It then updates the adventurer and room of the change, and passes a
+     * message to the view class to display
+     * @param theAdventurer the adventurer exploring the dungeon
+     */
     private void pickUpPotions(final Adventurer theAdventurer) {
         if(myCurrentRoom.getHealingPotion()) {
             DungeonView.informUser("You have found a healing potion!");
@@ -544,7 +569,6 @@ public class Dungeon implements Serializable {
                 for (int j = yStart; j < yStop + 1; j++) {
                     sb.append("*"); // bottom-left corner
                     sb.append(printNSDoor((myMazeOfRooms[i][j].getSouthDoor()))); // South door
-
                 }
                 sb.append("*"); // bottom-right corner
             }
@@ -649,13 +673,13 @@ public class Dungeon implements Serializable {
     }
 
     // only here for testing
-    public static void main(String[] args) {
-        Dungeon dungeon = new Dungeon(4, 4);
-        System.out.println(dungeon);
-        System.out.println();
-        System.out.println(dungeon.getCurrentLocation().toString());
-        System.out.println("Vision potion view");
-        System.out.println(dungeon.getVisionPotionView());
-
-    }
+//    public static void main(String[] args) {
+//        Dungeon dungeon = new Dungeon(4, 4);
+//        System.out.println(dungeon);
+//        System.out.println();
+//        System.out.println(dungeon.getCurrentLocation().toString());
+//        System.out.println("Vision potion view");
+//        System.out.println(dungeon.getVisionPotionView());
+//
+//    }
 }
