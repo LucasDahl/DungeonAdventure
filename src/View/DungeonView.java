@@ -6,14 +6,24 @@ import Model.Priestess;
 import Model.Thief;
 import Model.Warrior;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
+import java.io.*;
 
+/**
+ *
+ */
 public class DungeonView {
     // singleton DungeonView
     private static final DungeonView myDungeonView = new DungeonView();
+    private static DungeonAdventure myGame;
 
     private DungeonView() {
         // purposely left empty
+
     }
     // view is what the user sees
     // view sends info to controller
@@ -21,6 +31,10 @@ public class DungeonView {
     public DungeonView getDungeonView() {
         return myDungeonView;
     }
+
+    /**
+     *
+     */
     public static void displayHeroChoices() {
 
         Warrior warrior;
@@ -43,13 +57,26 @@ public class DungeonView {
 
     }
 
+    /**
+     *
+     * @param theDisplayMessage
+     */
     public static void informUser(String theDisplayMessage) {
         System.out.println(theDisplayMessage);
     }
 
+    /**
+     *
+     * @param theDisplayString
+     * @return
+     */
     public static String promptUserForString(String theDisplayString) {
         Scanner input = new Scanner(System.in);
         System.out.println(theDisplayString);
         return input.next();
+    }
+
+    public static DungeonAdventure getController() {
+        return myGame;
     }
 }
