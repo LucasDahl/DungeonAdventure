@@ -3,8 +3,10 @@ package Controller;
 import Model.*;
 import View.DungeonView;
 
+import java.io.*;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 import static Model.Direction.*;
@@ -21,7 +23,7 @@ import static Model.Direction.*;
 // SERIALIZE HERE! MAKE DUNGEON AND ADVENTURER INSTANCES, NOT STATIC
 public class DungeonAdventure implements Runnable {
     //singleton - eager instance
-    private static final DungeonAdventure myDungeonAdventure = new DungeonAdventure();
+    private static DungeonAdventure myDungeonAdventure = new DungeonAdventure();
     private Dungeon myDungeon;
     private Adventurer myAdventurer;
 
@@ -34,8 +36,8 @@ public class DungeonAdventure implements Runnable {
 
     private DungeonAdventure() {
         myDungeon = new Dungeon(DUNGEON_ROWS, DUNGEON_COLUMNS);
-
     }
+
 
     /**
      * Single point of access for DungeonAdventure
@@ -46,9 +48,22 @@ public class DungeonAdventure implements Runnable {
         return myDungeonAdventure;
     }
 
+
+
+    /**
+     *
+     */
     public void startGameThread() {
-        myDungeon = new Dungeon(DUNGEON_ROWS, DUNGEON_COLUMNS);
-        intro();
+
+        startingMenu();
+
+        if(DungeonView.getController() != null) {
+            myDungeonAdventure = DungeonView.getController();
+            myDungeon = myDungeonAdventure.myDungeon;
+        } else {
+            intro();
+        }
+
         if (myPlayerName != null) {
             // how we instantiate a thread;
             // will call the run method
@@ -57,11 +72,43 @@ public class DungeonAdventure implements Runnable {
         }
 
     }
+
     private void gameStart() {
         myDungeon = new Dungeon(DUNGEON_ROWS, DUNGEON_COLUMNS);
         startGameThread();
-
     }
+
+    // This method will allow the player to load
+    // or start a new game
+    private void startingMenu() {
+
+        // Properties
+        Scanner input = new Scanner(System.in);
+
+        DungeonView.informUser("\t\t Dungeon Adventure\n");
+
+        // Display the options
+        DungeonView.informUser("""
+                Please select using your keyboard:
+                \t1. New Game
+                \t2. Load Game
+                \t3. Exit\n"""
+        );
+
+        int userChoice = input.nextInt();
+
+        switch (userChoice) {
+            case 1:
+                break;
+            case 2:
+                loadGame();
+                break;
+            case 3:
+                DungeonView.informUser("\nThank you! Have an okay day! \n");
+                System.exit(0);
+        }
+    }
+
     private void intro() {
         String inputName;
         String defaultName = "nameless bum";
@@ -208,6 +255,7 @@ public class DungeonAdventure implements Runnable {
             DungeonView.informUser("Priestess Created");
         }
     }
+
     private void askReplay() {
         String resetPrompt= "Do you want to restart the game? [y/n]";
         String userInput = DungeonView.promptUserForString(resetPrompt);
@@ -218,12 +266,14 @@ public class DungeonAdventure implements Runnable {
             myGameThread = null;
         }
     }
+
     private void checkPlayerDeath() {
         if (myAdventurer.getCharacter().isDead()) {
             DungeonView.informUser("You died. Better luck next time.");
             //askReplay();
         }
     }
+
     private Direction translateMove(String thePlayerInput) {
         Direction direction;
         switch (thePlayerInput) {
@@ -235,6 +285,7 @@ public class DungeonAdventure implements Runnable {
         }
         return direction;
     }
+
     private void battle() {
         if (myDungeon.myCurrentRoom.hasLiveMonster()) {
             myDungeon.myCurrentRoom.getMonster().battle(myDungeon.
@@ -243,6 +294,7 @@ public class DungeonAdventure implements Runnable {
             DungeonView.informUser("Nothing to battle.");
         }
     }
+
     private void nextTurn(){
         String[] cheatsList = {"ko", "map", "teleport"};
         Set<String> cheats = new HashSet<>(List.of(cheatsList));
@@ -353,6 +405,119 @@ public class DungeonAdventure implements Runnable {
             }
         }
     }
+
+
+    // ************************** Loading and Saving ************************
+
+
+    // This method actually loads the saved game
+    private void loadASaveGame(final File theSavedGame){
+
+        DungeonView.informUser("Loading save file " + theSavedGame.getName());
+
+        // Reading data
+        try {
+
+            // Files
+            FileInputStream saveFileInput = new FileInputStream(theSavedGame);
+            ObjectInputStream objectIS = new ObjectInputStream(saveFileInput);
+
+            // Set the instance
+            // was myGame
+            myDungeonAdventure = (DungeonAdventure) objectIS.readObject();
+
+            DungeonView.informUser("\nSuccessfully loaded the game!\n");
+
+        } catch (Exception e) {
+            DungeonView.informUser("ERROR loading game: " + e);
+        }
+    }
+
+
+    // This method displays the games the user has saved.
+    // It also will allow them to load one.
+    private void loadGame(){
+
+//        File savedGames = new File("save\\DungeonAdventure.ser");
+
+        File saveFile = new File("save\\DungeonAdventure.ser");
+
+        // Load the game
+        loadASaveGame(saveFile);
+
+        // List the save files
+//        String[] saveGames = savedGames.list();
+//
+//        // Let the user know  if there are any save files or not
+//        if (saveGames == null) {
+//            informUser("There is no save game to load");
+//        } else {
+//
+//            // Properties
+//            Arrays.sort(saveGames, Collections.reverseOrder());
+//            Scanner input = new Scanner(System.in);
+//            int gameToLoad = 0;
+//
+//            StringBuilder gamesList = new StringBuilder("PLease select what save game you would like to load");
+//
+//            // Get the saved games
+//            for (int games = 0; games < saveGames.length; games++) {
+//                gamesList.append("\n");
+//                gamesList.append(games).append(". ").append(saveGames[games]);
+//            }
+//
+//            // Get the users input
+//            input.next();
+//
+//            // Make sure the user entered a value
+//            while(true) {
+//                try {
+//                    gameToLoad = Integer.parseInt(input.toString());
+//
+//                    if(gameToLoad < (gamesList.length() - 1) && gameToLoad > 0) {
+//                        break;
+//                    }
+//                } catch(Exception e) {
+//                    DungeonView.informUser("Invalid option, please pick again: ");
+//                }
+//                input.next();
+//            }
+//
+//            // Get the file
+//            File saveFile = new File(saveGames[gameToLoad]);
+//
+//            // Load the game
+//            loadASaveGame(saveFile);
+//        }
+    }
+
+
+    // This method will save the game for the user
+    private void saveGame(){
+
+        try{
+
+            // Set the file name
+            String fileName = "DungeonAdventure";
+
+            // Crerate the file
+            FileOutputStream fileOutputStream = new FileOutputStream("save\\" + fileName + ".ser");
+            ObjectOutputStream outputStream = new ObjectOutputStream(fileOutputStream);
+
+            // Write the file
+            outputStream.writeObject(myDungeonAdventure);
+            outputStream.flush();
+
+            // close the file
+            outputStream.close();
+
+            DungeonView.informUser("Saved!");
+        }
+        catch(Exception e){
+            DungeonView.informUser("Error in saving the file: " + e);
+        }
+    }
+
 }
 
 
