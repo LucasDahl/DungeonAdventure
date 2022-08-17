@@ -41,8 +41,8 @@ public class Adventurer implements Serializable {
         Scanner input = new Scanner(System.in);
         String name = theName;
 
-        // Enable health cheat
-        if(theName.equals("Health")) {
+        // Enable health cheat for player and potions
+        if(theName.toLowerCase().equals("health")) {
             potionHealth = 100000;
             DungeonView.informUser("Please enter your name: ");
             name = input.next();
@@ -55,6 +55,11 @@ public class Adventurer implements Serializable {
             myCharacter.setName(name);
         } catch (Exception e) {
             System.out.println("ERROR: " + e);
+        }
+
+        // If the player activated the cheat, give them more health
+        if(potionHealth > 35) {
+            myCharacter.setHealth(100000);
         }
     }
 
