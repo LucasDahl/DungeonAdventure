@@ -24,7 +24,7 @@ import static Model.Direction.*;
  */
 
 // SERIALIZE HERE! MAKE DUNGEON AND ADVENTURER INSTANCES, NOT STATIC
-public class DungeonAdventure implements Runnable, Serializable {
+public class DungeonAdventure implements Serializable {
     //singleton - eager instance
     private static DungeonAdventure myDungeonAdventure = new DungeonAdventure();
     private Dungeon myDungeon;
@@ -34,8 +34,12 @@ public class DungeonAdventure implements Runnable, Serializable {
     final static int DUNGEON_ROWS = 4;
     final static int DUNGEON_COLUMNS = 4;
 
+    private boolean flag = false;
+    private boolean gameOver = false;
 
-    private Thread myGameThread;
+
+    private transient Thread myGameThread;
+
 
     private DungeonAdventure() {
         myDungeon = new Dungeon(DUNGEON_ROWS, DUNGEON_COLUMNS);
@@ -60,18 +64,21 @@ public class DungeonAdventure implements Runnable, Serializable {
 
         startingMenu();
 
-        if(DungeonView.getController() != null) {
-            myDungeonAdventure = DungeonView.getController();
+        if(flag) {
+
             myDungeon = myDungeonAdventure.myDungeon;
+            myAdventurer = myDungeonAdventure.myAdventurer;
+            gameLoop();
         } else {
             intro();
+            gameLoop();
         }
 
         if (myPlayerName != null) {
             // how we instantiate a thread;
             // will call the run method
-            myGameThread = new Thread(this);
-            myGameThread.start();
+//            myGameThread = new Thread(this);
+//            myGameThread.start();
         }
 
     }
@@ -241,6 +248,8 @@ public class DungeonAdventure implements Runnable, Serializable {
         sb.append(reportOpenDoors());
         sb.append(checkPotions());
         sb.append(checkMonster());
+        sb.append("i - inventory and stats\n");
+        sb.append("save - type the full word \"save\"\n");
         return sb.toString();
     }
 
@@ -305,7 +314,7 @@ public class DungeonAdventure implements Runnable, Serializable {
         String[] movesList = {"w", "a", "s", "d"};
         Set<String> moves = new HashSet<>(List.of(movesList));
 
-        String[] otherOptions = {"h", "v", "b"};
+        String[] otherOptions = {"h", "v", "b", "i", "save"};
         Set<String> other = new HashSet<>(List.of(otherOptions));
 
         Set<String> expectedInputs = new HashSet<>();
@@ -329,6 +338,14 @@ public class DungeonAdventure implements Runnable, Serializable {
 
         } else {
             switch (playerInput) {
+                case "i": {
+                    myAdventurer.getInventory();
+                    break;
+                }
+                case "save": {
+                    saveGame();
+                    break;
+                }
                 case "h": {
                     myAdventurer.useHealPotion();
                     DungeonView.informUser("You have " +
@@ -392,13 +409,29 @@ public class DungeonAdventure implements Runnable, Serializable {
      *
      * @see Thread#run()
      */
-    @Override
-    public void run() {
+//    @Override
+//    public void run() {
+//        DungeonView.informUser("Starting Coordinates: " +
+//                myDungeon.getCurrentLocation().toString());
+//        DungeonView.informUser(myDungeon.getCurrentRoom().toString());
+//
+//        while (myGameThread != null) {
+//            if (quietCheckExitConditions() || myAdventurer.getCharacter().isDead()) {
+//                checkPlayerDeath();
+//                askReplay();
+//                break;
+//            } else {
+//                nextTurn();
+//            }
+//        }
+//    }
+
+    public void gameLoop() {
         DungeonView.informUser("Starting Coordinates: " +
                 myDungeon.getCurrentLocation().toString());
         DungeonView.informUser(myDungeon.getCurrentRoom().toString());
 
-        while (myGameThread != null) {
+        while (!gameOver) {
             if (quietCheckExitConditions() || myAdventurer.getCharacter().isDead()) {
                 checkPlayerDeath();
                 askReplay();
@@ -428,6 +461,7 @@ public class DungeonAdventure implements Runnable, Serializable {
             // Set the instance
             // was myGame
             myDungeonAdventure = (DungeonAdventure) objectIS.readObject();
+            flag = true;
 
             DungeonView.informUser("\nSuccessfully loaded the game!\n");
 
