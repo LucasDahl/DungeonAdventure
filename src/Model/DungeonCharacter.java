@@ -72,12 +72,11 @@ public abstract class DungeonCharacter implements Serializable {
 
             // Get input from the user
             DungeonView.informUser("Press 1 for normal attack, 2 for special skill 3 to heal, or 4 to flee: ");
-            input.next();
 
             // Make sure the user entered a value
-            while(!flag) {
+            while(true) {
                 try {
-                    attackType = Integer.parseInt(input.toString());
+                    attackType = Integer.parseInt( input.next());
                     flag = true;
                     break;
                 } catch(Exception e) {
@@ -85,6 +84,7 @@ public abstract class DungeonCharacter implements Serializable {
                 }
                 input.next();
             }
+
 
             if(attackType == 1) {
                 theHero.attack(theEnemy);
