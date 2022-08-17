@@ -3,7 +3,10 @@ package Controller;
 import Model.*;
 import View.DungeonView;
 
+
 import java.io.*;
+import java.io.Serializable;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
@@ -21,7 +24,7 @@ import static Model.Direction.*;
  */
 
 // SERIALIZE HERE! MAKE DUNGEON AND ADVENTURER INSTANCES, NOT STATIC
-public class DungeonAdventure implements Runnable {
+public class DungeonAdventure implements Runnable, Serializable {
     //singleton - eager instance
     private static DungeonAdventure myDungeonAdventure = new DungeonAdventure();
     private Dungeon myDungeon;

@@ -25,6 +25,8 @@ public class DungeonView {
         // purposely left empty
 
     }
+    // view is what the user sees
+    // view sends info to controller
 
     public DungeonView getDungeonView() {
         return myDungeonView;
