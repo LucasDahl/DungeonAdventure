@@ -77,9 +77,7 @@ public class DungeonAdventure implements Serializable {
         startGameThread();
     }
 
-    // This method will allow the player to load
-    // or start a new game
-    private void startingMenu() {
+        private void startingMenu() {
 
         // Properties
         Scanner input = new Scanner(System.in);
@@ -94,7 +92,20 @@ public class DungeonAdventure implements Serializable {
                 \t3. Exit\n"""
         );
 
-        int userChoice = input.nextInt();
+        int userChoice = 0;
+
+        while(true) {
+            try {
+                userChoice = Integer.parseInt(input.next());
+                if(userChoice > 0 && userChoice < 4) {
+                    break;
+                } else {
+                    throw new Exception("Invalid option, please pick again: ");
+                }
+            } catch(Exception e) {
+                DungeonView.informUser("Invalid option, please pick again: ");
+            }
+        }
 
         switch (userChoice) {
             case 1:
@@ -105,6 +116,9 @@ public class DungeonAdventure implements Serializable {
             case 3:
                 DungeonView.informUser("\nThank you! Have an okay day! \n");
                 System.exit(0);
+                break;
+            default:
+                DungeonView.informUser("Cannot follow instructions, goodbye!");
         }
     }
 
