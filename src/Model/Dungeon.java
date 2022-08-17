@@ -14,7 +14,7 @@ public class Dungeon implements Serializable {
      * Coordinates, in the 2D array of Rooms composing Dungeon. Not designed
      * for use outside of Dungeon.
      */
-    public class Coordinates {
+    public class Coordinates implements Serializable {
         // **************************** Fields ****************************
         int myX;
         int myY;
