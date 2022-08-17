@@ -32,6 +32,7 @@ D - Right <br>
 H - Use healing potion <br>
 V - Use vision potion <br>
 B - Initiate battle <br>
+Save - saves the game <br>
 
 <div align="center">
 
