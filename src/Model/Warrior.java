@@ -87,9 +87,9 @@ public class Warrior extends Hero {
         // The enemy was hit.
         if(super.getMyRandomRange(0, 100) < (MY_SPECIAL_CHANCE * 100)) {
             theEnemy.setHealth(theEnemy.getHealth() - getMySpecialDamage());
-            System.out.println("The " + theEnemy.getName() + " took " + mySpecialDamage + " points of damage.");
+            DungeonView.informUser("The " + theEnemy.getName() + " took " + (int) mySpecialDamage + " points of damage.");
         } else {
-            System.out.println("Attack missed.");
+            DungeonView.informUser("Attack missed.");
         }
     }
 
