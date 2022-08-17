@@ -3,6 +3,7 @@ package Model;
 import Controller.DungeonAdventure;
 import View.DungeonView;
 
+import java.io.Serializable;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -13,7 +14,7 @@ import java.util.Scanner;
  *  This is the parent class for all the dungeon characters.
  *
  */
-public abstract class DungeonCharacter {
+public abstract class DungeonCharacter implements Serializable {
 
     // **************************** Fields ****************************
 
@@ -57,6 +58,7 @@ public abstract class DungeonCharacter {
 
         // Properties
         Hero theHero = theAdventurer.getCharacter();
+        boolean flag = false;
 
         // Inform the user
         DungeonView.informUser(theEnemy.getName() + " Attacked!");
@@ -73,9 +75,10 @@ public abstract class DungeonCharacter {
             input.next();
 
             // Make sure the user entered a value
-            while(true) {
+            while(!flag) {
                 try {
                     attackType = Integer.parseInt(input.toString());
+                    flag = true;
                     break;
                 } catch(Exception e) {
                     DungeonView.informUser("Invalid option, please pick again: ");
@@ -113,15 +116,19 @@ public abstract class DungeonCharacter {
         // Battle over!
         DungeonView.informUser("Battle over!");
 
-        String winner;
+        String winner, loser;
 
-        // Get the winner
+        // Get the winner and loser
         if(theHero.isDead()) {
             winner = theEnemy.getName();
+            loser = theHero.getName();
         } else {
             winner = theHero.getName();
+            loser = theEnemy.getName();
         }
 
+        // Display the message
+        DungeonView.informUser(winner + " defeated " + loser + "!" );
     }
 
     /**
