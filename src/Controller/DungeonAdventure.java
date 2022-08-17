@@ -220,7 +220,7 @@ public class DungeonAdventure implements Serializable {
         StringBuilder sb = new StringBuilder();
         if (!(myDungeon.myCurrentRoom.getMonster() == null)) {
             if (myDungeon.myCurrentRoom.hasLiveMonster()) {
-                sb.append("b - battle");
+                sb.append("b - battle\n");
             }
         }
         return sb.toString();
