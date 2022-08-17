@@ -2,6 +2,7 @@ package Model;
 
 import View.DungeonView;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -12,7 +13,7 @@ import java.util.*;
  *  the game(the player)
  *
  */
-public class Adventurer {
+public class Adventurer implements Serializable {
 
     // **************************** Fields ****************************
 
