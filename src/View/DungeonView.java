@@ -14,7 +14,6 @@ public class DungeonView {
 
     private DungeonView() {
         // purposely left empty
-
     }
     // view is what the user sees
     // view sends info to controller
