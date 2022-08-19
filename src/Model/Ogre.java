@@ -28,11 +28,7 @@ public class Ogre extends Monster {
     public String toString() {
         return super.toString();
     }
-//
-//    @Override
-//    public void attackBehavior(final Model.DungeonCharacter theOther) {
-//        super.attackBehavior(theOther);
-//    }
+
 
     @Override
     public boolean isDead() {
