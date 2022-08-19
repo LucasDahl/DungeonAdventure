@@ -29,6 +29,10 @@ public class Gremlin extends Monster {
     public String toString() {
         return super.toString();
     }
-
+    
+    @Override
+    public boolean isDead() {
+        return super.isDead();
+    }
     
 }
