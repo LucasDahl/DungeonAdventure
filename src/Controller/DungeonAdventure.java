@@ -158,7 +158,8 @@ public class DungeonAdventure implements Serializable {
     private void setHero(final String thePlayerName, final String theHeroChoice) {
         myDungeonAdventure.setPlayerName(thePlayerName);
         myDungeonAdventure.setPlayerClass(theHeroChoice);
-        DungeonView.informUser("Good luck, " + thePlayerName);
+        myPlayerName = myAdventurer.getCharacter().getName()
+        DungeonView.informUser("Good luck, " + myPlayerName);
     }
 
     /**
