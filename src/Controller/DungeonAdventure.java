@@ -71,29 +71,26 @@ public class DungeonAdventure implements Serializable {
         }
     }
 
-
-    /**
-     * Initializes a dungeon and starts the game thread
-     */
+    // This method starts the game
     private void gameStart() {
         myDungeon = new Dungeon(DUNGEON_ROWS, DUNGEON_COLUMNS);
         startGameThread();
     }
 
-    private void startingMenu() {
+        private void startingMenu() {
 
-    // Properties
-    Scanner input = new Scanner(System.in);
+        // Properties
+        Scanner input = new Scanner(System.in);
 
-    DungeonView.informUser("\t\t Dungeon Adventure\n");
+        DungeonView.informUser("\t\t Dungeon Adventure\n");
 
-    // Display the options
-    DungeonView.informUser("""
-            Please select using your keyboard:
-            \t1. New Game
-            \t2. Load Game
-            \t3. Exit\n"""
-    );
+        // Display the options
+        DungeonView.informUser("""
+                Please select using your keyboard:
+                \t1. New Game
+                \t2. Load Game
+                \t3. Exit\n"""
+        );
 
         int userChoice = 0;
 
@@ -187,12 +184,7 @@ public class DungeonAdventure implements Serializable {
                 (pillarsCount>= neededPillars.length));
     }
 
-    /**
-     * This method checks if the room is and exit and whether the adventurer
-     * has met the exit criteria. It also notifies the user they win if all
-     * exit criteria are met, or informs them to keep searching for pillars.
-     * @return whether the room is an exit
-     */
+    // Checks if the room is the exit
     private boolean isRoomExit() {
         boolean canExitHere = false;
         int pillarsCount = 0;
@@ -227,16 +219,15 @@ public class DungeonAdventure implements Serializable {
      */
     private String checkMonster() {
         StringBuilder sb = new StringBuilder();
-        if (myDungeon.getCurrentRoom().hasLiveMonster()) {
+        if (!(myDungeon.getCurrentRoom().getMonster() == null)) {
+            if (myDungeon.getCurrentRoom().hasLiveMonster()) {
                 sb.append("b - battle\n");
+            }
         }
         return sb.toString();
     }
 
-    /**
-     * Checks whether the adventurer has healing and vision potions
-     * @return a String with the commands to use the potions the adventurer has
-     */
+    // This method will check for potions
     private String checkPotions() {
         StringBuilder sb = new StringBuilder();
         if (myAdventurer.getHealingPotions() > 0) {
@@ -273,10 +264,7 @@ public class DungeonAdventure implements Serializable {
         return sb.toString();
     }
 
-    /**
-     * Checks the options available to the player
-     * @return a String with the list of options available
-     */
+    // This method will display the options
     private String reportOptions() {
         StringBuilder sb = new StringBuilder();
         sb.append(reportOpenDoors());
@@ -308,9 +296,7 @@ public class DungeonAdventure implements Serializable {
         }
     }
 
-    /**
-     * Call this to prompt user whether they want to play again
-     */
+    // This method will ask the user if they want to play again
     private void askReplay() {
         String resetPrompt= "Do you want to restart the game? [y/n]";
         String userInput = DungeonView.promptUserForString(resetPrompt);
@@ -322,21 +308,15 @@ public class DungeonAdventure implements Serializable {
         }
     }
 
-    /**
-     * This method checks if the player is alive and sends a message
-     * to display when the player is dead.
-     */
+    // This method checks if the player is alive
     private void checkPlayerDeath() {
         if (myAdventurer.getCharacter().isDead()) {
             DungeonView.informUser("You died. Better luck next time.");
+            //askReplay();
         }
     }
 
-    /**
-     * This method translates the keyboard input to the required
-     * Direction input for the dungeon move method
-     * @return the Direction the player will move to
-     */
+    // This method actually moves the player.
     private Direction translateMove(String thePlayerInput) {
         Direction direction;
         switch (thePlayerInput) {
@@ -349,9 +329,7 @@ public class DungeonAdventure implements Serializable {
         return direction;
     }
 
-    /**
-     * This method will start a battle
-     */
+    // This method will start a battle
     private void battle() {
         if (myDungeon.getCurrentRoom().hasLiveMonster()) {
             myDungeon.getCurrentRoom().getMonster().battle(myDungeon.
@@ -361,9 +339,7 @@ public class DungeonAdventure implements Serializable {
         }
     }
 
-    /**
-     * This method requests the player's next turn and processes it
-     */
+    // This method will allow the player to take a turn
     private void nextTurn(){
 
         String[] cheatsList = {"ko", "map", "teleport"};
@@ -478,11 +454,11 @@ public class DungeonAdventure implements Serializable {
         }
     }
 
+
     // ************************** Loading and Saving ************************
 
-    /**
-     * This method loads the saved game
-     */
+
+    // This method actually loads the saved game
     private void loadASaveGame(final File theSavedGame){
 
         DungeonView.informUser("Loading save file " + theSavedGame.getName());
@@ -505,6 +481,7 @@ public class DungeonAdventure implements Serializable {
             DungeonView.informUser("ERROR loading game: " + e);
         }
     }
+
 
     // This method displays the games the user has saved.
     // It also will allow them to load one.
@@ -544,3 +521,8 @@ public class DungeonAdventure implements Serializable {
         }
     }
 }
+
+
+
+
+
