@@ -20,7 +20,7 @@ public class Dungeon implements Serializable {
         private int myY;
 
         // ************************** Constructors ************************
-        Coordinates(final int theX, final int theY) {
+        public Coordinates(final int theX, final int theY) {
             myX = theX;
             myY = theY;
         }
@@ -330,15 +330,6 @@ public class Dungeon implements Serializable {
         }
     }
 
-    private boolean isTraversalPossible() {
-        // STILL IN PROGRESS!!! 8/11/2022
-        boolean isTraversalPossible = false;
-        Coordinates entrance = getEntrance();
-        // try to reach the exit
-        Set<Room> visitedRooms = new HashSet<Room>();
-        visitedRooms.add(myCurrentRoom);
-        return isTraversalPossible;
-    }
 
     /**
      * This method randomly chooses a room in the dungeon and assigns
@@ -634,7 +625,7 @@ public class Dungeon implements Serializable {
      *
      * @param theRoom Coordinates to set as the current room
      */
-    private void updateCurrentRoom(final Coordinates theRoom) {
+    void updateCurrentRoom(final Coordinates theRoom) {
         myCurrentLocation = theRoom;
         myCurrentRoom = myMazeOfRooms[theRoom.getX()][theRoom.getY()];
     }
