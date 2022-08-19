@@ -2,8 +2,7 @@ package Model;
 /*
  * TCSS 360 - Summer 2022
  * Instructor: Tom Capaul
- * Model.Room class for Model.Dungeon Adventure game
- * Package condition: Must be placed in the same package as DungeonAdventure
+ * Room class for Dungeon Adventure game
  */
 
 import java.util.Objects;
@@ -11,8 +10,8 @@ import java.util.Random;
 import java.io.Serializable;
 
 /**
- * This class contains all fields and methods pertaining to a Model.Room as part
- * of the Model.Dungeon environment for the associated Model.Dungeon Adventure game.
+ * This class contains all fields and methods pertaining to a Room as part
+ * of the Dungeon environment for the associated Dungeon Adventure game.
  *
  * @author Jane Kennerly janekennerly@gmail.com
  * @version 26 July 2022
@@ -37,11 +36,14 @@ public class Room implements Serializable {
     private boolean myEntrance;
     private boolean myExit;
     private int myItemCount;
-
+    private static final int PIT_CHANCE = 20; // default 20
+    private static final int VISION_POTION_CHANCE = 10; // default 10
+    private static final int HEALING_POTION_CHANCE = 20; // default 20
+    private static final int MONSTER_CHANCE = 20; // default 20
     // ***************************** Constructors ***************************
 
     /**
-     * Standard Model.Room creation, no pillar set, no items, and all doors are open/exist
+     * Standard Room creation, no pillar set, no items, and all doors are open
      */
     public Room() {
 
@@ -57,7 +59,7 @@ public class Room implements Serializable {
 
     // ******************************* Methods ******************************
 
-    void defaultPaths() {
+    private void defaultPaths() {
         myNorthPath = false;
         myEastPath = false;
         mySouthPath = false;
@@ -68,7 +70,7 @@ public class Room implements Serializable {
     /**
      * Sets all doors to CLOSED
      */
-    public void closeAllDoors() {
+     void closeAllDoors() {
         setNorthDoor(DoorStatus.CLOSED);
         setEastDoor(DoorStatus.CLOSED);
         setSouthDoor(DoorStatus.CLOSED);
@@ -78,7 +80,7 @@ public class Room implements Serializable {
     /**
      * Sets all doors to OPEN
      */
-    public void openAllDoors() {
+    void openAllDoors() {
         setDoor(Direction.NORTH, DoorStatus.OPEN);
         setDoor(Direction.EAST, DoorStatus.OPEN);
         setDoor(Direction.SOUTH, DoorStatus.OPEN);
@@ -115,12 +117,7 @@ public class Room implements Serializable {
      * Randomly assigns a pit, vision potion, healing potion, and a monster
      * to the Model.Room.
      */
-    void populateRoom() {
-        final int PIT_CHANCE = 20;
-        final int VISION_POTION_CHANCE = 10;
-        final int HEALING_POTION_CHANCE = 20;
-        final int MONSTER_CHANCE = 20;
-
+    private void populateRoom() {
         Random rand = new Random();
         if ((rand.nextInt(100) + 1) <= PIT_CHANCE) {
             myPit = true;
@@ -209,7 +206,7 @@ public class Room implements Serializable {
      *
      * @return Gets the letter that best represents the contents of the room
      */
-    public String getMiddle() {
+    String getMiddle() {
         String middle = "";
         if (getEntrance()) {
             middle = "i";
@@ -221,7 +218,7 @@ public class Room implements Serializable {
             } else if (myItemCount < 1) {
                 middle = " ";
             } else {
-                if (getPillar().compareTo("") != 0) { // if pillar not empty String
+                if (getPillar().compareTo("") != 0) { // if pillar not ""
                     middle = getPillar();
                 } else if (getVisionPotion()) {
                     middle = "V";
@@ -248,7 +245,7 @@ public class Room implements Serializable {
      * @param theDirection the direction requested
      * @return whether the room has a path in the given direction
      */
-    public boolean getPath(Direction theDirection) {
+    boolean getPath(final Direction theDirection) {
         boolean theRequestedPath;
         switch (theDirection) {
             case NORTH, UP -> theRequestedPath = myNorthPath;
@@ -265,7 +262,7 @@ public class Room implements Serializable {
      *
      * @return the letter of the pillar in the room if there is one
      */
-    public String getPillar() {
+    String getPillar() {
         return myPillarLetter;
     }
 
@@ -274,14 +271,14 @@ public class Room implements Serializable {
      *
      * @return whether there is a pit in the room
      */
-    public boolean getPit() {
+    boolean getPit() {
         return myPit;
     }
 
     /**
      * @return whether the room has been visited (for maze generation)
      */
-    public boolean getVisitedStatus() {
+    boolean getVisitedStatus() {
         return myVisitedStatus;
     }
 
@@ -290,7 +287,7 @@ public class Room implements Serializable {
      *
      * @return whether there is a vision potion
      */
-    public boolean getVisionPotion() {
+    boolean getVisionPotion() {
         return myVisionPotion;
     }
 
@@ -304,7 +301,7 @@ public class Room implements Serializable {
      *
      * @param theNorthDoor uses enumerated type DoorStatus
      */
-    void setNorthDoor(DoorStatus theNorthDoor) {
+    void setNorthDoor(final DoorStatus theNorthDoor) {
         myNorthDoor = theNorthDoor;
     }
 
@@ -313,7 +310,7 @@ public class Room implements Serializable {
      *
      * @param theEastDoor uses enumerated type DoorStatus
      */
-    void setEastDoor(DoorStatus theEastDoor) {
+    void setEastDoor(final DoorStatus theEastDoor) {
         myEastDoor = theEastDoor;
     }
 
@@ -322,7 +319,7 @@ public class Room implements Serializable {
      *
      * @param theSouthDoor uses enumerated type DoorStatus
      */
-    void setSouthDoor(DoorStatus theSouthDoor) {
+    void setSouthDoor(final DoorStatus theSouthDoor) {
         mySouthDoor = theSouthDoor;
     }
 
@@ -331,11 +328,11 @@ public class Room implements Serializable {
      *
      * @param theWestDoor uses enumerated type DoorStatus
      */
-    void setWestDoor(DoorStatus theWestDoor) {
+    void setWestDoor(final DoorStatus theWestDoor) {
         myWestDoor = theWestDoor;
     }
 
-    void setDoor(Direction theDirection, DoorStatus theStatus) {
+    void setDoor(final Direction theDirection, final DoorStatus theStatus) {
         switch (theDirection) {
             case NORTH, UP -> myNorthDoor = theStatus;
             case EAST, RIGHT -> myEastDoor = theStatus;
@@ -393,7 +390,7 @@ public class Room implements Serializable {
      * @param theDirection  A Direction to set
      * @param thePathExists true - the path exists, false - there is no path
      */
-    void setPath(Direction theDirection, boolean thePathExists) {
+    void setPath(final Direction theDirection, final boolean thePathExists) {
         switch (theDirection) {
             case NORTH, UP -> myNorthPath = thePathExists;
             case EAST, RIGHT -> myEastPath = thePathExists;
@@ -408,9 +405,11 @@ public class Room implements Serializable {
      * @param thePillarLetter "A", "E", "I", or "P"
      */
     void setPillar(final String thePillarLetter) {
-        if (Objects.equals(thePillarLetter, "") && myPillarLetter.length() > 0) {
+        if (Objects.equals(thePillarLetter, "") &&
+                myPillarLetter.length() > 0) {
             myItemCount--;
-        } else if (Objects.equals(myPillarLetter, "") && thePillarLetter.length() > 0) {
+        } else if (Objects.equals(myPillarLetter, "") &&
+                thePillarLetter.length() > 0) {
             myItemCount++;
         }
         myPillarLetter = thePillarLetter;
@@ -421,7 +420,7 @@ public class Room implements Serializable {
      *
      * @param thePit true creates pit, false removes it
      */
-    void setPit(boolean thePit) {
+    void setPit(final boolean thePit) {
         if (!thePit && myPit) { // removing pit when there was a pit
             myItemCount--;
         } else if (!myPit && thePit) { // had no pit, adding a pit
@@ -448,7 +447,7 @@ public class Room implements Serializable {
      * @param theStatus set true to mean room was visited,
      *                  false means the room wasn't visited
      */
-    void setVisitedStatus(boolean theStatus) {
+    void setVisitedStatus(final boolean theStatus) {
         myVisitedStatus = theStatus;
     }
 
@@ -481,5 +480,4 @@ public class Room implements Serializable {
         }
         return sb.toString();
     }
-
 }
