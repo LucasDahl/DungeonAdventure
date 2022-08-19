@@ -16,11 +16,11 @@ public class Dungeon implements Serializable {
      */
     public class Coordinates implements Serializable {
         // **************************** Fields ****************************
-        int myX;
-        int myY;
+        private int myX;
+        private int myY;
 
         // ************************** Constructors ************************
-        Coordinates(int theX, int theY) {
+        Coordinates(final int theX, final int theY) {
             myX = theX;
             myY = theY;
         }
@@ -29,11 +29,11 @@ public class Dungeon implements Serializable {
         // Getters
         //========
 
-        int getX() {
+        private int getX() {
             return myX;
         }
 
-        int getY() {
+        private int getY() {
             return myY;
         }
 
@@ -44,15 +44,17 @@ public class Dungeon implements Serializable {
         /**
          * @param theX the value to add or subtract to the current X
          */
-        void updateX(int theX) {
-            myX += theX;
+        private void updateX(int theX) {
+            if(Math.abs(theX) <= 1) {
+                myX += theX;
+            }
             myCurrentRoom = myMazeOfRooms[myX][myY];
         }
 
         /**
          * @param theY the value to add or subtract to the current Y
          */
-        void updateY(int theY) {
+        private void updateY(int theY) {
             myY += theY;
             myCurrentRoom = myMazeOfRooms[myX][myY];
         }
@@ -73,8 +75,7 @@ public class Dungeon implements Serializable {
     private Coordinates myEntrance;
     private Coordinates myExit;
     private final Room[][] myMazeOfRooms;
-    public Room myCurrentRoom;
-
+    private Room myCurrentRoom;
     private final int myColumns;
     private final int myRows;
 
@@ -291,7 +292,8 @@ public class Dungeon implements Serializable {
      * @return the Room based on the Room at the top of the stack offset
      * in the given direction
      */
-    private Room roomOffset(Stack<Coordinates> theStack, Direction theDirection) {
+    private Room roomOffset(final Stack<Coordinates> theStack,
+                            final Direction theDirection) {
         int x = theStack.peek().getX();
         int y = theStack.peek().getY();
         switch (theDirection) {
@@ -395,13 +397,20 @@ public class Dungeon implements Serializable {
     //========
 
     /**
+     * @return the current room of the adventurer
+     */
+    public Room getCurrentRoom() {
+        return myCurrentRoom;
+    }
+
+    /**
      * This method checks if a random room is an entrance, exit, or
      * has pillars. If the room doesn't have any pillars, this method would
      * set the parameter the Pillar as the room's pillar.
      *
      * @param thePillar a letter (a, e, i, p) representing a Pillar of OO
      */
-    private void getEmptyRoom(String thePillar) {
+    private void getEmptyRoom(final String thePillar) {
         Random rand = new Random();
         int x, y;
         x = rand.nextInt(myRows);
@@ -456,7 +465,7 @@ public class Dungeon implements Serializable {
      * This method summarizes the interactions an adventurer would have.
      * @param theAdventurer the adventurer wandering the dungeon
      */
-    private void adventurerInteractions(Adventurer theAdventurer){
+    private void adventurerInteractions(final Adventurer theAdventurer){
         checkPitInteraction(theAdventurer);
         autoPickUpItems(theAdventurer);
         checkForMonsters();
@@ -467,7 +476,7 @@ public class Dungeon implements Serializable {
      * to take damage if there is.
      * @param theAdventurer the adventurer wandering the dungeon
      */
-    private void checkPitInteraction(Adventurer theAdventurer) {
+    private void checkPitInteraction(final Adventurer theAdventurer) {
         int pitDamage = 10;
         if(myCurrentRoom.getPit()) {
             theAdventurer.takeDamage(pitDamage);
@@ -491,14 +500,14 @@ public class Dungeon implements Serializable {
     /**
      * @return the Adventurer's X coordinate
      */
-    int getAdventurerX() {
+    private int getAdventurerX() {
         return myCurrentLocation.myX;
     }
 
     /**
      * @return the Adventurer's Y coordinate
      */
-    int getAdventurerY() {
+    private int getAdventurerY() {
         return myCurrentLocation.myY;
     }
 
@@ -584,7 +593,7 @@ public class Dungeon implements Serializable {
      * @param theDoor DoorStatus OPEN or CLOSED
      * @return * is a closed door. | is an open east/west door.
      */
-    String printEWDoor(DoorStatus theDoor) {
+    private String printEWDoor(final DoorStatus theDoor) {
         String str = "";
         if (theDoor.equals(DoorStatus.CLOSED)) {
             str = "*";
@@ -602,7 +611,7 @@ public class Dungeon implements Serializable {
      * @param theDoor DoorStatus OPEN or CLOSED
      * @return * is a closed door. - is an open north/south door.
      */
-    String printNSDoor(DoorStatus theDoor) {
+    private String printNSDoor(final DoorStatus theDoor) {
         String str = "";
         if (theDoor.equals(DoorStatus.CLOSED)) {
             str = "*";
@@ -625,13 +634,9 @@ public class Dungeon implements Serializable {
      *
      * @param theRoom Coordinates to set as the current room
      */
-    public void updateCurrentRoom(Coordinates theRoom) {
+    private void updateCurrentRoom(final Coordinates theRoom) {
         myCurrentLocation = theRoom;
         myCurrentRoom = myMazeOfRooms[theRoom.getX()][theRoom.getY()];
-    }
-
-    public Room getCurrentRoom() {
-        return myCurrentRoom;
     }
 
     //=================
