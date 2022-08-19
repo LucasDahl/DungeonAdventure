@@ -333,7 +333,7 @@ public class DungeonAdventure implements Serializable {
     private void battle() {
         if (myDungeon.getCurrentRoom().hasLiveMonster()) {
             myDungeon.getCurrentRoom().getMonster().battle(myDungeon.
-                    getCurrentRoom().getMonster(), myAdventurer.getCharacter());
+                    getCurrentRoom().getMonster(), myAdventurer);
         } else {
             DungeonView.informUser("Nothing to battle.");
         }

@@ -1,5 +1,7 @@
 package Model;
 
+import View.DungeonView;
+
 /**
  * @author Lucas Dahl - LDahl
  * @version 1.0
