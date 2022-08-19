@@ -32,7 +32,7 @@ D - Right <br>
 H - Use healing potion <br>
 V - Use vision potion <br>
 B - Initiate battle <br>
-Save - saves the game <br>
+Save - Saves the game <br>
 
 <div align="center">
 
@@ -55,7 +55,7 @@ Minimum damage: 35 <br>
 Maximum damage: 60
 Chance to block: 0.2 (20 percent)<br>
 Special attack: Crushing Blow<br>
-Special attack damage: 75 - 150;
+Special attack damage: 75 - 150;<br>
 Special attack hit chance: 0.4 (40 percent)<br>
 
 ### Priestess: <br>
