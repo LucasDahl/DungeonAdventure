@@ -79,7 +79,7 @@ public class Warrior extends Hero {
     //=================
 
     @Override
-    protected void specialSkill(DungeonCharacter theEnemy) {
+    public void specialSkill(DungeonCharacter theEnemy) {
 
         // Display the special skill
         System.out.println(getSpecialSkill());
