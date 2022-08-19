@@ -72,21 +72,21 @@ public class DungeonCharacterTest {
     @DisplayName("Test the getName method for Model.Warrior")
     public void testWarriorName() {
         setUpDungeonCharacters();
-        assertEquals("testWarriorName failed", "Warrior", warrior.getName());
+        assertEquals("Warrior", warrior.getName(),"testWarriorName failed");
     }
 
     @Test
     @DisplayName("Test the getName method  for Model.Thief")
     public void testThiefName() {
         setUpDungeonCharacters();
-        assertEquals("testThiefName failed", "Thief", thief.getName());
+        assertEquals("Thief", thief.getName(), "testThiefName failed");
     }
 
     @Test
     @DisplayName("Test the getName method for Model.Priestess")
     public void testPriestessName() {
         setUpDungeonCharacters();
-        assertEquals("testPriestessName failed", "Priestess", priestess.getName());
+        assertEquals("Priestess", priestess.getName(), "testPriestessName failed");
     }
 
     //==============
@@ -97,42 +97,43 @@ public class DungeonCharacterTest {
     @DisplayName("Test the toString method for Warrior")
     public void testWarriorToString() {
         setUpDungeonCharacters();
-        assertEquals("testWarriorToString failed", "Name: Warrior Health: 125.0 Max Damage range: 60.0 Min damage range: 35.0 Attack speed: 4.0 Chance to hit: 0.8 Number of attacks: 1 Chance to block: 0.2", warrior.toString());
+
+        assertEquals("Name: Warrior Health: 125.0 Max Damage range: 60.0 Min damage range: 35.0 Attack speed: 4.0 Chance to hit: 0.8 Number of attacks: 1 Chance to block: 0.2", warrior.toString(), "testWarriorToString failed");
     }
 
     @Test
     @DisplayName("Test the toString method for Thief")
     public void testThiefToString() {
         setUpDungeonCharacters();
-        assertEquals("testThiefToString failed", "Name: Thief Health: 75.0 Max Damage range: 40.0 Min damage range: 20.0 Attack speed: 4.0 Chance to hit: 0.8 Number of attacks: 1 Chance to block: 0.4", thief.toString());
+        assertEquals("Name: Thief Health: 75.0 Max Damage range: 40.0 Min damage range: 20.0 Attack speed: 4.0 Chance to hit: 0.8 Number of attacks: 1 Chance to block: 0.4", thief.toString() , "testThiefToString failed");
     }
 
     @Test
     @DisplayName("Test the toString method for Priestess")
     public void testPriestessToString() {
         setUpDungeonCharacters();
-        assertEquals("testPriestessToString failed", "Name: Priestess Health: 75.0 Max Damage range: 45.0 Min damage range: 25.0 Attack speed: 5.0 Chance to hit: 0.7 Number of attacks: 1 Chance to block: 0.3", priestess.toString());
+        assertEquals( "Name: Priestess Health: 75.0 Max Damage range: 45.0 Min damage range: 25.0 Attack speed: 5.0 Chance to hit: 0.7 Number of attacks: 1 Chance to block: 0.3", priestess.toString(),"testPriestessToString failed");
     }
 
     @Test
     @DisplayName("Test the toString method for Ogre")
     public void testOgreToString() {
         setUpDungeonCharacters();
-        assertEquals("testOgreToString failed", "Name: Ogre Health: 200.0 Max Damage range: 60.0 Min damage range: 30.0 Attack speed: 2.0 Chance to hit: 0.6 Number of attacks: 1", ogre.toString());
+        assertEquals( "Name: Ogre Health: 200.0 Max Damage range: 60.0 Min damage range: 30.0 Attack speed: 2.0 Chance to hit: 0.6 Number of attacks: 1", ogre.toString(), "testOgreToString failed");
     }
 
     @Test
     @DisplayName("Test the toString method for Skeleton")
     public void testSkeletonToString() {
         setUpDungeonCharacters();
-        assertEquals("testSkeletonToString failed", "Name: Skeleton Health: 100.0 Max Damage range: 50.0 Min damage range: 30.0 Attack speed: 3.0 Chance to hit: 0.8 Number of attacks: 1", skeleton.toString());
+        assertEquals( "Name: Skeleton Health: 100.0 Max Damage range: 50.0 Min damage range: 30.0 Attack speed: 3.0 Chance to hit: 0.8 Number of attacks: 1", skeleton.toString(), "testSkeletonToString failed");
     }
 
     @Test
     @DisplayName("Test the toString method for Gremlin")
     public void testGremlinToString() {
         setUpDungeonCharacters();
-        assertEquals("testGremlinToString failed", "Name: Gremlin Health: 70.0 Max Damage range: 30.0 Min damage range: 15.0 Attack speed: 5.0 Chance to hit: 0.8 Number of attacks: 1", gremlin.toString());
+        assertEquals( "Name: Gremlin Health: 70.0 Max Damage range: 30.0 Min damage range: 15.0 Attack speed: 5.0 Chance to hit: 0.8 Number of attacks: 1", gremlin.toString(), "testGremlinToString failed");
     }
 
 
@@ -144,42 +145,43 @@ public class DungeonCharacterTest {
     @DisplayName("Test the getHealth method for Warrior")
     public void testWarriorGetHealth() {
         setUpDungeonCharacters();
-        assertEquals("testWarriorGetHealth failed", 125, warrior.getHealth(), 0);
+        //assertEquals("testWarriorGetHealth failed", 125, warrior.getHealth(), 0);
+        assertEquals(125, warrior.getHealth(), 0, "testWarriorGetHealth failed" );
     }
 
     @Test
     @DisplayName("Test the getHealth method for Thief")
     public void testThiefGetHealth() {
         setUpDungeonCharacters();
-        assertEquals("testThiefGetHealth failed", 75, thief.getHealth(), 0);
+        assertEquals( 75, thief.getHealth(), 0, "testThiefGetHealth failed");
     }
 
     @Test
     @DisplayName("Test the getHealth method for Priestess")
     public void testPriestessGetHealth() {
         setUpDungeonCharacters();
-        assertEquals("testPriestessGetHealth failed", 75, priestess.getHealth(), 0);
+        assertEquals( 75, priestess.getHealth(), 0, "testPriestessGetHealth failed");
     }
 
     @Test
     @DisplayName("Test the getHealth method for Ogre")
     public void testOgreGetHealth() {
         setUpDungeonCharacters();
-        assertEquals("testOgreGetHealth failed", 200, ogre.getHealth(), 0);
+        assertEquals( 200, ogre.getHealth(), 0, "testOgreGetHealth failed");
     }
 
     @Test
     @DisplayName("Test the getHealth method for Skeleton")
     public void testSkeletonGetHealth() {
         setUpDungeonCharacters();
-        assertEquals("testSkeletonGetHealth failed", 100, skeleton.getHealth(), 0);
+        assertEquals( 100, skeleton.getHealth(), 0, "testSkeletonGetHealth failed");
     }
 
     @Test
     @DisplayName("Test the getHealth method for MGremlin")
     public void testGremlinGetHealth() {
         setUpDungeonCharacters();
-        assertEquals("testGremlinGetHealth failed", 70, gremlin.getHealth(), 0);
+        assertEquals( 70, gremlin.getHealth(), 0, "testGremlinGetHealth failed");
     }
 
     //================
@@ -191,7 +193,7 @@ public class DungeonCharacterTest {
     public void testWarriorSetHealth() {
         setUpDungeonCharacters();
         warrior.setHealth(5);
-        assertEquals("testWarriorSetHealth failed", 5, warrior.getHealth(), 0);
+        assertEquals( 5, warrior.getHealth(), 0, "testWarriorSetHealth failed");
     }
 
     @Test
@@ -199,7 +201,7 @@ public class DungeonCharacterTest {
     public void testThiefSetHealth() {
         setUpDungeonCharacters();
         thief.setHealth(51);
-        assertEquals("testThiefSetHealth failed", 51, thief.getHealth(), 0);
+        assertEquals( 51, thief.getHealth(), 0, "testThiefSetHealth failed");
     }
 
     @Test
@@ -207,7 +209,7 @@ public class DungeonCharacterTest {
     public void testPriestessSetHealth() {
         setUpDungeonCharacters();
         priestess.setHealth(25);
-        assertEquals("testPriestessSetHealth failed", 25, priestess.getHealth(), 0);
+        assertEquals( 25, priestess.getHealth(), 0, "testPriestessSetHealth failed");
     }
 
     @Test
@@ -215,7 +217,7 @@ public class DungeonCharacterTest {
     public void testOgreSetHealth() {
         setUpDungeonCharacters();
         ogre.setHealth(27.3);
-        assertEquals("testOgreSetHealth failed", 27.3, ogre.getHealth(), 3);
+        assertEquals( 27.3, ogre.getHealth(), 3, "testOgreSetHealth failed");
     }
 
     @Test
@@ -223,7 +225,7 @@ public class DungeonCharacterTest {
     public void testSkeletonSetHealth() {
         setUpDungeonCharacters();
         skeleton.setHealth(42.42);
-        assertEquals("testOgreSetHealth failed", 42.42, skeleton.getHealth(), 42);
+        assertEquals( 42.42, skeleton.getHealth(), 42, "testOgreSetHealth failed");
     }
 
     @Test
@@ -231,7 +233,7 @@ public class DungeonCharacterTest {
     public void testGremlinSetHealth() {
         setUpDungeonCharacters();
         gremlin.setHealth(78.99);
-        assertEquals("testGremlinSetHealth failed", 78.99, gremlin.getHealth(), 99);
+        assertEquals( 78.99, gremlin.getHealth(), 99, "testGremlinSetHealth failed");
     }
 
     //============
@@ -254,21 +256,21 @@ public class DungeonCharacterTest {
     @DisplayName("Test the getSpecialSkill method for Warrior")
     public void testWarriorSpecialSkill() {
         setUpHeros();
-        assertEquals("testWarriorSpecialSkill failed", "Crushing Blow", warrior1.getSpecialSkill());
+        assertEquals( "Crushing Blow", warrior1.getSpecialSkill(), "testWarriorSpecialSkill failed");
     }
 
     @Test
     @DisplayName("Test the getSpecialSkill method for Thief")
     public void testThiefSpecialSkill() {
         setUpHeros();
-        assertEquals("testThiefSpecialSkill failed", "Sneak Attack", thief1.getSpecialSkill());
+        assertEquals( "Sneak Attack", thief1.getSpecialSkill(), "testThiefSpecialSkill failed");
     }
 
     @Test
     @DisplayName("Test the getSpecialSkill method for Priestess")
     public void testPriestessSpecialSkill() {
         setUpHeros();
-        assertEquals("testPriestessSpecialSkill failed", "Heal", priestess1.getSpecialSkill());
+        assertEquals( "Heal", priestess1.getSpecialSkill(), "testPriestessSpecialSkill failed");
     }
 
     //=============================
@@ -279,25 +281,66 @@ public class DungeonCharacterTest {
     @DisplayName("Test the getSpecialSkill method for Warrior")
     public void testWarriorSpecialSkillChance() {
         setUpHeros();
-        assertEquals("testWarriorSpecialSkillChance failed", 0, warrior1.getSpecialChance(), 4);
+        assertEquals( 0, warrior1.getSpecialChance(), 4, "testWarriorSpecialSkillChance failed");
     }
 
     @Test
     @DisplayName("Test the getSpecialSkillChance method for Thief")
     public void testThiefSpecialSkillChance() {
         setUpHeros();
-        assertEquals("testThiefSpecialSkillChance failed", 0, thief1.getSpecialChance(), 4);
+        assertEquals( 0, thief1.getSpecialChance(), 4, "testThiefSpecialSkillChance failed");
     }
 
     //============================
     // Test Special skills - range
     //============================
 
-//    @Test
-//    @DisplayName("Test the getSpecialSkill method for Model.Warrior")
-//    public void testWarriorSpecialAttack() {
-//        setUpHeros();
-//        assertTrue(75.0 <= warrior1.specialAttack() && warrior1.specialAttack() <= 150.0);
-//    }
+    @Test
+    @DisplayName("Test the getSpecialSkill method for Warrior")
+    public void testWarriorSpecialAttack() {
+
+        // Set characters
+        setUpHeros();
+        setUpDungeonCharacters();
+
+        // Use the skill
+        double  currentHealth = ogre.getHealth();
+        warrior1.specialSkill(ogre);
+
+
+        assertTrue("testWarriorSpecialAttack",  ogre.getHealth() <= currentHealth);
+    }
+
+    @Test
+    @DisplayName("Test the getSpecialSkill method for Thief")
+    public void testThiefSpecialAttack() {
+
+        // Set characters
+        setUpHeros();
+        setUpDungeonCharacters();
+
+        // Use the skill
+        double  currentHealth = ogre.getHealth();
+        thief1.specialSkill(ogre);
+
+
+        assertTrue("testThiefSpecialAttack",  ogre.getHealth() <= currentHealth);
+    }
+
+    @Test
+    @DisplayName("Test the getSpecialSkill method for Priestess")
+    public void testPriestessSpecialAttack() {
+
+        // Set characters
+        setUpHeros();
+        setUpDungeonCharacters();
+
+        // Use the skill
+        double  currentHealth = priestess.getHealth();
+        priestess1.specialSkill(ogre);
+
+
+        assertTrue("testPriestessSpecialAttack",  priestess1.getHealth() >= currentHealth);
+    }
 
 }
