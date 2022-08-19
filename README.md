@@ -23,7 +23,7 @@ An Adventurer must navigate a maze to find all four pillars of OO. Adventurers f
 ## Controls
 </div>
 
-The controls are simple wasd contorls, with a few extra to use items.
+The movement controls are WASD controls, with a few extra controls to use items.
 
 W - Up <br>
 A - Left <br>
@@ -39,7 +39,7 @@ Save - saves the game <br>
 ## Adventurer
 </div>
 
-Play as either a Warrior with the ability to deal a crushing blow, a Priestess who can heal without potions, or a Thief with a chance of a surprise attack. Chose the right Hero for the job, as the way is plagued with dangerous enemies and traps, and it may just take all you have to make it to the end.
+Play as either a Warrior with the ability to deal a crushing blow, a Priestess who can heal without potions, or a Thief with a chance of a surprise attack. Choose the right Hero for the job, as the way is plagued with dangerous enemies and traps, and it may just take all you have to make it to the end.
 
 <div align="center">
 
@@ -53,7 +53,7 @@ Attack speed: 4 <br>
 Chance to hit: 0.8 (80 percent) <br>
 Minimum damage: 35 <br>
 Maximum damage: 60
-chance to block: 0.2 (20 percent)<br>
+Chance to block: 0.2 (20 percent)<br>
 Special attack: Crushing Blow<br>
 Special attack damage: 75 - 150;
 Special attack hit chance: 0.4 (40 percent)<br>
