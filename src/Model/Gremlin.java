@@ -30,8 +30,5 @@ public class Gremlin extends Monster {
         return super.toString();
     }
 
-//    @Override
-//    public void attackBehavior(final Model.DungeonCharacter theOther) {
-//        super.attackBehavior(theOther);
-//    }
+    
 }
