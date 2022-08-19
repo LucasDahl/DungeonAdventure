@@ -474,7 +474,7 @@ public class Dungeon implements Serializable {
 
             DungeonView.informUser("You have fallen into a pit! -"
                     + pitDamage + " health");
-            DungeonView.informUser("Your current health is: " +
+            DungeonView.informUser("Your current health is: " + (int)
                     theAdventurer.getCharacter().getHealth());
         }
     }
