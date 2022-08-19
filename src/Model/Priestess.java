@@ -61,7 +61,7 @@ public class Priestess extends Hero {
     //=================
 
     @Override
-    protected void specialSkill(DungeonCharacter theEnemy) {
+    public void specialSkill(DungeonCharacter theEnemy) {
 
         // Properties
         double totalHealed = healPoints();
@@ -70,7 +70,7 @@ public class Priestess extends Hero {
         super.setHealth(super.getHealth() + totalHealed);
 
         // Let the user know how much they healed
-        DungeonView.informUser("Healed for : " + totalHealed + " points.");
+        DungeonView.informUser("Healed for : " + (int) totalHealed + " points.");
     }
 
     @Override
