@@ -172,7 +172,7 @@ public abstract class DungeonCharacter implements Serializable {
     //========
 
     // Get the name
-    protected String getName() {
+    public String getName() {
         return myName;
     }
 
