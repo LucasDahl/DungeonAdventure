@@ -55,7 +55,7 @@ public class DungeonAdventure implements Serializable {
     /**
      * This will start the game
      */
-    public void startGameThread() {
+    private void startGameThread() {
 
         // Starting the menu
         startingMenu();
@@ -77,7 +77,7 @@ public class DungeonAdventure implements Serializable {
         startGameThread();
     }
 
-        private void startingMenu() {
+    private void startingMenu() {
 
         // Properties
         Scanner input = new Scanner(System.in);
@@ -439,7 +439,7 @@ public class DungeonAdventure implements Serializable {
     /**
      *  This is the game loop.
      */
-    public void gameLoop() {
+    private void gameLoop() {
         DungeonView.informUser("Starting Coordinates: " +
                 myDungeon.getCurrentLocation().toString());
         DungeonView.informUser(myDungeon.getCurrentRoom().toString());
