@@ -23,6 +23,12 @@ import static Model.Direction.*;
  * as all component classes.
  */
 
+/**
+ * This class contains all the logic to run the Dungeon Adventure game.
+ *
+ * @author Lucas Dahl, Jane Kennerly, Luke McAlpine
+ * @version 19 August 2022
+ */
 public class DungeonAdventure implements Serializable {
 
     //singleton - eager instance
@@ -37,7 +43,9 @@ public class DungeonAdventure implements Serializable {
 
     private transient Thread myGameThread;
 
-
+    /**
+     * Constructor for the game class
+     */
     private DungeonAdventure() {
         myDungeon = new Dungeon(DUNGEON_ROWS, DUNGEON_COLUMNS);
     }
@@ -71,12 +79,17 @@ public class DungeonAdventure implements Serializable {
         }
     }
 
-    // This method starts the game
+    /**
+     * This method starts the game
+     */
     private void gameStart() {
         myDungeon = new Dungeon(DUNGEON_ROWS, DUNGEON_COLUMNS);
         startGameThread();
     }
 
+    /**
+     * Shows the starting menu
+     */
     private void startingMenu() {
 
         // Properties
@@ -122,7 +135,9 @@ public class DungeonAdventure implements Serializable {
         }
     }
 
-    // This method displays the intro
+    /**
+     * This method displays the intro
+     */
     private void intro() {
 
         String inputName;
@@ -154,7 +169,11 @@ public class DungeonAdventure implements Serializable {
         setHero(playerName, heroChoice);
     }
 
-    // This method set the hero
+    /**
+     * This method set the hero
+     * @param thePlayerName String of the player's name
+     * @param theHeroChoice String value of hero type
+     */
     private void setHero(final String thePlayerName, final String theHeroChoice) {
         myDungeonAdventure.setPlayerName(thePlayerName);
         myDungeonAdventure.setPlayerClass(theHeroChoice);
@@ -171,7 +190,10 @@ public class DungeonAdventure implements Serializable {
         myPlayerName = theName;
     }
 
-    // Lets the player exit if they have all the pillars
+    /**
+     * Lets the player exit if they have all the pillars
+     * @return whether player has met exit conditions
+     */
     private boolean quietCheckExitConditions() {
         String currentPillars = myAdventurer.getListOfPillars();
         String[] neededPillars = {"A", "E", "I", "P"};
@@ -185,7 +207,10 @@ public class DungeonAdventure implements Serializable {
                 (pillarsCount>= neededPillars.length));
     }
 
-    // Checks if the room is the exit
+    /**
+     * Checks if the room is the exit
+     * @return whether the room is an exit
+     */
     private boolean isRoomExit() {
         boolean canExitHere = false;
         int pillarsCount = 0;
@@ -228,7 +253,9 @@ public class DungeonAdventure implements Serializable {
         return sb.toString();
     }
 
-    // This method will check for potions
+    /**
+     * This method will check for potions
+     */
     private String checkPotions() {
         StringBuilder sb = new StringBuilder();
         if (myAdventurer.getHealingPotions() > 0) {
@@ -265,7 +292,10 @@ public class DungeonAdventure implements Serializable {
         return sb.toString();
     }
 
-    // This method will display the options
+    /**
+     * This method will display the options
+     * @return a String representing all the options available to the player
+     */
     private String reportOptions() {
         StringBuilder sb = new StringBuilder();
         sb.append(reportOpenDoors());
@@ -297,7 +327,9 @@ public class DungeonAdventure implements Serializable {
         }
     }
 
-    // This method will ask the user if they want to play again
+    /**
+     * This method will ask the user if they want to play again
+     */
     private void askReplay() {
         String resetPrompt= "Do you want to restart the game? [y/n]";
         String userInput = DungeonView.promptUserForString(resetPrompt);
@@ -309,7 +341,9 @@ public class DungeonAdventure implements Serializable {
         }
     }
 
-    // This method checks if the player is alive
+    /**
+     * This method checks if the player is alive
+     */
     private void checkPlayerDeath() {
         if (myAdventurer.getCharacter().isDead()) {
             DungeonView.informUser("You died. Better luck next time.");
@@ -317,7 +351,11 @@ public class DungeonAdventure implements Serializable {
         }
     }
 
-    // This method actually moves the player.
+    /**
+     * This method translates the player's input to a Direction
+     * @param thePlayerInput String representation of player's move
+     * @return the Direction player wants to go
+     */
     private Direction translateMove(String thePlayerInput) {
         Direction direction;
         switch (thePlayerInput) {
@@ -330,7 +368,9 @@ public class DungeonAdventure implements Serializable {
         return direction;
     }
 
-    // This method will start a battle
+    /**
+     * This method will start a battle
+     */
     private void battle() {
         if (myDungeon.getCurrentRoom().hasLiveMonster()) {
             myDungeon.getCurrentRoom().getMonster().battle(myDungeon.
@@ -340,7 +380,9 @@ public class DungeonAdventure implements Serializable {
         }
     }
 
-    // This method will allow the player to take a turn
+    /**
+     * This method will allow the player to take a turn
+     */
     private void nextTurn(){
 
         String[] cheatsList = {"ko", "map", "teleport"};
@@ -427,9 +469,9 @@ public class DungeonAdventure implements Serializable {
     }
 
     /**
-     *  This is the main method.
+     *  This is the main driver for the game.
      *
-     * @param args parameters to ass in
+     * @param args parameters to pass in
      */
     public static void main(String[] args) {
         DungeonAdventure game = DungeonAdventure.getDungeonAdventure();
@@ -459,7 +501,10 @@ public class DungeonAdventure implements Serializable {
     // ************************** Loading and Saving ************************
 
 
-    // This method actually loads the saved game
+    /**
+     * This method actually loads the saved game
+     * @param theSavedGame the saved game file
+     */
     private void loadASaveGame(final File theSavedGame){
 
         DungeonView.informUser("Loading save file " + theSavedGame.getName());
@@ -483,9 +528,10 @@ public class DungeonAdventure implements Serializable {
         }
     }
 
-
-    // This method displays the games the user has saved.
-    // It also will allow them to load one.
+    /**
+     * This method displays the games the user has saved.
+     * It also will allow them to load one.
+     */
     private void loadGame(){
 
         File saveFile = new File("save\\DungeonAdventure.ser");
@@ -496,7 +542,9 @@ public class DungeonAdventure implements Serializable {
     }
 
 
-    // This method will save the game for the user
+    /**
+     * This method will save the game to a file for the user
+     */
     private void saveGame(){
 
         try{
