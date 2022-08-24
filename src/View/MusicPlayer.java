@@ -3,19 +3,19 @@ package View;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.swing.*;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 
 
-public class PlayMusic implements Runnable{
+public class MusicPlayer implements Runnable{
     private String myMusicLocation;
     private transient Thread myMusicThread;
 
 
-    public PlayMusic(String theMusicPath) {
-        myMusicLocation = theMusicPath;
+//    public MusicPlayer(String theMusicPath) {
+//        myMusicLocation = theMusicPath;
+//    }
+    public MusicPlayer() {
+        // yes it's empty constructor
     }
     public void playMusic (String theFilePath) {
         try {
@@ -28,8 +28,7 @@ public class PlayMusic implements Runnable{
                 while (myMusicThread != null) {
                     clip.loop(Clip.LOOP_CONTINUOUSLY);
                 }
-                System.out.println("Done looping music");
-                //JOptionPane.showMessageDialog(null,"Press ok to stop playing");
+
             } else {
                 System.out.println("Cannot find file");
             }
@@ -41,8 +40,9 @@ public class PlayMusic implements Runnable{
 
     public void playVictoryMusic() {
         String filepath = "DungeonAdventure/music/Victory.wav";
-        PlayMusic musicPlayer = new PlayMusic(filepath);
-        musicPlayer.run();
+        myMusicLocation = filepath;
+        playMusic(myMusicLocation);
+        run();
     }
 
     @Override
@@ -51,12 +51,15 @@ public class PlayMusic implements Runnable{
             myMusicThread = new Thread(this);
         }
         playMusic(myMusicLocation);
+
     }
 
     // testing main
     public static void main(String[] args) {
-        String filepath = "DungeonAdventure/music/Victory.wav";
-        PlayMusic musicPlayer = new PlayMusic(filepath);
-        musicPlayer.run();
+//        String filepath = "DungeonAdventure/music/Victory.wav";
+//        MusicPlayer musicPlayer = new MusicPlayer(filepath);
+//        musicPlayer.run();
+        MusicPlayer musicPlayer = new MusicPlayer(); // I only need one!
+        musicPlayer.playVictoryMusic();
     }
 }

@@ -2,6 +2,7 @@ package Controller;
 
 import Model.*;
 import View.DungeonView;
+import View.MusicPlayer;
 
 
 import java.io.*;
@@ -29,7 +30,7 @@ import static Model.Direction.*;
  * @author Lucas Dahl, Jane Kennerly, Luke McAlpine
  * @version 19 August 2022
  */
-public class DungeonAdventure implements Serializable {
+public class DungeonAdventure implements Runnable, Serializable {
 
     //singleton - eager instance
     private static DungeonAdventure myDungeonAdventure = new DungeonAdventure();
@@ -40,6 +41,7 @@ public class DungeonAdventure implements Serializable {
     private boolean gameOver = false;
     private static final int DUNGEON_ROWS = 4;
     private static final int DUNGEON_COLUMNS = 4;
+    private MusicPlayer musicPlayer;
 
     private transient Thread myGameThread;
 
@@ -48,6 +50,7 @@ public class DungeonAdventure implements Serializable {
      */
     private DungeonAdventure() {
         myDungeon = new Dungeon(DUNGEON_ROWS, DUNGEON_COLUMNS);
+        musicPlayer = new MusicPlayer();
     }
 
     /**
@@ -63,28 +66,29 @@ public class DungeonAdventure implements Serializable {
     /**
      * This will start the game
      */
-    private void startGameThread() {
-
-        // Starting the menu
-        startingMenu();
-
-        if(flag) {
-
-            myDungeon = myDungeonAdventure.myDungeon;
-            myAdventurer = myDungeonAdventure.myAdventurer;
-            gameLoop();
-        } else {
-            intro();
-            gameLoop();
-        }
-    }
+//    private void startGameThread() {
+//
+//        // Starting the menu
+//        startingMenu();
+//
+//        if(flag) {
+//
+//            myDungeon = myDungeonAdventure.myDungeon;
+//            myAdventurer = myDungeonAdventure.myAdventurer;
+//            gameLoop();
+//        } else {
+//            intro();
+//            gameLoop();
+//        }
+//    }
 
     /**
      * This method starts the game
      */
     private void gameStart() {
         myDungeon = new Dungeon(DUNGEON_ROWS, DUNGEON_COLUMNS);
-        startGameThread();
+        //startGameThread();
+        run();
     }
 
     /**
@@ -384,7 +388,7 @@ public class DungeonAdventure implements Serializable {
      * This method will allow the player to take a turn
      */
     private void nextTurn(){
-
+        musicPlayer.playVictoryMusic();
         String[] cheatsList = {"ko", "map", "teleport"};
         Set<String> cheats = new HashSet<>(List.of(cheatsList));
 
@@ -475,7 +479,8 @@ public class DungeonAdventure implements Serializable {
      */
     public static void main(String[] args) {
         DungeonAdventure game = DungeonAdventure.getDungeonAdventure();
-        game.startGameThread();
+        //game.startGameThread();
+        game.run();
     }
 
     /**
@@ -487,6 +492,7 @@ public class DungeonAdventure implements Serializable {
         DungeonView.informUser(myDungeon.getCurrentRoom().toString());
 
         while (!gameOver) {
+
             if (quietCheckExitConditions() || myAdventurer.getCharacter().isDead()) {
                 checkPlayerDeath();
                 askReplay();
@@ -567,6 +573,23 @@ public class DungeonAdventure implements Serializable {
         }
         catch(Exception e){
             DungeonView.informUser("Error in saving the file: " + e);
+        }
+    }
+
+    @Override
+    public void run() {
+        //musicPlayer.playVictoryMusic();
+        // Starting the menu
+        startingMenu();
+
+        if(flag) {
+
+            myDungeon = myDungeonAdventure.myDungeon;
+            myAdventurer = myDungeonAdventure.myAdventurer;
+            gameLoop();
+        } else {
+            intro();
+            gameLoop();
         }
     }
 }
